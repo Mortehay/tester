@@ -1,2 +1,2 @@
-# tester
-some try
+ping tester
+![](http-ping-animated.gif)
