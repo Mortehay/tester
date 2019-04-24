@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Route;
 
+/**
+ * Class LoginController
+ * @package App\Http\Controllers\Auth
+ */
 class LoginController extends Controller
 {
     /*
@@ -27,13 +32,28 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * @var array
+     */
+    public $data = [];
+
+    /**
+     * LoginController constructor.
      */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $this->data = [
+            'route' => 'texts.'. Route::currentRouteName(),
+        ];
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        return view('auth.login', $this->data);
     }
 }

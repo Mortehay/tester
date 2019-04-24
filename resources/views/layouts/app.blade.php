@@ -6,9 +6,7 @@
     @yield('headScriptsAdditional')
     @include('layouts.micro')
 </head>
-@php
-    $body_route= 'texts.'.Route::currentRouteName().'.';
-@endphp
+
 <body class="uk-container {{Route::is('home')?'home-page':''}} {{ str_replace('_', '-', app()->getLocale()) }}" data-lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @include('layouts.topScripts')
 <div class="tm-page" id="lay_content">

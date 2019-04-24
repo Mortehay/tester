@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     /**
+     * @var array
+     */
+    public $data = [];
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -14,6 +19,9 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->data = [
+            'route' => 'texts.'. Route::currentRouteName(),
+        ];
     }
 
     /**
@@ -23,6 +31,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home', $this->data);
     }
 }
