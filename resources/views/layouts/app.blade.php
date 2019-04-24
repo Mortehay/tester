@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="uk-background-muted">
 <head>
     @include('layouts.metaTags')
     @include('layouts.headScripts')
     @yield('headScriptsAdditional')
     @include('layouts.micro')
 </head>
-<body class="{{Route::is('home')?'home-page':''}} {{ str_replace('_', '-', app()->getLocale()) }}" data-lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@php
+    $body_route= 'texts.'.Route::currentRouteName().'.';
+@endphp
+<body class="uk-container {{Route::is('home')?'home-page':''}} {{ str_replace('_', '-', app()->getLocale()) }}" data-lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @include('layouts.topScripts')
 <div class="tm-page" id="lay_content">
     @yield('right_panel')

@@ -2,6 +2,8 @@
 {{--@if(session()->get('cookie'))
     @include('layouts.cookie')
 @endif--}}
-<footer id="lay_footer" class="uk-footer">
-
+<footer class="uk-footer">
+    <div class="uk-container uk-text-center">
+        футер
+    </div>
 </footer>

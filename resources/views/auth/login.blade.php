@@ -1,13 +1,12 @@
 @extends('layouts.app')
 @section('headScriptsAdditional')
-    <link rel="stylesheet" type="text/css" href="{{mix('css/login.css')}}"/>
 @endsection
 @section('content')
 <div class="uk-flex uk-flex-center">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">{{__($body_route.'title')}} 2{{Route::currentRouteName()}} 1</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">

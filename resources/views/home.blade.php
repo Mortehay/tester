@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('headScriptsAdditional')
-    {{--<link rel="stylesheet" type="text/css" href="{{mix('css/11111.css')}}"/>--}}
 @endsection
 @section('right_panel')
     @include('layouts.left_panel')
