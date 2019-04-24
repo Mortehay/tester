@@ -7,9 +7,9 @@
     @include('layouts.micro')
 </head>
 
-<body class="uk-container {{__($text.'.class')}}">
+<body>
 @include('layouts.topScripts')
-<div class="tm-page" id="lay_content">
+<div class="tm-page">
     @yield('right_panel')
     @yield('content')
     @include('layouts.footer')

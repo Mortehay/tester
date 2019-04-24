@@ -4,6 +4,6 @@
 @endif--}}
 <footer class="uk-footer">
     <div class="uk-container uk-text-center">
-        футер
+
     </div>
 </footer>
