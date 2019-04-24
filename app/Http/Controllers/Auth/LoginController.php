@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Config;
 /**
  * Class LoginController
  * @package App\Http\Controllers\Auth
@@ -30,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo;
 
 
     /**
@@ -44,6 +44,10 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $locale = Config::get('app.locale');
+        $locale_prefix = ($locale == 'en')? '' :'/'. $locale;
+        $this->redirectTo = $locale_prefix.'/home';
+        //dd($this->redirectTo);
         $this->data = [
             'route' => Route::currentRouteName(),
             'text' => 'texts.'. Route::currentRouteName(),
@@ -53,7 +57,7 @@ class LoginController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function showLoginForm()
     {
         return view('auth.login', $this->data);
     }

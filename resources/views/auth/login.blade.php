@@ -9,7 +9,7 @@
                     <h3 class="uk-text-center">
                         {{__($text.'.title')}}
                     </h3>
-                    <form class="" method="POST" action="{{ route('login') }}">
+                    <form class="" method="POST" action="{{ route('user.login') }}">
                         @csrf
                         <fieldset class="uk-fieldset">
                             <div class="uk-child-width-1-1 uk-grid-small" data-uk-grid>
