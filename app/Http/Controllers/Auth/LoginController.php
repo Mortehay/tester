@@ -45,7 +45,8 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->data = [
-            'route' => 'texts.'. Route::currentRouteName(),
+            'route' => Route::currentRouteName(),
+            'text' => 'texts.'. Route::currentRouteName(),
         ];
     }
 

@@ -20,7 +20,8 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
         $this->data = [
-            'route' => 'texts.'. Route::currentRouteName(),
+            'route' => Route::currentRouteName(),
+            'text' => 'texts.'. Route::currentRouteName(),
         ];
     }
 
