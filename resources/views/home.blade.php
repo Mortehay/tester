@@ -2,9 +2,12 @@
 @section('headScriptsAdditional')
     {{--<link rel="stylesheet" type="text/css" href="{{mix('css/11111.css')}}"/>--}}
 @endsection
+@section('right_panel')
+    @include('layouts.left_panel')
+@endsection
 @section('content')
     @include('layouts.login_menu')
-    <div class="container">
+    <div class="uk-flex uk-flex-center">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">

@@ -1,7 +1,9 @@
 @extends('layouts.app')
-
+@section('headScriptsAdditional')
+    <link rel="stylesheet" type="text/css" href="{{mix('css/login.css')}}"/>
+@endsection
 @section('content')
-<div class="container">
+<div class="uk-flex uk-flex-center">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
