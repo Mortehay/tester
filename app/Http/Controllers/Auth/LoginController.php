@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 /**
  * Class LoginController
  * @package App\Http\Controllers\Auth
@@ -30,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo;
+    //protected $redirectTo = '/home';
 
 
     /**
@@ -44,10 +46,6 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $locale = Config::get('app.locale');
-        $locale_prefix = ($locale == 'en')? '' :'/'. $locale;
-        $this->redirectTo = $locale_prefix.'/home';
-        //dd($this->redirectTo);
         $this->data = [
             'route' => Route::currentRouteName(),
             'text' => 'texts.'. Route::currentRouteName(),
@@ -60,5 +58,33 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('auth.login', $this->data);
+    }
+
+    /**
+     * @return string
+     */
+    public function redirectTo()
+    {
+        $locale_prefix = '';
+        $locale = Config::get('app.locale');
+        if(Session::get('locale') && Session::get('locale') != 'en'){
+            $locale_prefix = '/'.Session::get('locale');
+        }
+        return $locale_prefix.'/home';
+    }
+
+    public function logout(Request $request)
+    {
+        $logout ='/';
+        if(Session::get('locale') && Session::get('locale') != 'en'){
+
+            $logout = '/'.Session::get('locale');
+
+        }
+        $this->guard()->logout();
+
+        $request->session()->flush();
+        $request->session()->regenerate();
+        return redirect($logout);
     }
 }

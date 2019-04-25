@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 
 class ResetPasswordController extends Controller
 {
@@ -25,7 +27,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -35,5 +37,18 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * @return string
+     */
+    public function redirectTo()
+    {
+        $locale_prefix = '';
+        $locale = Config::get('app.locale');
+        if(Session::get('locale') && Session::get('locale') != 'en'){
+            $locale_prefix = '/'.Session::get('locale');
+        }
+        return $locale_prefix.'/home';
     }
 }
