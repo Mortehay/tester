@@ -4,4 +4,5 @@
 <link rel="shortcut icon" href="http://weballion.com/images/fav.png">
 <script src="{{asset('js/uikit.min.js')}}"></script>
 <script src="{{asset('js/uikit-icons.min.js')}}"></script>
+
 <title>{{ __('Login') }}</title>

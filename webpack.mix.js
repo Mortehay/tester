@@ -15,5 +15,5 @@ mix.options({
     processCssUrls: false
 });
 
-mix.scripts('resources/js/main.js', 'public/js/app.js').version()
+mix.js('resources/js/app.js', 'public/js/app.js').version()
     .less('resources/less/style.less', 'public/css/style.css').version();
