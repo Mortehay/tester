@@ -107,6 +107,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lang",
   data: function data() {
@@ -168,112 +170,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     }
-    /*logoChanged(e){
-        if(e.target.files[0] !== undefined){
-            console.log(e.target.files[0]);
-            let fileReader = new FileReader();
-            fileReader.readAsDataURL(e.target.files[0]);
-            fileReader.onload = (e) => {
-                this.company.image = e.target.result
-            }
-        } else {
-            this.company.image = false;
-        }
-         console.log(this.company);
-    },
-    fetchCompanies(page_url){
-        let vm = this;
-         page_url = page_url || '/api/companies';
-        fetch(page_url)
-            .then(res => res.json())
-    .then(res =>{
-            ///console.log(res.data);
-            this.companies = res.data;
-        vm.makePagination(res.meta, res.links);
-    })
-    .catch(err => console.log(err));
-    },
-    makePagination(meta, links){
-        let pagination = {
-            current_page: meta.current_page,
-            last_page:meta.last_page,
-            next_page_url: links.next,
-            prev_page_url: links.prev
-        };
-        console.log(pagination);
-        this.pagination = pagination;
-    },
-    deleteCompany(id){
-        if(confirm('are you sure?')){
-            fetch(`api/company/${id}`,{method:'delete'})
-                .then(res => res.json())
-        .then(data => {
-                alert('company removed');
-            this.fetchCompanies();
-        })
-        .catch(err =>console.log(err));
-        }
-    },
-    addCompany(){
-        console.log(this.edit);
-        console.log(this.company);
-        if(this.edit === false){
-            //add
-            fetch('api/company',{
-                method: 'post',
-                body : JSON.stringify(this.company),
-                headers:{
-                    'content-type':'application/json'
-                }
-            })
-                .then(res => res.json())
-        .then(data =>{
-                this.company.name = '';
-            this.company.logo = '';
-            this.company.email = '';
-            this.company.image = '';
-            alert('company added');
-            this.fetchCompanies();
-        })
-        .catch(err => console.log(err));
-        } else {
-            //update
-            fetch('api/company',{
-                method: 'put',
-                body : JSON.stringify(this.company),
-                headers:{
-                    'content-type':'application/json'
-                }
-            })
-                .then(res => res.json())
-        .then(data =>{
-                this.edit = false;
-            this.company = {
-                id: '',
-                name: '',
-                email: '',
-                logo: ''
-            };
-            alert('company updated');
-            this.fetchCompanies();
-        })
-        .catch(err => console.log(err));
-         }
-    },
-    editCompany(company){
-        this.edit = true;
-        this.company.id = company.id;
-        this.company.company_id = company.id;
-        this.company.name = company.name;
-        this.company.email = company.email;
-        this.company.logo = company.logo;
-        this.company.image = company.logo;
-      },
-    goToEmployees(company){
-        //this.$route.push({ path: `/companies/${company.id}/employees` }) // -> /companies/1/employees
-        window.location.href = `/companies/${company.id}/employees`;
-    }*/
-
   }
 });
 
@@ -762,28 +658,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._v("\n    lang switcher test " + _vm._s(_vm.currentLang) + "\n    "),
+  return _c("div", { staticClass: "uk-text-uppercase" }, [
     _c(
-      "ul",
-      _vm._l(_vm.langs, function(lang) {
-        return _c("li", [
-          _c(
-            "a",
-            {
-              class: {
-                "uk-active": lang != _vm.currentLang,
-                "uk-disabled": lang == _vm.currentLang
+      "button",
+      {
+        staticClass: "uk-button uk-button-default uk-button-small",
+        attrs: { type: "button" }
+      },
+      [_vm._v(_vm._s(_vm.currentLang))]
+    ),
+    _vm._v(" "),
+    _c("div", { attrs: { "uk-dropdown": "pos: bottom-justify" } }, [
+      _c(
+        "ul",
+        { staticClass: "uk-nav uk-dropdown-nav" },
+        _vm._l(_vm.langs, function(lang) {
+          return _c("li", [
+            _c(
+              "a",
+              {
+                class: {
+                  "uk-active": lang != _vm.currentLang,
+                  "uk-disabled": lang == _vm.currentLang
+                },
+                attrs: { "data-lang": lang },
+                on: { click: _vm.langChange }
               },
-              attrs: { "data-lang": lang },
-              on: { click: _vm.langChange }
-            },
-            [_vm._v(_vm._s(lang.toUpperCase()))]
-          )
-        ])
-      }),
-      0
-    )
+              [_vm._v(_vm._s(lang.toUpperCase()))]
+            )
+          ])
+        }),
+        0
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -13021,8 +12928,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\less\style.less */"./resources/less/style.less");
+__webpack_require__(/*! D:\OSPanel\domains\tester\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\OSPanel\domains\tester\resources\less\style.less */"./resources/less/style.less");
 
 
 /***/ })
