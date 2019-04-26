@@ -12951,8 +12951,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\less\style.less */"./resources/less/style.less");
+__webpack_require__(/*! D:\OSPanel\domains\tester\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\OSPanel\domains\tester\resources\less\style.less */"./resources/less/style.less");
 
 
 /***/ })

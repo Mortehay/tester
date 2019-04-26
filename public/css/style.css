@@ -1,6 +1,11 @@
 .uk-button-primary {
   border: 0px solid transparent;
 }
+.tm-container-xsmall {
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .tm-navbar-container:not(.uk-navbar-transparent) {
   background: linear-gradient(to left, #28a5f5, #1e87f0);
 }
@@ -31,4 +36,17 @@
   background-color: currentColor;
   transition: 0.3s ease-in-out;
   transition-property: right;
+}
+/* iphone ----------- */
+@media only screen and (max-width: 767px) {
+  .uk-navbar-container > .uk-container .uk-navbar-right {
+    margin-right: 0px;
+  }
+}
+/* iPads (горизонтальный) ----------- */
+/* iPads (вертикальный) ----------- */
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .uk-navbar-container > .uk-container .uk-navbar-right {
+    margin-right: 0px;
+  }
 }

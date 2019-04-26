@@ -3,8 +3,8 @@
 @endsection
 @section('content')
     <div class="uk-section uk-position-relative uk-width-1-1 uk-flex uk-flex-column uk-flex-middle uk-flex-center" data-uk-height-viewport="expand: true">
-        <div class="uk-container">
-            <div class="uk-card uk-card-default uk-card-body uk-width-large uk-margin-auto" data-uk-scrollspy="cls:uk-animation-slide-bottom-medium">
+        <div class="uk-container tm-container-xsmall">
+            <div class="uk-card uk-card-default uk-card-body" data-uk-scrollspy="cls:uk-animation-slide-bottom-medium">
                 <h3 class="uk-text-center">
                     {{__($text.'.title')}}
                 </h3>
