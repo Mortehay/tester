@@ -16,12 +16,9 @@ window.Vue = require('vue');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
-//Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('lang-switcher', require('./components/LangSwitcherComponent.vue').default);
-//Vue.component('test', require('./components/Test.vue').default);
+Vue.component('domains', require('./components/DomainComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

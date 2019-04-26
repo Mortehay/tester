@@ -21,6 +21,7 @@
                                     </div>
                                 @endif
                                 You are logged in!
+                                    <domains></domains>
                             </div>
                         </div>
                     </div>

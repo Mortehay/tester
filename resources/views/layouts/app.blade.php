@@ -7,6 +7,7 @@
 </head>
 
 <body>
+<div id="app">
     <div class="tm-page" uk-height-viewport="offset-top: true; offset-bottom: true">
         <div uk-sticky="media: 960" class="uk-navbar-container tm-navbar-container uk-light">
             <div class="uk-container uk-container-expand">
@@ -19,9 +20,9 @@
                         </a>
                     </div>
                     <div class="uk-navbar-right">
-                        <div id="app">
+
                             <lang-switcher></lang-switcher>
-                        </div>
+
                         @if(!Auth::guest())
                             @include('layouts.login_menu')
                         @endif
@@ -31,7 +32,9 @@
         </div>
         @yield('content')
     </div>
+
     @include('layouts.footer')
+</div>
     @include('layouts.bottomScripts')
 </body>
 </html>

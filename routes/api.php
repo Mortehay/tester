@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('langs', 'Api\LangController@index');
 Route::get('langs/{lang}', 'Api\LangController@change');
+
+Route::get('domains', 'Api\DomainController@getAll');

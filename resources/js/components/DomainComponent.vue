@@ -1,0 +1,268 @@
+<template>
+    <div>
+        <h2  id="domain-editor">
+            domains
+        </h2>
+        <form @submit.prevent="addDomain" class="mb-3">
+
+
+            <div class="form-group">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="domain name" v-model="domain.name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="domain link" v-model="domain.link">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="domain domaining_name" v-model="domain.hosting_name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="domain domaining_link" v-model="domain.hosting_link">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="domain type" v-model="domain.type">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="domain password" v-model="domain.password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="domain comment" v-model="domain.comment">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-light btn-block">Save</button>
+        </form>
+        <nav aria-label="Page navigation example" id="page-navigation">
+            <ul class="pagination">
+                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                    <a class="page-link" href="#" @click="fetchDomains(pagination.prev_page_url)">Previous</a>
+                </li>
+                <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{pagination.current_page}} of {{pagination.last_page}}</a></li>
+                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                    <a class="page-link" href="#" @click="fetchDomains(pagination.next_page_url)">Next</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="card card-body mb-2" v-for="domain in domains" v-bind:key="domain.id">
+            <div class="row">
+                <h3>{{ domain.id }}</h3>
+            </div>
+            <div class="row">
+                <h3>{{ domain.name }}</h3>
+            </div>
+            <div class="row">
+                <h4>{{ domain.link }}</h4>
+            </div>
+            <div class="row">
+                <h4>{{ domain.domaining_name }}</h4>
+            </div>
+            <div class="row">
+                <h4>{{ domain.domaining_link }}</h4>
+            </div>
+            <div class="row">
+                <h4>{{ domain.type }}</h4>
+            </div>
+            <div class="row">
+                <h4>{{ domain.type }}</h4>
+            </div>
+            <div class="row">
+                <h4>{{ domain.password }}</h4>
+            </div>
+            <div class="row">
+                <p>{{ domain.comment }}</p>
+            </div>
+
+            <hr>
+            <!--<button @click="goToEmployees(domain)" class="btn btn-primary mb-2">Employees</button>-->
+            <button @click="editdomain(domain)" class="btn btn-warning mb-2" v-scroll-to="{ el: '#domain-editor' }">edit</button>
+            <button @click="deleteDomain(domain.id)" class="btn btn-danger" v-scroll-to="{el : '#page-navigation'}">delete</button>
+
+        </div>
+    </div>
+
+</template>
+
+<script>
+    export default {
+        name: "domains",
+        data() {
+            return {
+                domains: [],
+                domain: {
+                    id: '',
+                    name: '',
+                    link:'',
+                    hosting_name: '',
+                    hosting_link: '',
+                    type: '',
+                    type: '',
+                    password: '',
+                    comment: '',
+                },
+                domain_id: '',
+                pagination: {},
+                edit: false,
+                validationErrors:[],
+
+            };
+        },
+        created() {
+            this.fetchDomains();
+        },
+        methods:{
+
+
+            /*logoChanged(e){
+                if(e.target.files[0] !== undefined){
+                    if(this.validationErrors.logo != undefined) this.validationErrors.logo = false;
+                    console.log(e.target.files[0]);
+                    let fileReader = new FileReader();
+                    fileReader.readAsDataURL(e.target.files[0]);
+                    fileReader.onload = (e) => {
+                        this.domain.image = e.target.result
+                    }
+                    this.domain.logo = true;
+                } else {
+                    this.domain.image = false;
+                }
+
+                console.log(this.domain);
+            },*/
+            fetchDomains(page_url){
+                let vm = this;
+
+                page_url = page_url || '/api/domains';
+                fetch(page_url)
+                    .then(res => res.json())
+                    .then(res =>{
+                        console.log(res.data);
+                        this.domains = res.data;
+                        vm.makePagination(res.meta, res.links);
+                    })
+                    .catch(err => console.log(err));
+            },
+            makePagination(meta, links){
+                let pagination = {
+                    current_page: meta.current_page,
+                    last_page:meta.last_page,
+                    next_page_url: links.next,
+                    prev_page_url: links.prev
+                };
+                //console.log(pagination);
+                this.pagination = pagination;
+            },
+            deleteDomain(id){
+                if(confirm('are you sure?')){
+                    fetch(`/api/domains/${id}`,{method:'delete'})
+                        .then(res => res.json())
+                        .then(data => {
+                            alert('domain removed');
+                            this.fetchDomains();
+                        })
+                        .catch(err =>console.log(err));
+                }
+            },
+            addDomain(){
+                //console.log(this.edit);
+                //console.log(this.domain);
+                if(this.edit === false){
+                    //add
+                    fetch('/api/domains',{
+                        method: 'post',
+                        body : JSON.stringify(this.domain),
+                        headers:{
+                            'content-type':'application/json'
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(data =>{
+                            this.domain.name = '';
+                            this.domain.link = '';
+                            this.domain.domaining_name = '';
+                            this.domain.domaining_link = '';
+                            this.domain.type = '';;
+                            this.domain.password = '';
+                            this.domain.comment = '';
+                            alert('domain added');
+                            this.fetchDomains();
+                            this.$scrollTo('#page-navigation');
+                        })
+                        .catch(err => console.log(err));
+                } else {
+                    //update
+                    fetch('/api/domains',{
+                        method: 'put',
+                        body : JSON.stringify(this.domain),
+                        headers:{
+
+                            'content-type':'application/json'
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(data =>{
+                            this.edit = false;
+                            this.domain = {
+                                id: '',
+                                name: '',
+                                link:'',
+                                hosting_name: '',
+                                hosting_link: '',
+                                type: '',
+                                password: '',
+                                comment: '',
+                            };
+                            alert('domain updated');
+                            this.fetchDomains();
+                        })
+                        .catch(err => console.log(err));
+
+                }
+            },
+            editdomain(domain){
+                this.edit = true;
+                this.domain.id = domain.id;
+                this.domain.domain_id = domain.id;
+                this.domain.name = domain.name;
+                this.domain.link = domain.link;
+                this.domain.hosting_name = domain.hosting_name;
+                this.domain.hosting_link = domain.hosting_link;
+                this.domain.type = domain.type;
+                this.domain.password = domain.password;
+                this.domain.comment = domain.comment;
+
+
+            },
+            /*goToEmployees(domain){
+                //this.$route.push({ path: `/domains/${domain.id}/employees` }) // -> /domains/1/employees
+                window.location.href = `/tabledomains/${domain.id}/tableadditionaldomains`;
+            },*/
+            forceRerender() {
+                this.componentKey += 1;
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
