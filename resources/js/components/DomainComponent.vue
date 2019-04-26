@@ -30,8 +30,13 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="radio" v-for="type in types">
+                            <input v-on:click="typeChange" type="radio" :value="type"  v-model="domainType" >
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="domain type" v-model="domain.type">
+                            <input type="text" class="form-control" placeholder="domain login" v-model="domain.login">
                         </div>
                     </div>
                     <div class="row">
@@ -41,7 +46,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="domain comment" v-model="domain.comment">
+                            <textarea type="text" class="form-control" placeholder="domain description" v-model="domain.description"></textarea>>
                         </div>
                     </div>
 
@@ -83,13 +88,13 @@
                 <h4>{{ domain.type }}</h4>
             </div>
             <div class="row">
-                <h4>{{ domain.type }}</h4>
+                <h4>{{ domain.login }}</h4>
             </div>
             <div class="row">
                 <h4>{{ domain.password }}</h4>
             </div>
             <div class="row">
-                <p>{{ domain.comment }}</p>
+                <p>{{ domain.description }}</p>
             </div>
 
             <hr>
@@ -108,6 +113,8 @@
         data() {
             return {
                 domains: [],
+                domainType: '',
+                types:['h_','_d','hd'],
                 domain: {
                     id: '',
                     name: '',
@@ -115,9 +122,9 @@
                     hosting_name: '',
                     hosting_link: '',
                     type: '',
-                    type: '',
+                    login: '',
                     password: '',
-                    comment: '',
+                    description: '',
                 },
                 domain_id: '',
                 pagination: {},
@@ -148,6 +155,11 @@
 
                 console.log(this.domain);
             },*/
+            typeChange(){
+                let vm = this;
+                let type = event.target.value;
+                console.log(type);
+            },
             fetchDomains(page_url){
                 let vm = this;
 
@@ -200,9 +212,10 @@
                             this.domain.link = '';
                             this.domain.domaining_name = '';
                             this.domain.domaining_link = '';
-                            this.domain.type = '';;
+                            this.domain.type = '';
+                            this.domain.login = '';
                             this.domain.password = '';
-                            this.domain.comment = '';
+                            this.domain.description = '';
                             alert('domain added');
                             this.fetchDomains();
                             this.$scrollTo('#page-navigation');
@@ -228,8 +241,9 @@
                                 hosting_name: '',
                                 hosting_link: '',
                                 type: '',
+                                login: '',
                                 password: '',
-                                comment: '',
+                                description: '',
                             };
                             alert('domain updated');
                             this.fetchDomains();
@@ -247,8 +261,9 @@
                 this.domain.hosting_name = domain.hosting_name;
                 this.domain.hosting_link = domain.hosting_link;
                 this.domain.type = domain.type;
+                this.domain.login = domain.login;
                 this.domain.password = domain.password;
-                this.domain.comment = domain.comment;
+                this.domain.description = domain.description;
 
 
             },
