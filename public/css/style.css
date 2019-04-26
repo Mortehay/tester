@@ -44,6 +44,11 @@
   }
 }
 /* iPads (горизонтальный) ----------- */
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .uk-navbar-container > .uk-container .uk-navbar-right {
+    margin-right: 0px;
+  }
+}
 /* iPads (вертикальный) ----------- */
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   .uk-navbar-container > .uk-container .uk-navbar-right {
