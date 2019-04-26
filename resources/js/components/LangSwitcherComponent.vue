@@ -1,11 +1,13 @@
 <template>
-    <div>
-        lang switcher test {{currentLang}}
-        <ul>
-            <li v-for="lang in langs">
-                <a v-on:click="langChange" :data-lang="lang" :class="{ 'uk-active' : lang != currentLang , 'uk-disabled' : lang == currentLang}">{{lang.toUpperCase()}}</a>
-            </li>
-        </ul>
+    <div class="uk-text-uppercase">
+        <button class="uk-button uk-button-default uk-button-small" type="button">{{currentLang}}</button>
+        <div uk-dropdown="pos: bottom-justify">
+            <ul class="uk-nav uk-dropdown-nav">
+                <li v-for="lang in langs">
+                    <a v-on:click="langChange" :data-lang="lang" :class="{ 'uk-active' : lang != currentLang , 'uk-disabled' : lang == currentLang}">{{lang.toUpperCase()}}</a>
+                </li>
+            </ul>
+        </div>
     </div>
 
 </template>

@@ -107,6 +107,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lang",
   data: function data() {
@@ -679,28 +681,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._v("\n    lang switcher test " + _vm._s(_vm.currentLang) + "\n    "),
+  return _c("div", { staticClass: "uk-text-uppercase" }, [
     _c(
-      "ul",
-      _vm._l(_vm.langs, function(lang) {
-        return _c("li", [
-          _c(
-            "a",
-            {
-              class: {
-                "uk-active": lang != _vm.currentLang,
-                "uk-disabled": lang == _vm.currentLang
+      "button",
+      {
+        staticClass: "uk-button uk-button-default uk-button-small",
+        attrs: { type: "button" }
+      },
+      [_vm._v(_vm._s(_vm.currentLang))]
+    ),
+    _vm._v(" "),
+    _c("div", { attrs: { "uk-dropdown": "pos: bottom-justify" } }, [
+      _c(
+        "ul",
+        { staticClass: "uk-nav uk-dropdown-nav" },
+        _vm._l(_vm.langs, function(lang) {
+          return _c("li", [
+            _c(
+              "a",
+              {
+                class: {
+                  "uk-active": lang != _vm.currentLang,
+                  "uk-disabled": lang == _vm.currentLang
+                },
+                attrs: { "data-lang": lang },
+                on: { click: _vm.langChange }
               },
-              attrs: { "data-lang": lang },
-              on: { click: _vm.langChange }
-            },
-            [_vm._v(_vm._s(lang.toUpperCase()))]
-          )
-        ])
-      }),
-      0
-    )
+              [_vm._v(_vm._s(lang.toUpperCase()))]
+            )
+          ])
+        }),
+        0
+      )
+    ])
   ])
 }
 var staticRenderFns = []

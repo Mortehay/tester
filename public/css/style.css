@@ -1,5 +1,34 @@
-.login-form {
+.uk-button-primary {
+  border: 0px solid transparent;
+}
+.tm-navbar-container:not(.uk-navbar-transparent) {
+  background: linear-gradient(to left, #28a5f5, #1e87f0);
+}
+.tm-navbar-container .uk-dropdown {
+  min-width: 20px;
+  padding: 15px;
+}
+.tm-navbar-container .uk-navbar-nav > li > a {
   position: relative;
-  top: 45%;
-  width: 200px;
+}
+.tm-navbar-container .uk-navbar-nav > li > a,
+.tm-navbar-container .uk-navbar-item,
+.tm-navbar-container .uk-navbar-toggle {
+  min-height: 50px;
+  font-size: 13px;
+}
+.tm-navbar-container .uk-navbar-nav > li > a:hover::before {
+  right: 15px;
+}
+.tm-navbar-container .uk-navbar-nav > li > a::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 15px;
+  right: calc(102% - 15px);
+  bottom: 20px;
+  height: 1px;
+  background-color: currentColor;
+  transition: 0.3s ease-in-out;
+  transition-property: right;
 }
