@@ -143,6 +143,8 @@ __webpack_require__.r(__webpack_exports__);
       /**/
     },
     langChange: function langChange(event) {
+      var _this2 = this;
+
       //console.log('lang', event.target.dataset.lang);
       var vm = this;
       var lang = event.target.dataset.lang;
@@ -161,119 +163,34 @@ __webpack_require__.r(__webpack_exports__);
         fetch(page_url).then(function (res) {
           return res.json();
         }).then(function (res) {
-          console.log(res); //if(res.data == 'success')
+          console.log(res);
+          var tempUrl = window.location.pathname.split('/');
+          var tempPathname = window.location.pathname;
+          console.log(tempUrl);
+          console.log(_this2.currentLang); //this.fetchLangs();
+
+          console.log(_this2.langs); //if(res.data == 'success')
           //this.langs = res;
+
+          if (_this2.currentLang == 'en' && _this2.lang != 'en') {
+            tempPathname = '/' + _this2.lang + tempPathname;
+            location.href = window.location.origin + tempPathname; //console.log(tempPathname);
+          }
+
+          if (_this2.currentLang != 'en' && _this2.lang == 'en') {
+            tempPathname = tempPathname.replace('/' + _this2.currentLang, '');
+            location.href = window.location.origin + tempPathname; //console.log(tempPathname);
+          }
+
+          if (_this2.currentLang != 'en' && _this2.lang != 'en') {
+            tempPathname = tempPathname.replace('/' + _this2.currentLang, '/' + _this2.lang);
+            location.href = window.location.origin + tempPathname; //console.log(tempPathname);
+          }
         })["catch"](function (err) {
           return console.log(err);
         });
       }
     }
-    /*logoChanged(e){
-        if(e.target.files[0] !== undefined){
-            console.log(e.target.files[0]);
-            let fileReader = new FileReader();
-            fileReader.readAsDataURL(e.target.files[0]);
-            fileReader.onload = (e) => {
-                this.company.image = e.target.result
-            }
-        } else {
-            this.company.image = false;
-        }
-         console.log(this.company);
-    },
-    fetchCompanies(page_url){
-        let vm = this;
-         page_url = page_url || '/api/companies';
-        fetch(page_url)
-            .then(res => res.json())
-    .then(res =>{
-            ///console.log(res.data);
-            this.companies = res.data;
-        vm.makePagination(res.meta, res.links);
-    })
-    .catch(err => console.log(err));
-    },
-    makePagination(meta, links){
-        let pagination = {
-            current_page: meta.current_page,
-            last_page:meta.last_page,
-            next_page_url: links.next,
-            prev_page_url: links.prev
-        };
-        console.log(pagination);
-        this.pagination = pagination;
-    },
-    deleteCompany(id){
-        if(confirm('are you sure?')){
-            fetch(`api/company/${id}`,{method:'delete'})
-                .then(res => res.json())
-        .then(data => {
-                alert('company removed');
-            this.fetchCompanies();
-        })
-        .catch(err =>console.log(err));
-        }
-    },
-    addCompany(){
-        console.log(this.edit);
-        console.log(this.company);
-        if(this.edit === false){
-            //add
-            fetch('api/company',{
-                method: 'post',
-                body : JSON.stringify(this.company),
-                headers:{
-                    'content-type':'application/json'
-                }
-            })
-                .then(res => res.json())
-        .then(data =>{
-                this.company.name = '';
-            this.company.logo = '';
-            this.company.email = '';
-            this.company.image = '';
-            alert('company added');
-            this.fetchCompanies();
-        })
-        .catch(err => console.log(err));
-        } else {
-            //update
-            fetch('api/company',{
-                method: 'put',
-                body : JSON.stringify(this.company),
-                headers:{
-                    'content-type':'application/json'
-                }
-            })
-                .then(res => res.json())
-        .then(data =>{
-                this.edit = false;
-            this.company = {
-                id: '',
-                name: '',
-                email: '',
-                logo: ''
-            };
-            alert('company updated');
-            this.fetchCompanies();
-        })
-        .catch(err => console.log(err));
-         }
-    },
-    editCompany(company){
-        this.edit = true;
-        this.company.id = company.id;
-        this.company.company_id = company.id;
-        this.company.name = company.name;
-        this.company.email = company.email;
-        this.company.logo = company.logo;
-        this.company.image = company.logo;
-      },
-    goToEmployees(company){
-        //this.$route.push({ path: `/companies/${company.id}/employees` }) // -> /companies/1/employees
-        window.location.href = `/companies/${company.id}/employees`;
-    }*/
-
   }
 });
 

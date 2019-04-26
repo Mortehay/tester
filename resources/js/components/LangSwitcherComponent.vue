@@ -63,8 +63,29 @@
                         .then(res => res.json())
                         .then(res =>{
                             console.log(res);
+                            let tempUrl = (window.location.pathname).split('/');
+                            let tempPathname = window.location.pathname;
+                            console.log(tempUrl);
+                            console.log(this.currentLang);
+                            //this.fetchLangs();
+                            console.log(this.langs);
                             //if(res.data == 'success')
                             //this.langs = res;
+                            if(this.currentLang == 'en' && this.lang != 'en'){
+                                tempPathname = '/' + this.lang + tempPathname;
+                                location.href = window.location.origin + tempPathname;
+                                //console.log(tempPathname);
+                            }
+                            if(this.currentLang != 'en' && this.lang == 'en'){
+                                tempPathname = tempPathname.replace('/' + this.currentLang, '');
+                                location.href = window.location.origin + tempPathname;
+                                //console.log(tempPathname);
+                            }
+                            if(this.currentLang != 'en' && this.lang != 'en'){
+                                tempPathname = tempPathname.replace('/' + this.currentLang, '/' + this.lang);
+                                location.href = window.location.origin + tempPathname;
+                                //console.log(tempPathname);
+                            }
                         })
                         .catch(err => console.log(err));
                 }

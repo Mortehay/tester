@@ -57,8 +57,8 @@ Route::group([ 'prefix' => 'ru', 'middleware' => 'locale'], function () {
 /*ru routes*/
 
 /*uk routes*/
-/*Route::group([ 'prefix' => 'uk', 'middleware' => 'locale'], function () {
+Route::group([ 'prefix' => 'uk', 'middleware' => 'locale'], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
     Route::get('/home', 'HomeController@index')->name('home');
-});*/
+});
 /*uk routes*/
