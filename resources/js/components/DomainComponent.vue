@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form @submit.prevent="addDomain" class="uk-form">
+        <form id="domain-editor" @submit.prevent="addDomain" class="uk-form">
             <div class="uk-grid-small uk-child-width-1-2@s" data-uk-grid>
                 <div>
                     <input type="text" class="uk-input" placeholder="domain name" v-model="domain.name">
@@ -26,8 +26,21 @@
             </div>
             <div class="uk-margin">
                 <div v-for="type in types">
-                    <input v-on:click="typeChange" type="radio" class="uk-radio" :value="type"  v-model="domainType" >
+                    <label>{{type.name}}
+                        <input v-on:click="typeChange" type="radio" class="uk-radio" :value="type.code"  v-model="domainType" >
+                    </label>
                 </div>
+            </div>
+            <div class="uk-margin">
+                <div class="uk-grid-small uk-child-width-1-2@s">
+                    <div v-if="domain.screen">
+                        <img :src="domain.screen" class="img-responsive" height="70" width="90">
+                    </div>
+                    <div>
+                        <input type="file" class="" @change="screenChanged"></input>
+                    </div>
+                </div>
+
             </div>
             <button type="submit" class="uk-button uk-button-primary">Save</button>
         </form>
@@ -36,9 +49,9 @@
                 <li v-bind:class="[{disabled: !pagination.prev_page_url}]">
                     <a href="#" @click="fetchDomains(pagination.prev_page_url)"><span uk-pagination-previous></span></a>
                 </li>
-                <li><a href="#">1</a></li>
+                <!--<li><a href="#">1</a></li>
                 <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
+                <li><a href="#">3</a></li>-->
                 <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{pagination.current_page}} of {{pagination.last_page}}</a></li>
                 <li v-bind:class="[{disabled: !pagination.next_page_url}]">
                     <a href="#" @click="fetchDomains(pagination.next_page_url)"><span uk-pagination-next></span></a>
@@ -74,10 +87,12 @@
             <div class="">
                 <p>{{ domain.description }}</p>
             </div>
-
+            <div>
+                <img style="width:100px;" :src="domain.screen" >
+            </div>
             <hr>
             <!--<button @click="goToEmployees(domain)" class="">Employees</button>-->
-            <button @click="editdomain(domain)" class="" v-scroll-to="{ el: '#domain-editor' }">edit</button>
+            <button @click="editdomain(domain)" class="" v-scroll-to="{ el: '#domain-editor', offset: -70, }">edit</button>
             <button @click="deleteDomain(domain.id)" class="" v-scroll-to="{el : '#page-navigation'}">delete</button>
 
         </div>
@@ -92,7 +107,19 @@
             return {
                 domains: [],
                 domainType: '',
-                types:['h_','_d','hd'],
+                types:[
+                        {
+                            code: 'h_',
+                            name:'host',
+                        }, {
+                            code: '_d',
+                            name:'domain',
+                        },
+                        {
+                            code:'hd',
+                            name:'host+domain'
+                        }
+                    ],
                 domain: {
                     id: '',
                     name: '',
@@ -103,6 +130,7 @@
                     login: '',
                     password: '',
                     description: '',
+                    screen: '',
                 },
                 domain_id: '',
                 pagination: {},
@@ -133,10 +161,25 @@
 
                 console.log(this.domain);
             },*/
+            screenChanged(e){
+                if(e.target.files[0] !== undefined){
+                    console.log(e.target.files[0]);
+                    let fileReader = new FileReader();
+                    fileReader.readAsDataURL(e.target.files[0]);
+                    fileReader.onload = (e) => {
+                        this.domain.screen = e.target.result
+                    }
+                } else {
+                    this.domain.screen = false;
+                }
+
+                console.log(this.domain);
+            },
             typeChange(){
                 let vm = this;
                 let type = event.target.value;
-                console.log(type);
+                this.domain.type = event.target.value;
+                //console.log(this.domain);
             },
             fetchDomains(page_url){
                 let vm = this;
@@ -177,7 +220,7 @@
                 //console.log(this.domain);
                 if(this.edit === false){
                     //add
-                    fetch('/api/domains',{
+                    fetch('/api/domain',{
                         method: 'post',
                         body : JSON.stringify(this.domain),
                         headers:{
@@ -194,6 +237,7 @@
                             this.domain.login = '';
                             this.domain.password = '';
                             this.domain.description = '';
+                            this.domain.screen = '',
                             alert('domain added');
                             this.fetchDomains();
                             this.$scrollTo('#page-navigation');
@@ -201,7 +245,10 @@
                         .catch(err => console.log(err));
                 } else {
                     //update
-                    fetch('/api/domains',{
+                    //console.log('update');
+                    console.log(this.domain);
+
+                    fetch('/api/domain',{
                         method: 'put',
                         body : JSON.stringify(this.domain),
                         headers:{
@@ -222,6 +269,7 @@
                                 login: '',
                                 password: '',
                                 description: '',
+                                screen:'',
                             };
                             alert('domain updated');
                             this.fetchDomains();
@@ -229,6 +277,7 @@
                         .catch(err => console.log(err));
 
                 }
+                this.forceRerender();
             },
             editdomain(domain){
                 this.edit = true;
@@ -238,7 +287,10 @@
                 this.domain.link = domain.link;
                 this.domain.hosting_name = domain.hosting_name;
                 this.domain.hosting_link = domain.hosting_link;
+                this.domainType = domain.type;
                 this.domain.type = domain.type;
+                //console.log(domain.type);
+                this.domain.screen = domain.screen;
                 this.domain.login = domain.login;
                 this.domain.password = domain.password;
                 this.domain.description = domain.description;

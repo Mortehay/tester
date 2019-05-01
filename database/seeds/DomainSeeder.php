@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Domain;
 use App\AddDomain;
 use Faker\Factory as Faker;
+use App\ImageUploads;
 
 class DomainSeeder extends Seeder
 {
@@ -56,6 +57,11 @@ class DomainSeeder extends Seeder
                 $_addDomain->name = $faker->domainName;
                 $_addDomain->save();
             }
+
+            $domain_screen = new ImageUploads();
+            $domain_screen->domain()->associate($_domain);
+            $domain_screen->image_path  = 'screen\test.jpg';
+            $domain_screen->save();
 
         }
     }

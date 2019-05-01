@@ -182,13 +182,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
   data: function data() {
     return {
       domains: [],
       domainType: '',
-      types: ['h_', '_d', 'hd'],
+      types: [{
+        code: 'h_',
+        name: 'host'
+      }, {
+        code: '_d',
+        name: 'domain'
+      }, {
+        code: 'hd',
+        name: 'host+domain'
+      }],
       domain: {
         id: '',
         name: '',
@@ -198,7 +222,8 @@ __webpack_require__.r(__webpack_exports__);
         type: '',
         login: '',
         password: '',
-        description: ''
+        description: '',
+        screen: ''
       },
       domain_id: '',
       pagination: {},
@@ -225,13 +250,30 @@ __webpack_require__.r(__webpack_exports__);
         }
          console.log(this.domain);
     },*/
+    screenChanged: function screenChanged(e) {
+      var _this = this;
+
+      if (e.target.files[0] !== undefined) {
+        console.log(e.target.files[0]);
+        var fileReader = new FileReader();
+        fileReader.readAsDataURL(e.target.files[0]);
+
+        fileReader.onload = function (e) {
+          _this.domain.screen = e.target.result;
+        };
+      } else {
+        this.domain.screen = false;
+      }
+
+      console.log(this.domain);
+    },
     typeChange: function typeChange() {
       var vm = this;
       var type = event.target.value;
-      console.log(type);
+      this.domain.type = event.target.value; //console.log(this.domain);
     },
     fetchDomains: function fetchDomains(page_url) {
-      var _this = this;
+      var _this2 = this;
 
       var vm = this;
       page_url = page_url || '/api/domains';
@@ -239,7 +281,7 @@ __webpack_require__.r(__webpack_exports__);
         return res.json();
       }).then(function (res) {
         console.log(res.data);
-        _this.domains = res.data;
+        _this2.domains = res.data;
         vm.makePagination(res.meta, res.links);
       })["catch"](function (err) {
         return console.log(err);
@@ -256,7 +298,7 @@ __webpack_require__.r(__webpack_exports__);
       this.pagination = pagination;
     },
     deleteDomain: function deleteDomain(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (confirm('are you sure?')) {
         fetch("/api/domains/".concat(id), {
@@ -266,20 +308,20 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (data) {
           alert('domain removed');
 
-          _this2.fetchDomains();
+          _this3.fetchDomains();
         })["catch"](function (err) {
           return console.log(err);
         });
       }
     },
     addDomain: function addDomain() {
-      var _this3 = this;
+      var _this4 = this;
 
       //console.log(this.edit);
       //console.log(this.domain);
       if (this.edit === false) {
         //add
-        fetch('/api/domains', {
+        fetch('/api/domain', {
           method: 'post',
           body: JSON.stringify(this.domain),
           headers: {
@@ -288,25 +330,27 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
-          _this3.domain.name = '';
-          _this3.domain.link = '';
-          _this3.domain.domaining_name = '';
-          _this3.domain.domaining_link = '';
-          _this3.domain.type = '';
-          _this3.domain.login = '';
-          _this3.domain.password = '';
-          _this3.domain.description = '';
-          alert('domain added');
+          _this4.domain.name = '';
+          _this4.domain.link = '';
+          _this4.domain.domaining_name = '';
+          _this4.domain.domaining_link = '';
+          _this4.domain.type = '';
+          _this4.domain.login = '';
+          _this4.domain.password = '';
+          _this4.domain.description = '';
+          _this4.domain.screen = '', alert('domain added');
 
-          _this3.fetchDomains();
+          _this4.fetchDomains();
 
-          _this3.$scrollTo('#page-navigation');
+          _this4.$scrollTo('#page-navigation');
         })["catch"](function (err) {
           return console.log(err);
         });
       } else {
         //update
-        fetch('/api/domains', {
+        //console.log('update');
+        console.log(this.domain);
+        fetch('/api/domain', {
           method: 'put',
           body: JSON.stringify(this.domain),
           headers: {
@@ -315,8 +359,8 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
-          _this3.edit = false;
-          _this3.domain = {
+          _this4.edit = false;
+          _this4.domain = {
             id: '',
             name: '',
             link: '',
@@ -325,15 +369,18 @@ __webpack_require__.r(__webpack_exports__);
             type: '',
             login: '',
             password: '',
-            description: ''
+            description: '',
+            screen: ''
           };
           alert('domain updated');
 
-          _this3.fetchDomains();
+          _this4.fetchDomains();
         })["catch"](function (err) {
           return console.log(err);
         });
       }
+
+      this.forceRerender();
     },
     editdomain: function editdomain(domain) {
       this.edit = true;
@@ -343,7 +390,10 @@ __webpack_require__.r(__webpack_exports__);
       this.domain.link = domain.link;
       this.domain.hosting_name = domain.hosting_name;
       this.domain.hosting_link = domain.hosting_link;
-      this.domain.type = domain.type;
+      this.domainType = domain.type;
+      this.domain.type = domain.type; //console.log(domain.type);
+
+      this.domain.screen = domain.screen;
       this.domain.login = domain.login;
       this.domain.password = domain.password;
       this.domain.description = domain.description;
@@ -963,6 +1013,7 @@ var render = function() {
         "form",
         {
           staticClass: "uk-form",
+          attrs: { id: "domain-editor" },
           on: {
             submit: function($event) {
               $event.preventDefault()
@@ -1153,32 +1204,59 @@ var render = function() {
             { staticClass: "uk-margin" },
             _vm._l(_vm.types, function(type) {
               return _c("div", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.domainType,
-                      expression: "domainType"
+                _c("label", [
+                  _vm._v(_vm._s(type.name) + "\n                    "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.domainType,
+                        expression: "domainType"
+                      }
+                    ],
+                    staticClass: "uk-radio",
+                    attrs: { type: "radio" },
+                    domProps: {
+                      value: type.code,
+                      checked: _vm._q(_vm.domainType, type.code)
+                    },
+                    on: {
+                      click: _vm.typeChange,
+                      change: function($event) {
+                        _vm.domainType = type.code
+                      }
                     }
-                  ],
-                  staticClass: "uk-radio",
-                  attrs: { type: "radio" },
-                  domProps: {
-                    value: type,
-                    checked: _vm._q(_vm.domainType, type)
-                  },
-                  on: {
-                    click: _vm.typeChange,
-                    change: function($event) {
-                      _vm.domainType = type
-                    }
-                  }
-                })
+                  })
+                ])
               ])
             }),
             0
           ),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-margin" }, [
+            _c("div", { staticClass: "uk-grid-small uk-child-width-1-2@s" }, [
+              _vm.domain.screen
+                ? _c("div", [
+                    _c("img", {
+                      staticClass: "img-responsive",
+                      attrs: {
+                        src: _vm.domain.screen,
+                        height: "70",
+                        width: "90"
+                      }
+                    })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", [
+                _c("input", {
+                  attrs: { type: "file" },
+                  on: { change: _vm.screenChanged }
+                })
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "button",
@@ -1225,12 +1303,6 @@ var render = function() {
                   )
                 ]
               ),
-              _vm._v(" "),
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _vm._m(2),
               _vm._v(" "),
               _c("li", { staticClass: "page-item disabled" }, [
                 _c(
@@ -1290,6 +1362,13 @@ var render = function() {
           _vm._v(" "),
           _c("div", {}, [_c("p", [_vm._v(_vm._s(domain.description))])]),
           _vm._v(" "),
+          _c("div", [
+            _c("img", {
+              staticStyle: { width: "100px" },
+              attrs: { src: domain.screen }
+            })
+          ]),
+          _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
           _c(
@@ -1299,8 +1378,8 @@ var render = function() {
                 {
                   name: "scroll-to",
                   rawName: "v-scroll-to",
-                  value: { el: "#domain-editor" },
-                  expression: "{ el: '#domain-editor' }"
+                  value: { el: "#domain-editor", offset: -70 },
+                  expression: "{ el: '#domain-editor', offset: -70, }"
                 }
               ],
               on: {
@@ -1337,26 +1416,7 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("1")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("2")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("3")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -14238,8 +14298,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\OSPanel\domains\tester\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\OSPanel\domains\tester\resources\less\style.less */"./resources/less/style.less");
+__webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\less\style.less */"./resources/less/style.less");
 
 
 /***/ })
