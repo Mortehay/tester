@@ -22,4 +22,9 @@ class Domain extends Model
     {
         return $this->hasMany('App\AddDomain', 'id' );
     }
+
+    public function screen()
+    {
+        return $this->hasOne('App\ImageUploads','domain_id','id' );
+    }
 }

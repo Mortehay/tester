@@ -88,7 +88,7 @@
                 <p>{{ domain.description }}</p>
             </div>
             <div>
-                <img style="width:100px;" :src="domain.screen" >
+                <img style="width:100px;" :src="domain.screen !== null ? location + '/' +domain.screen.image_path : ''" >
             </div>
             <hr>
             <!--<button @click="goToEmployees(domain)" class="">Employees</button>-->
@@ -105,6 +105,7 @@
         name: "domains",
         data() {
             return {
+                location: window.location.origin,
                 domains: [],
                 domainType: '',
                 types:[
@@ -131,6 +132,7 @@
                     password: '',
                     description: '',
                     screen: '',
+                    image: '',
                 },
                 domain_id: '',
                 pagination: {},
@@ -290,7 +292,7 @@
                 this.domainType = domain.type;
                 this.domain.type = domain.type;
                 //console.log(domain.type);
-                this.domain.screen = domain.screen;
+                this.domain.screen = domain.screen != null ? domain.screen.image_path : '';
                 this.domain.login = domain.login;
                 this.domain.password = domain.password;
                 this.domain.description = domain.description;

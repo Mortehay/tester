@@ -201,6 +201,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "domains",
   data: function data() {
     return {
+      location: window.location.origin,
       domains: [],
       domainType: '',
       types: [{
@@ -393,7 +394,7 @@ __webpack_require__.r(__webpack_exports__);
       this.domainType = domain.type;
       this.domain.type = domain.type; //console.log(domain.type);
 
-      this.domain.screen = domain.screen;
+      this.domain.screen = domain.screen != null ? domain.screen.image_path : '';
       this.domain.login = domain.login;
       this.domain.password = domain.password;
       this.domain.description = domain.description;
@@ -1365,7 +1366,12 @@ var render = function() {
           _c("div", [
             _c("img", {
               staticStyle: { width: "100px" },
-              attrs: { src: domain.screen }
+              attrs: {
+                src:
+                  domain.screen !== null
+                    ? _vm.location + "/" + domain.screen.image_path
+                    : ""
+              }
             })
           ]),
           _vm._v(" "),

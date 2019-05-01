@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Domain;
 use App\Http\Resources\Domain as DomainResource;
+use Intervention\Image\ImageManagerStatic as Image;
+use App\ImageUploads;
 
 class DomainController extends Controller
 {
@@ -20,13 +22,12 @@ class DomainController extends Controller
     {
         //get a single domain
         $domain = Domain::findOrFail($id);
-        // return a single domain as resource
+
         return new DomainResource($domain);
     }
     public function store(Request $request)
     {
-        //print_r($request);
-        //print_r($request->input('image'));
+        //save or update domain
         if($request->isMethod('put')){
             $domain = Domain::findOrFail($request->domain_id);
             $domain->id = $request->input('domain_id');
@@ -45,30 +46,23 @@ class DomainController extends Controller
         $domain->description = $request->input('description');
 
         $domain->save();
-        return json_encode([$storeType=> 'success']);
-        /*if($request->input('image') && $request->input('image') != $request->input('screen')){
-            $image = $request->input('image');
-            $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
 
-            Image::make($request->input('image'))->save(public_path('screen'.DIRECTORY_SEPARATOR ).$name);
+        $image = $request->input('screen');
+        $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
 
-            $image= new FileUploads();
-            $image->image_name = $name;
-            $image->save();
-
-            $domain->screen = 'screen'.DIRECTORY_SEPARATOR .$name;
+        Image::make($request->input('screen'))->save(public_path('screen'.DIRECTORY_SEPARATOR ).$name);
+        if(empty($domain->screen()->get()->toArray())){
+            $domain_screen = new ImageUploads();
+            $domain_screen->domain()->associate($domain);
+            $domain_screen->image_path  = 'screen'.DIRECTORY_SEPARATOR.$name;
+            $domain_screen->save();
         } else {
-            if($domain->screen != Null || $domain->logo != ''){
-                $domain->screen = $domain->screen;
-            } else {
-                $domain->screen = 'screen'.DIRECTORY_SEPARATOR .'tmp.jpg';
-            }
+            $domain_screen = ImageUploads::where('domain_id', '=', $domain->id)->first();
+            $domain_screen->image_path  = 'screen'.DIRECTORY_SEPARATOR.$name;
+            $domain_screen->save();
         }
 
-
-        if($domain->save()){
-            return  new DomainResource($domain);
-        }*/
+        return json_encode([$storeType => 'success']);
 
     }
 }
