@@ -11,21 +11,22 @@
                 <div class="uk-margin">
                     <div class="uk-card uk-card-default uk-card-body" data-uk-height-viewport="expand: true">
                         <div class="uk-card uk-card-primary uk-text-center uk-width-large uk-margin-auto uk-padding">
-                            <div class="uk-h2">
+                            <div class="uk-h2 uk-margin">
                                 Welcome
                             </div>
-                            <div class="uk-margin">
+                            <div>
                                 @if (session('status'))
                                     <div class="alert alert-success" role="alert">
                                         {{ session('status') }}
                                     </div>
                                 @endif
                                 You are logged in!
-                                    <domains></domains>
                             </div>
                         </div>
+                        <div class="uk-margin">
+                            <domains></domains>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>

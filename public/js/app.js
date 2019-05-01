@@ -182,28 +182,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
   data: function data() {
@@ -981,14 +959,10 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", { attrs: { id: "domain-editor" } }, [
-        _vm._v("\n        domains\n    ")
-      ]),
-      _vm._v(" "),
       _c(
         "form",
         {
-          staticClass: "mb-3",
+          staticClass: "uk-form",
           on: {
             submit: function($event) {
               $event.preventDefault()
@@ -997,242 +971,219 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.domain.name,
-                        expression: "domain.name"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "domain name" },
-                    domProps: { value: _vm.domain.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.domain, "name", $event.target.value)
-                      }
+          _c(
+            "div",
+            {
+              staticClass: "uk-grid-small uk-child-width-1-2@s",
+              attrs: { "data-uk-grid": "" }
+            },
+            [
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.domain.name,
+                      expression: "domain.name"
                     }
-                  })
-                ])
+                  ],
+                  staticClass: "uk-input",
+                  attrs: { type: "text", placeholder: "domain name" },
+                  domProps: { value: _vm.domain.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.domain, "name", $event.target.value)
+                    }
+                  }
+                })
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.domain.link,
-                        expression: "domain.link"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "domain link" },
-                    domProps: { value: _vm.domain.link },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.domain, "link", $event.target.value)
-                      }
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.domain.link,
+                      expression: "domain.link"
                     }
-                  })
-                ])
+                  ],
+                  staticClass: "uk-input",
+                  attrs: { type: "text", placeholder: "domain link" },
+                  domProps: { value: _vm.domain.link },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.domain, "link", $event.target.value)
+                    }
+                  }
+                })
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.domain.hosting_name,
-                        expression: "domain.hosting_name"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "domain domaining_name"
-                    },
-                    domProps: { value: _vm.domain.hosting_name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.domain,
-                          "hosting_name",
-                          $event.target.value
-                        )
-                      }
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.domain.hosting_name,
+                      expression: "domain.hosting_name"
                     }
-                  })
-                ])
+                  ],
+                  staticClass: "uk-input",
+                  attrs: { type: "text", placeholder: "domain domaining_name" },
+                  domProps: { value: _vm.domain.hosting_name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.domain, "hosting_name", $event.target.value)
+                    }
+                  }
+                })
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.domain.hosting_link,
-                        expression: "domain.hosting_link"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "domain domaining_link"
-                    },
-                    domProps: { value: _vm.domain.hosting_link },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.domain,
-                          "hosting_link",
-                          $event.target.value
-                        )
-                      }
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.domain.hosting_link,
+                      expression: "domain.hosting_link"
                     }
-                  })
-                ])
+                  ],
+                  staticClass: "uk-input",
+                  attrs: { type: "text", placeholder: "domain domaining_link" },
+                  domProps: { value: _vm.domain.hosting_link },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.domain, "hosting_link", $event.target.value)
+                    }
+                  }
+                })
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "row" },
-                _vm._l(_vm.types, function(type) {
-                  return _c("div", { staticClass: "radio" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.domainType,
-                          expression: "domainType"
-                        }
-                      ],
-                      attrs: { type: "radio" },
-                      domProps: {
-                        value: type,
-                        checked: _vm._q(_vm.domainType, type)
-                      },
-                      on: {
-                        click: _vm.typeChange,
-                        change: function($event) {
-                          _vm.domainType = type
-                        }
-                      }
-                    })
-                  ])
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.domain.login,
-                        expression: "domain.login"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "domain login" },
-                    domProps: { value: _vm.domain.login },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.domain, "login", $event.target.value)
-                      }
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.domain.login,
+                      expression: "domain.login"
                     }
-                  })
-                ])
+                  ],
+                  staticClass: "uk-input",
+                  attrs: { type: "text", placeholder: "domain login" },
+                  domProps: { value: _vm.domain.login },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.domain, "login", $event.target.value)
+                    }
+                  }
+                })
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.domain.password,
-                        expression: "domain.password"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "domain password" },
-                    domProps: { value: _vm.domain.password },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.domain, "password", $event.target.value)
-                      }
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.domain.password,
+                      expression: "domain.password"
                     }
-                  })
-                ])
+                  ],
+                  staticClass: "uk-input",
+                  attrs: { type: "text", placeholder: "domain password" },
+                  domProps: { value: _vm.domain.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.domain, "password", $event.target.value)
+                    }
+                  }
+                })
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.domain.description,
-                        expression: "domain.description"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "domain description" },
-                    domProps: { value: _vm.domain.description },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.domain, "description", $event.target.value)
-                      }
+              _c("div", [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.domain.description,
+                      expression: "domain.description"
                     }
-                  }),
-                  _vm._v(">\n                    ")
-                ])
+                  ],
+                  staticClass: "uk-input",
+                  attrs: { type: "text", placeholder: "domain description" },
+                  domProps: { value: _vm.domain.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.domain, "description", $event.target.value)
+                    }
+                  }
+                })
               ])
-            ])
-          ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "uk-margin" },
+            _vm._l(_vm.types, function(type) {
+              return _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.domainType,
+                      expression: "domainType"
+                    }
+                  ],
+                  staticClass: "uk-radio",
+                  attrs: { type: "radio" },
+                  domProps: {
+                    value: type,
+                    checked: _vm._q(_vm.domainType, type)
+                  },
+                  on: {
+                    click: _vm.typeChange,
+                    change: function($event) {
+                      _vm.domainType = type
+                    }
+                  }
+                })
+              ])
+            }),
+            0
+          ),
           _vm._v(" "),
           _c(
             "button",
             {
-              staticClass: "btn btn-light btn-block",
+              staticClass: "uk-button uk-button-primary",
               attrs: { type: "submit" }
             },
             [_vm._v("Save")]
@@ -1249,163 +1200,163 @@ var render = function() {
           }
         },
         [
-          _c("ul", { staticClass: "pagination" }, [
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.prev_page_url }]
-              },
-              [
+          _c(
+            "ul",
+            {
+              staticClass: "uk-pagination uk-flex-center",
+              attrs: { "data-uk-margin": "" }
+            },
+            [
+              _c(
+                "li",
+                { class: [{ disabled: !_vm.pagination.prev_page_url }] },
+                [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          return _vm.fetchDomains(_vm.pagination.prev_page_url)
+                        }
+                      }
+                    },
+                    [_c("span", { attrs: { "uk-pagination-previous": "" } })]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c("li", { staticClass: "page-item disabled" }, [
                 _c(
                   "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.fetchDomains(_vm.pagination.prev_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Previous")]
+                  { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                  [
+                    _vm._v(
+                      "Page " +
+                        _vm._s(_vm.pagination.current_page) +
+                        " of " +
+                        _vm._s(_vm.pagination.last_page)
+                    )
+                  ]
                 )
-              ]
-            ),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item disabled" }, [
+              ]),
+              _vm._v(" "),
               _c(
-                "a",
-                { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                "li",
+                { class: [{ disabled: !_vm.pagination.next_page_url }] },
                 [
-                  _vm._v(
-                    "Page " +
-                      _vm._s(_vm.pagination.current_page) +
-                      " of " +
-                      _vm._s(_vm.pagination.last_page)
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          return _vm.fetchDomains(_vm.pagination.next_page_url)
+                        }
+                      }
+                    },
+                    [_c("span", { attrs: { "uk-pagination-next": "" } })]
                   )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.next_page_url }]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.fetchDomains(_vm.pagination.next_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Next")]
-                )
-              ]
-            )
-          ])
+            ]
+          )
         ]
       ),
       _vm._v(" "),
       _vm._l(_vm.domains, function(domain) {
-        return _c(
-          "div",
-          { key: domain.id, staticClass: "card card-body mb-2" },
-          [
-            _c("div", { staticClass: "row" }, [
-              _c("h3", [_vm._v(_vm._s(domain.id))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("h3", [_vm._v(_vm._s(domain.name))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("h4", [_vm._v(_vm._s(domain.link))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("h4", [_vm._v(_vm._s(domain.domaining_name))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("h4", [_vm._v(_vm._s(domain.domaining_link))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("h4", [_vm._v(_vm._s(domain.type))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("h4", [_vm._v(_vm._s(domain.login))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("h4", [_vm._v(_vm._s(domain.password))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("p", [_vm._v(_vm._s(domain.description))])
-            ]),
-            _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                directives: [
-                  {
-                    name: "scroll-to",
-                    rawName: "v-scroll-to",
-                    value: { el: "#domain-editor" },
-                    expression: "{ el: '#domain-editor' }"
-                  }
-                ],
-                staticClass: "btn btn-warning mb-2",
-                on: {
-                  click: function($event) {
-                    return _vm.editdomain(domain)
-                  }
+        return _c("div", { key: domain.id }, [
+          _c("div", {}, [_c("h3", [_vm._v(_vm._s(domain.id))])]),
+          _vm._v(" "),
+          _c("div", {}, [_c("h3", [_vm._v(_vm._s(domain.name))])]),
+          _vm._v(" "),
+          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.link))])]),
+          _vm._v(" "),
+          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.domaining_name))])]),
+          _vm._v(" "),
+          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.domaining_link))])]),
+          _vm._v(" "),
+          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.type))])]),
+          _vm._v(" "),
+          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.login))])]),
+          _vm._v(" "),
+          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.password))])]),
+          _vm._v(" "),
+          _c("div", {}, [_c("p", [_vm._v(_vm._s(domain.description))])]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              directives: [
+                {
+                  name: "scroll-to",
+                  rawName: "v-scroll-to",
+                  value: { el: "#domain-editor" },
+                  expression: "{ el: '#domain-editor' }"
                 }
-              },
-              [_vm._v("edit")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                directives: [
-                  {
-                    name: "scroll-to",
-                    rawName: "v-scroll-to",
-                    value: { el: "#page-navigation" },
-                    expression: "{el : '#page-navigation'}"
-                  }
-                ],
-                staticClass: "btn btn-danger",
-                on: {
-                  click: function($event) {
-                    return _vm.deleteDomain(domain.id)
-                  }
+              ],
+              on: {
+                click: function($event) {
+                  return _vm.editdomain(domain)
                 }
-              },
-              [_vm._v("delete")]
-            )
-          ]
-        )
+              }
+            },
+            [_vm._v("edit")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              directives: [
+                {
+                  name: "scroll-to",
+                  rawName: "v-scroll-to",
+                  value: { el: "#page-navigation" },
+                  expression: "{el : '#page-navigation'}"
+                }
+              ],
+              on: {
+                click: function($event) {
+                  return _vm.deleteDomain(domain.id)
+                }
+              }
+            },
+            [_vm._v("delete")]
+          )
+        ])
       })
     ],
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("1")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("2")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("3")])])
+  }
+]
 render._withStripped = true
 
 
@@ -14287,8 +14238,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\less\style.less */"./resources/less/style.less");
+__webpack_require__(/*! D:\OSPanel\domains\tester\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\OSPanel\domains\tester\resources\less\style.less */"./resources/less/style.less");
 
 
 /***/ })

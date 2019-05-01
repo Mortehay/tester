@@ -1,106 +1,84 @@
 <template>
     <div>
-        <h2  id="domain-editor">
-            domains
-        </h2>
-        <form @submit.prevent="addDomain" class="mb-3">
-
-
-            <div class="form-group">
-
-                <div class="card-body">
-                    <div class="row">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="domain name" v-model="domain.name">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="domain link" v-model="domain.link">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="domain domaining_name" v-model="domain.hosting_name">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="domain domaining_link" v-model="domain.hosting_link">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="radio" v-for="type in types">
-                            <input v-on:click="typeChange" type="radio" :value="type"  v-model="domainType" >
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="domain login" v-model="domain.login">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="domain password" v-model="domain.password">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <textarea type="text" class="form-control" placeholder="domain description" v-model="domain.description"></textarea>>
-                        </div>
-                    </div>
-
-
+        <form @submit.prevent="addDomain" class="uk-form">
+            <div class="uk-grid-small uk-child-width-1-2@s" data-uk-grid>
+                <div>
+                    <input type="text" class="uk-input" placeholder="domain name" v-model="domain.name">
+                </div>
+                <div>
+                     <input type="text" class="uk-input" placeholder="domain link" v-model="domain.link">
+                </div>
+                <div>
+                     <input type="text" class="uk-input" placeholder="domain domaining_name" v-model="domain.hosting_name">
+                </div>
+                <div>
+                    <input type="text" class="uk-input" placeholder="domain domaining_link" v-model="domain.hosting_link">
+                </div>
+                <div>
+                    <input type="text" class="uk-input" placeholder="domain login" v-model="domain.login">
+                </div>
+                <div>
+                    <input type="text" class="uk-input" placeholder="domain password" v-model="domain.password">
+                </div>
+                <div>
+                     <textarea type="text" class="uk-input" placeholder="domain description" v-model="domain.description"></textarea>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-light btn-block">Save</button>
+            <div class="uk-margin">
+                <div v-for="type in types">
+                    <input v-on:click="typeChange" type="radio" class="uk-radio" :value="type"  v-model="domainType" >
+                </div>
+            </div>
+            <button type="submit" class="uk-button uk-button-primary">Save</button>
         </form>
         <nav aria-label="Page navigation example" id="page-navigation">
-            <ul class="pagination">
-                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-                    <a class="page-link" href="#" @click="fetchDomains(pagination.prev_page_url)">Previous</a>
+            <ul class="uk-pagination uk-flex-center" data-uk-margin>
+                <li v-bind:class="[{disabled: !pagination.prev_page_url}]">
+                    <a href="#" @click="fetchDomains(pagination.prev_page_url)"><span uk-pagination-previous></span></a>
                 </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
                 <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{pagination.current_page}} of {{pagination.last_page}}</a></li>
-                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-                    <a class="page-link" href="#" @click="fetchDomains(pagination.next_page_url)">Next</a>
+                <li v-bind:class="[{disabled: !pagination.next_page_url}]">
+                    <a href="#" @click="fetchDomains(pagination.next_page_url)"><span uk-pagination-next></span></a>
                 </li>
             </ul>
         </nav>
 
-        <div class="card card-body mb-2" v-for="domain in domains" v-bind:key="domain.id">
-            <div class="row">
+        <div class="" v-for="domain in domains" v-bind:key="domain.id">
+            <div class="">
                 <h3>{{ domain.id }}</h3>
             </div>
-            <div class="row">
+            <div class="">
                 <h3>{{ domain.name }}</h3>
             </div>
-            <div class="row">
+            <div class="">
                 <h4>{{ domain.link }}</h4>
             </div>
-            <div class="row">
+            <div class="">
                 <h4>{{ domain.domaining_name }}</h4>
             </div>
-            <div class="row">
+            <div class="">
                 <h4>{{ domain.domaining_link }}</h4>
             </div>
-            <div class="row">
+            <div class="">
                 <h4>{{ domain.type }}</h4>
             </div>
-            <div class="row">
+            <div class="">
                 <h4>{{ domain.login }}</h4>
             </div>
-            <div class="row">
+            <div class="">
                 <h4>{{ domain.password }}</h4>
             </div>
-            <div class="row">
+            <div class="">
                 <p>{{ domain.description }}</p>
             </div>
 
             <hr>
-            <!--<button @click="goToEmployees(domain)" class="btn btn-primary mb-2">Employees</button>-->
-            <button @click="editdomain(domain)" class="btn btn-warning mb-2" v-scroll-to="{ el: '#domain-editor' }">edit</button>
-            <button @click="deleteDomain(domain.id)" class="btn btn-danger" v-scroll-to="{el : '#page-navigation'}">delete</button>
+            <!--<button @click="goToEmployees(domain)" class="">Employees</button>-->
+            <button @click="editdomain(domain)" class="" v-scroll-to="{ el: '#domain-editor' }">edit</button>
+            <button @click="deleteDomain(domain.id)" class="" v-scroll-to="{el : '#page-navigation'}">delete</button>
 
         </div>
     </div>

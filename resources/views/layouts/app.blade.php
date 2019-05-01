@@ -20,9 +20,7 @@
                         </a>
                     </div>
                     <div class="uk-navbar-right">
-
-                            <lang-switcher></lang-switcher>
-
+                        <lang-switcher></lang-switcher>
                         @if(!Auth::guest())
                             @include('layouts.login_menu')
                         @endif
