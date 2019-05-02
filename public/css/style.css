@@ -37,6 +37,20 @@
   transition: 0.3s ease-in-out;
   transition-property: right;
 }
+.tm-margin-xsmall-right {
+  margin-right: 5px;
+}
+.tm-margin-xsmall-left {
+  margin-left: 5px;
+}
+.uk-label-success {
+  background-color: #32d296 !important;
+  color: #fff !important;
+}
+.uk-label-danger {
+  background-color: #f0506e !important;
+  color: #fff !important;
+}
 /* iphone ----------- */
 @media only screen and (max-width: 767px) {
   .uk-navbar-container > .uk-container .uk-navbar-right {
