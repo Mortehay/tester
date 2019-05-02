@@ -12,7 +12,6 @@
                 </div>
                 <div class="uk-width-auto">
                     <a href="#" class="uk-icon-link" data-uk-icon="icon: cog;ratio: 0.8" data-uk-tooltip="Edit"></a>
-                    <a href="#" class="uk-icon-link" data-uk-icon="icon: list;ratio: 0.8" data-uk-tooltip="History"></a>
                     <a href="#" class="uk-icon-link uk-text-danger" data-uk-icon="icon: trash;ratio: 0.8" data-uk-tooltip="Delete"></a>
                 </div>
             </div>
@@ -26,7 +25,6 @@
                 </div>
                 <div class="uk-width-auto">
                     <a href="#" class="uk-icon-link" data-uk-icon="icon: cog;ratio: 0.8" data-uk-tooltip="Edit"></a>
-                    <a href="#" class="uk-icon-link" data-uk-icon="icon: list;ratio: 0.8" data-uk-tooltip="History"></a>
                     <a href="#" class="uk-icon-link uk-text-danger" data-uk-icon="icon: trash;ratio: 0.8" data-uk-tooltip="Delete"></a>
                 </div>
             </div>
