@@ -20,44 +20,42 @@
                 <div>
                     <input type="text" class="uk-input" placeholder="domain password" v-model="domain.password">
                 </div>
-                <div>
+                <div class="uk-width-1-1">
                      <textarea type="text" class="uk-input" placeholder="domain description" v-model="domain.description"></textarea>
                 </div>
             </div>
-            <div class="uk-margin">
+            <div class="uk-grid-small uk-child-width-auto uk-grid">
                 <div v-for="type in types">
-                    <label>{{type.name}}
-                        <input v-on:click="typeChange" type="radio" class="uk-radio" :value="type.code"  v-model="domainType" >
+                    <label>
+                        <input v-on:click="typeChange" type="radio" class="uk-radio" :value="type.code"  v-model="domainType" > {{type.name}}
                     </label>
                 </div>
             </div>
             <div class="uk-margin">
-                <div class="uk-grid-small uk-child-width-1-2@s">
-                    <div v-if="domain.screen">
-                        <img :src="domain.screen" class="img-responsive" height="70" width="90">
-                    </div>
-                    <div>
-                        <input type="file" class="" @change="screenChanged"></input>
-                    </div>
+                <div class="uk-margin" v-if="domain.screen">
+                    <img :src="domain.screen" class="img-responsive" height="70" width="90">
                 </div>
-
+                <div uk-form-custom="target: true">
+                    <input type="file" @change="screenChanged">
+                    <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
+                </div>
             </div>
             <button type="submit" class="uk-button uk-button-primary">Save</button>
         </form>
-        <nav aria-label="Page navigation example" id="page-navigation">
-            <ul class="uk-pagination uk-flex-center" data-uk-margin>
-                <li v-bind:class="[{disabled: !pagination.prev_page_url}]">
-                    <a href="#" @click="fetchDomains(pagination.prev_page_url)"><span uk-pagination-previous></span></a>
-                </li>
-                <!--<li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>-->
-                <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{pagination.current_page}} of {{pagination.last_page}}</a></li>
-                <li v-bind:class="[{disabled: !pagination.next_page_url}]">
-                    <a href="#" @click="fetchDomains(pagination.next_page_url)"><span uk-pagination-next></span></a>
-                </li>
-            </ul>
-        </nav>
+        <div class="uk-margin">
+            <nav aria-label="Page navigation example" id="page-navigation">
+                <ul class="uk-pagination uk-flex-center" data-uk-margin>
+                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]">
+                        <a href="#" @click="fetchDomains(pagination.prev_page_url)"><span uk-pagination-previous></span></a>
+                    </li>
+                    <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{pagination.current_page}} of {{pagination.last_page}}</a></li>
+                    <li v-bind:class="[{disabled: !pagination.next_page_url}]">
+                        <a href="#" @click="fetchDomains(pagination.next_page_url)"><span uk-pagination-next></span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
 
         <div class="" v-for="domain in domains" v-bind:key="domain.id">
             <div class="">

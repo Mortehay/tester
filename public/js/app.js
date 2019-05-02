@@ -195,8 +195,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
   data: function data() {
@@ -1175,7 +1173,7 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _c("div", [
+              _c("div", { staticClass: "uk-width-1-1" }, [
                 _c("textarea", {
                   directives: [
                     {
@@ -1203,11 +1201,10 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "uk-margin" },
+            { staticClass: "uk-grid-small uk-child-width-auto uk-grid" },
             _vm._l(_vm.types, function(type) {
               return _c("div", [
                 _c("label", [
-                  _vm._v(_vm._s(type.name) + "\n                    "),
                   _c("input", {
                     directives: [
                       {
@@ -1229,7 +1226,8 @@ var render = function() {
                         _vm.domainType = type.code
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" " + _vm._s(type.name) + "\n                ")
                 ])
               ])
             }),
@@ -1237,26 +1235,29 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "uk-margin" }, [
-            _c("div", { staticClass: "uk-grid-small uk-child-width-1-2@s" }, [
-              _vm.domain.screen
-                ? _c("div", [
-                    _c("img", {
-                      staticClass: "img-responsive",
-                      attrs: {
-                        src: _vm.domain.screen,
-                        height: "70",
-                        width: "90"
-                      }
-                    })
-                  ])
-                : _vm._e(),
+            _vm.domain.screen
+              ? _c("div", { staticClass: "uk-margin" }, [
+                  _c("img", {
+                    staticClass: "img-responsive",
+                    attrs: { src: _vm.domain.screen, height: "70", width: "90" }
+                  })
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { attrs: { "uk-form-custom": "target: true" } }, [
+              _c("input", {
+                attrs: { type: "file" },
+                on: { change: _vm.screenChanged }
+              }),
               _vm._v(" "),
-              _c("div", [
-                _c("input", {
-                  attrs: { type: "file" },
-                  on: { change: _vm.screenChanged }
-                })
-              ])
+              _c("input", {
+                staticClass: "uk-input uk-form-width-medium",
+                attrs: {
+                  type: "text",
+                  placeholder: "Select file",
+                  disabled: ""
+                }
+              })
             ])
           ]),
           _vm._v(" "),
@@ -1271,78 +1272,87 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c(
-        "nav",
-        {
-          attrs: {
-            "aria-label": "Page navigation example",
-            id: "page-navigation"
-          }
-        },
-        [
-          _c(
-            "ul",
-            {
-              staticClass: "uk-pagination uk-flex-center",
-              attrs: { "data-uk-margin": "" }
-            },
-            [
-              _c(
-                "li",
-                { class: [{ disabled: !_vm.pagination.prev_page_url }] },
-                [
+      _c("div", { staticClass: "uk-margin" }, [
+        _c(
+          "nav",
+          {
+            attrs: {
+              "aria-label": "Page navigation example",
+              id: "page-navigation"
+            }
+          },
+          [
+            _c(
+              "ul",
+              {
+                staticClass: "uk-pagination uk-flex-center",
+                attrs: { "data-uk-margin": "" }
+              },
+              [
+                _c(
+                  "li",
+                  { class: [{ disabled: !_vm.pagination.prev_page_url }] },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.fetchDomains(
+                              _vm.pagination.prev_page_url
+                            )
+                          }
+                        }
+                      },
+                      [_c("span", { attrs: { "uk-pagination-previous": "" } })]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("li", { staticClass: "page-item disabled" }, [
                   _c(
                     "a",
                     {
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          return _vm.fetchDomains(_vm.pagination.prev_page_url)
-                        }
-                      }
+                      staticClass: "page-link text-dark",
+                      attrs: { href: "#" }
                     },
-                    [_c("span", { attrs: { "uk-pagination-previous": "" } })]
+                    [
+                      _vm._v(
+                        "Page " +
+                          _vm._s(_vm.pagination.current_page) +
+                          " of " +
+                          _vm._s(_vm.pagination.last_page)
+                      )
+                    ]
                   )
-                ]
-              ),
-              _vm._v(" "),
-              _c("li", { staticClass: "page-item disabled" }, [
+                ]),
+                _vm._v(" "),
                 _c(
-                  "a",
-                  { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                  "li",
+                  { class: [{ disabled: !_vm.pagination.next_page_url }] },
                   [
-                    _vm._v(
-                      "Page " +
-                        _vm._s(_vm.pagination.current_page) +
-                        " of " +
-                        _vm._s(_vm.pagination.last_page)
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.fetchDomains(
+                              _vm.pagination.next_page_url
+                            )
+                          }
+                        }
+                      },
+                      [_c("span", { attrs: { "uk-pagination-next": "" } })]
                     )
                   ]
                 )
-              ]),
-              _vm._v(" "),
-              _c(
-                "li",
-                { class: [{ disabled: !_vm.pagination.next_page_url }] },
-                [
-                  _c(
-                    "a",
-                    {
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          return _vm.fetchDomains(_vm.pagination.next_page_url)
-                        }
-                      }
-                    },
-                    [_c("span", { attrs: { "uk-pagination-next": "" } })]
-                  )
-                ]
-              )
-            ]
-          )
-        ]
-      ),
+              ]
+            )
+          ]
+        )
+      ]),
       _vm._v(" "),
       _vm._l(_vm.domains, function(domain) {
         return _c("div", { key: domain.id }, [
