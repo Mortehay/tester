@@ -58,41 +58,51 @@
 
 
         <div class="" v-for="domain in domains" v-bind:key="domain.id">
-            <div class="">
-                <h3>{{ domain.id }}</h3>
-            </div>
-            <div class="">
-                <h3>{{ domain.name }}</h3>
-            </div>
-            <div class="">
-                <h4>{{ domain.link }}</h4>
-            </div>
-            <div class="">
-                <h4>{{ domain.domaining_name }}</h4>
-            </div>
-            <div class="">
-                <h4>{{ domain.domaining_link }}</h4>
-            </div>
-            <div class="">
-                <h4>{{ domain.type }}</h4>
-            </div>
-            <div class="">
-                <h4>{{ domain.login }}</h4>
-            </div>
-            <div class="">
-                <h4>{{ domain.password }}</h4>
-            </div>
-            <div class="">
-                <p>{{ domain.description }}</p>
+            <div class="uk-margin">
+                <div data-uk-grid>
+                    <div class="uk-width-1-3@m">
+                        <a class="uk-cover-container uk-transition-toggle uk-display-block uk-link-reset" :href="domain.link" target="_blank">
+                            <img :src="domain.screen !== null ? location + '/' +domain.screen.image_path : ''" >
+                            <div class="uk-overlay-primary uk-transition-fade uk-position-cover"></div>
+                            <div class="uk-position-center">
+                                <div class="uk-overlay uk-transition-fade uk-light">
+                                    Visit web-site
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="uk-width-2-3@m">
+                        <div class="uk-flex-middle uk-grid-small" data-uk-grid>
+                            <div class="uk-text-bold uk-h4">
+                                <a class="uk-link-reset" :href="domain.link" target="_blank">
+                                    {{ domain.id }}. {{ domain.name }}
+                                </a>
+                            </div>
+                            <div><a class="uk-link-muted" href="#" target="_blank">({{ domain.type }})</a></div>
+                        </div>
+                        <div class="uk-text-meta">
+                            Additional domains: <a :href="domain.domaining_link" class="uk-link-muted" target="_blank">{{ domain.domaining_name }}</a>
+                        </div>
+                        <div class="uk-margin">
+                            <div class="uk-child-width-1-1 uk-grid-collapse" data-uk-grid>
+                                <div>
+                                    Login: {{ domain.login }}
+                                </div>
+                                <div>
+                                    Password: {{ domain.password }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            {{ domain.description }}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div>
-                <img style="width:100px;" :src="domain.screen !== null ? location + '/' +domain.screen.image_path : ''" >
+                <button @click="editdomain(domain)" class="uk-button uk-button-primary" v-scroll-to="{ el: '#domain-editor', offset: -70, }">edit</button>
+                <button @click="deleteDomain(domain.id)" class="uk-button uk-button-danger" v-scroll-to="{el : '#page-navigation'}">delete</button>
             </div>
-            <hr>
-            <!--<button @click="goToEmployees(domain)" class="">Employees</button>-->
-            <button @click="editdomain(domain)" class="" v-scroll-to="{ el: '#domain-editor', offset: -70, }">edit</button>
-            <button @click="deleteDomain(domain.id)" class="" v-scroll-to="{el : '#page-navigation'}">delete</button>
-
         </div>
     </div>
 

@@ -195,6 +195,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
   data: function data() {
@@ -1356,84 +1366,189 @@ var render = function() {
       _vm._v(" "),
       _vm._l(_vm.domains, function(domain) {
         return _c("div", { key: domain.id }, [
-          _c("div", {}, [_c("h3", [_vm._v(_vm._s(domain.id))])]),
-          _vm._v(" "),
-          _c("div", {}, [_c("h3", [_vm._v(_vm._s(domain.name))])]),
-          _vm._v(" "),
-          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.link))])]),
-          _vm._v(" "),
-          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.domaining_name))])]),
-          _vm._v(" "),
-          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.domaining_link))])]),
-          _vm._v(" "),
-          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.type))])]),
-          _vm._v(" "),
-          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.login))])]),
-          _vm._v(" "),
-          _c("div", {}, [_c("h4", [_vm._v(_vm._s(domain.password))])]),
-          _vm._v(" "),
-          _c("div", {}, [_c("p", [_vm._v(_vm._s(domain.description))])]),
-          _vm._v(" "),
-          _c("div", [
-            _c("img", {
-              staticStyle: { width: "100px" },
-              attrs: {
-                src:
-                  domain.screen !== null
-                    ? _vm.location + "/" + domain.screen.image_path
-                    : ""
-              }
-            })
+          _c("div", { staticClass: "uk-margin" }, [
+            _c("div", { attrs: { "data-uk-grid": "" } }, [
+              _c("div", { staticClass: "uk-width-1-3@m" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "uk-cover-container uk-transition-toggle uk-display-block uk-link-reset",
+                    attrs: { href: domain.link, target: "_blank" }
+                  },
+                  [
+                    _c("img", {
+                      attrs: {
+                        src:
+                          domain.screen !== null
+                            ? _vm.location + "/" + domain.screen.image_path
+                            : ""
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass:
+                        "uk-overlay-primary uk-transition-fade uk-position-cover"
+                    }),
+                    _vm._v(" "),
+                    _vm._m(0, true)
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-2-3@m" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "uk-flex-middle uk-grid-small",
+                    attrs: { "data-uk-grid": "" }
+                  },
+                  [
+                    _c("div", { staticClass: "uk-text-bold uk-h4" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "uk-link-reset",
+                          attrs: { href: domain.link, target: "_blank" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(domain.id) +
+                              ". " +
+                              _vm._s(domain.name) +
+                              "\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "uk-link-muted",
+                          attrs: { href: "#", target: "_blank" }
+                        },
+                        [_vm._v("(" + _vm._s(domain.type) + ")")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-text-meta" }, [
+                  _vm._v("\n                        Additional domains: "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "uk-link-muted",
+                      attrs: { href: domain.domaining_link, target: "_blank" }
+                    },
+                    [_vm._v(_vm._s(domain.domaining_name))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "uk-child-width-1-1 uk-grid-collapse",
+                      attrs: { "data-uk-grid": "" }
+                    },
+                    [
+                      _c("div", [
+                        _vm._v(
+                          "\n                                Login: " +
+                            _vm._s(domain.login) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _vm._v(
+                          "\n                                Password: " +
+                            _vm._s(domain.password) +
+                            "\n                            "
+                        )
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(domain.description) +
+                      "\n                    "
+                  )
+                ])
+              ])
+            ])
           ]),
           _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              directives: [
-                {
-                  name: "scroll-to",
-                  rawName: "v-scroll-to",
-                  value: { el: "#domain-editor", offset: -70 },
-                  expression: "{ el: '#domain-editor', offset: -70, }"
+          _c("div", [
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "scroll-to",
+                    rawName: "v-scroll-to",
+                    value: { el: "#domain-editor", offset: -70 },
+                    expression: "{ el: '#domain-editor', offset: -70, }"
+                  }
+                ],
+                staticClass: "uk-button uk-button-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.editdomain(domain)
+                  }
                 }
-              ],
-              on: {
-                click: function($event) {
-                  return _vm.editdomain(domain)
+              },
+              [_vm._v("edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "scroll-to",
+                    rawName: "v-scroll-to",
+                    value: { el: "#page-navigation" },
+                    expression: "{el : '#page-navigation'}"
+                  }
+                ],
+                staticClass: "uk-button uk-button-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteDomain(domain.id)
+                  }
                 }
-              }
-            },
-            [_vm._v("edit")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              directives: [
-                {
-                  name: "scroll-to",
-                  rawName: "v-scroll-to",
-                  value: { el: "#page-navigation" },
-                  expression: "{el : '#page-navigation'}"
-                }
-              ],
-              on: {
-                click: function($event) {
-                  return _vm.deleteDomain(domain.id)
-                }
-              }
-            },
-            [_vm._v("delete")]
-          )
+              },
+              [_vm._v("delete")]
+            )
+          ])
         ])
       })
     ],
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-position-center" }, [
+      _c("div", { staticClass: "uk-overlay uk-transition-fade uk-light" }, [
+        _vm._v(
+          "\n                                Visit web-site\n                            "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
