@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\AddDomain;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Domain;
@@ -31,10 +32,10 @@ class DomainController extends Controller
         if($request->isMethod('put')){
             $domain = Domain::findOrFail($request->domain_id);
             $domain->id = $request->input('domain_id');
-            $storeType = 'update';
+            $operationType = 'update';
         } else {
             $domain = new Domain;
-            $storeType = 'new';
+            $operationType = 'new';
         }
         $domain->name = $request->input('name');
         $domain->link = $request->input('link');
@@ -62,7 +63,17 @@ class DomainController extends Controller
             $domain_screen->save();
         }
 
-        return json_encode([$storeType => 'success']);
+        return json_encode([$operationType => 'success']);
+    }
+    public function destroy($id)
+    {
+        //destroy a single domain
+        $operationType = 'destroy';
+        $domain = Domain::findOrFail($id);
+        $domainId = $domain->id;
+        $deleteAddDomain = AddDomain::where('domain_id', '=', $domainId)->delete();
+        $domain->delete();
 
+        return json_encode([$operationType => 'success', 'domein' => $domainId]);
     }
 }

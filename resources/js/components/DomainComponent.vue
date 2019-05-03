@@ -141,6 +141,7 @@
                     description: '',
                     screen: '',
                     image: '',
+                    addDomain: [],
                 },
                 domain_id: '',
                 pagination: {},
@@ -154,23 +155,6 @@
         },
         methods:{
 
-
-            /*logoChanged(e){
-                if(e.target.files[0] !== undefined){
-                    if(this.validationErrors.logo != undefined) this.validationErrors.logo = false;
-                    console.log(e.target.files[0]);
-                    let fileReader = new FileReader();
-                    fileReader.readAsDataURL(e.target.files[0]);
-                    fileReader.onload = (e) => {
-                        this.domain.image = e.target.result
-                    }
-                    this.domain.logo = true;
-                } else {
-                    this.domain.image = false;
-                }
-
-                console.log(this.domain);
-            },*/
             screenChanged(e){
                 if(e.target.files[0] !== undefined){
                     console.log(e.target.files[0]);
@@ -216,7 +200,7 @@
             },
             deleteDomain(id){
                 if(confirm('are you sure?')){
-                    fetch(`/api/domains/${id}`,{method:'delete'})
+                    fetch(`/api/domain/${id}`,{method:'delete'})
                         .then(res => res.json())
                         .then(data => {
                             alert('domain removed');
@@ -248,6 +232,7 @@
                             this.domain.password = '';
                             this.domain.description = '';
                             this.domain.screen = '',
+                            this.domain.addDomain = [],
                             alert('domain added');
                             this.fetchDomains();
                             this.$scrollTo('#page-navigation');
@@ -280,6 +265,7 @@
                                 password: '',
                                 description: '',
                                 screen:'',
+                                addDomain:[],
                             };
                             alert('domain updated');
                             this.fetchDomains();
@@ -304,6 +290,7 @@
                 this.domain.login = domain.login;
                 this.domain.password = domain.password;
                 this.domain.description = domain.description;
+                this.domain.addDomain = domain.addDomain;
 
 
             },

@@ -233,7 +233,8 @@ __webpack_require__.r(__webpack_exports__);
         password: '',
         description: '',
         screen: '',
-        image: ''
+        image: '',
+        addDomain: []
       },
       domain_id: '',
       pagination: {},
@@ -245,21 +246,6 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchDomains();
   },
   methods: {
-    /*logoChanged(e){
-        if(e.target.files[0] !== undefined){
-            if(this.validationErrors.logo != undefined) this.validationErrors.logo = false;
-            console.log(e.target.files[0]);
-            let fileReader = new FileReader();
-            fileReader.readAsDataURL(e.target.files[0]);
-            fileReader.onload = (e) => {
-                this.domain.image = e.target.result
-            }
-            this.domain.logo = true;
-        } else {
-            this.domain.image = false;
-        }
-         console.log(this.domain);
-    },*/
     screenChanged: function screenChanged(e) {
       var _this = this;
 
@@ -311,7 +297,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       if (confirm('are you sure?')) {
-        fetch("/api/domains/".concat(id), {
+        fetch("/api/domain/".concat(id), {
           method: 'delete'
         }).then(function (res) {
           return res.json();
@@ -348,7 +334,7 @@ __webpack_require__.r(__webpack_exports__);
           _this4.domain.login = '';
           _this4.domain.password = '';
           _this4.domain.description = '';
-          _this4.domain.screen = '', alert('domain added');
+          _this4.domain.screen = '', _this4.domain.addDomain = [], alert('domain added');
 
           _this4.fetchDomains();
 
@@ -380,7 +366,8 @@ __webpack_require__.r(__webpack_exports__);
             login: '',
             password: '',
             description: '',
-            screen: ''
+            screen: '',
+            addDomain: []
           };
           alert('domain updated');
 
@@ -407,6 +394,7 @@ __webpack_require__.r(__webpack_exports__);
       this.domain.login = domain.login;
       this.domain.password = domain.password;
       this.domain.description = domain.description;
+      this.domain.addDomain = domain.addDomain;
     },
 
     /*goToEmployees(domain){
@@ -14430,8 +14418,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\OSPanel\domains\tester\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\OSPanel\domains\tester\resources\less\style.less */"./resources/less/style.less");
+__webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\less\style.less */"./resources/less/style.less");
 
 
 /***/ })
