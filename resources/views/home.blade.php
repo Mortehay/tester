@@ -85,7 +85,7 @@
                                             <td>6 hrs, 59 mins</td>
                                         </tr>
                                         <tr>
-                                            <td><span class="uk-label uk-label-success uk-margin-small-right">on</span></td>
+                                            <td><span class="uk-label tm-label-stoped uk-margin-small-right">stoped</span></td>
                                             <td>16:54:01 02-05-2019</td>
                                             <td>63 hrs, 16 mins</td>
                                         </tr>
