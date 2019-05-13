@@ -29,6 +29,7 @@ class DomainController extends Controller
     public function store(Request $request)
     {
         //save or update domain
+        //dd($request);
         if($request->isMethod('put')){
             $domain = Domain::findOrFail($request->domain_id);
             $domain->id = $request->input('domain_id');
@@ -37,6 +38,7 @@ class DomainController extends Controller
             $domain = new Domain;
             $operationType = 'new';
         }
+
         $domain->name = $request->input('name');
         $domain->link = $request->input('link');
         $domain->hosting_name = $request->input('hosting_name');
@@ -45,22 +47,41 @@ class DomainController extends Controller
         $domain->login = $request->input('login');
         $domain->password = $request->input('password');
         $domain->description = $request->input('description');
-
         $domain->save();
 
-        $image = $request->input('screen');
-        $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+        $additionalDomains = $request->input('additionalDomains');
+        //dd($additionalDomains);
+        if($additionalDomains && !empty($additionalDomains)){
+            foreach ($additionalDomains as $additionalDomain){
+                if(!array_key_exists('id',$additionalDomain)){
+                    $newAdditionalDomain = new AddDomain();
+                    $newAdditionalDomain->domain_id = $domain->id;
+                    $newAdditionalDomain->name = $additionalDomain['name'];
+                    $newAdditionalDomain->save();
+                } else {
+                    $existingAdditionalDomain = AddDomain::findOrFail($additionalDomain['id']);
+                    $existingAdditionalDomain->name = $additionalDomain['name'];
+                    $existingAdditionalDomain->save();
+                }
+            }
+        }
 
-        Image::make($request->input('screen'))->save(public_path('screen'.DIRECTORY_SEPARATOR ).$name);
-        if(empty($domain->screen()->get()->toArray())){
-            $domain_screen = new ImageUploads();
-            $domain_screen->domain()->associate($domain);
-            $domain_screen->image_path  = 'screen'.DIRECTORY_SEPARATOR.$name;
-            $domain_screen->save();
-        } else {
-            $domain_screen = ImageUploads::where('domain_id', '=', $domain->id)->first();
-            $domain_screen->image_path  = 'screen'.DIRECTORY_SEPARATOR.$name;
-            $domain_screen->save();
+        //dd($image);
+        $image = $request->input('screen');
+        if(substr_count($image, 'screen\\') == 0) {
+            $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+
+            Image::make($request->input('screen'))->save(public_path('screen'.DIRECTORY_SEPARATOR ).$name);
+            if(empty($domain->screen()->get()->toArray())){
+                $domain_screen = new ImageUploads();
+                $domain_screen->domain()->associate($domain);
+                $domain_screen->image_path  = 'screen'.DIRECTORY_SEPARATOR.$name;
+                $domain_screen->save();
+            } else {
+                $domain_screen = ImageUploads::where('domain_id', '=', $domain->id)->first();
+                $domain_screen->image_path  = 'screen'.DIRECTORY_SEPARATOR.$name;
+                $domain_screen->save();
+            }
         }
 
         return json_encode([$operationType => 'success']);

@@ -31,6 +31,43 @@
                     </label>
                 </div>
             </div>
+            <div class="uk-grid-small uk-child-width-auto uk-grid">
+                <ul>
+                    <!--<li v-if="(domain.addDomain).lenght > 0" class="tag" v-for="(item, key) in domain.addDomain" :key.number="key">
+                        <span class="title">{{item}}</span>
+                        <button class="delete-btn" @click="removeTag(key)">X</button>
+                    </li>
+                    <li class="search-box">
+                        <input type="text" placeholder="Add tag…" v-model="tag" @keyup="characterInput">
+                    </li>-->
+                   <!-- <li v-for="addDomain in domain.addDomain">
+                        <div v-if="!textEditing">
+                            <span @click="enableTextEditing"  :value="addDomain.name">{{addDomain.name}}</span>
+                        </div>
+                        <div v-if="textEditing">
+                            <input v-model="textTempValue" class="input"/>
+                            <button @click="disableTextEditing"> Cancel </button>
+                            <button @click="saveTextEdit"> Save </button>
+                        </div>
+                        <button class="delete-btn" @click="removeTag(key)">X</button>
+                    </li>-->
+                    <li v-if="(domain.additionalDomains).length > 0" v-for="(additionalDomain, key) in domain.additionalDomains">
+                        <input type="text" :value="additionalDomain.name" v-on:blur= "textEditing=false; editText(key, $event.target.value)"><button class="uk-button uk-button-small uk-button-danger"                                                                                  @click="deleteAdditionalDomain(key)">delete</button>
+                    </li>
+                    <!--<li v-for="addDomain in domain.addDomain">
+                        <div v-show = "textEditing == false">
+                            <label @dblclick = "textEditing = true"> {{addDomain.name}} </label>
+                        </div>
+                        <input v-show = "textEditing == true" v-model = "addDomain.name"
+                               v-on:blur= "textEditing=false; editText($event.target.value)"
+                               @keyup.enter = "textEditing=false; editText($event.target.value)">
+                    </li>-->
+                    <li class="search-box">
+                        <input type="text" placeholder="Add domain…"  v-model="newAddDomain">
+                        <button class="uk-button uk-button-small uk-button-primary" @click.prevent="newAdditioanalDomain(newAddDomain)">add</button>
+                    </li>
+                </ul>
+            </div>
             <div class="uk-margin">
                 <div class="uk-margin" v-if="domain.screen">
                     <img :src="domain.screen" class="img-responsive" height="70" width="90">
@@ -81,7 +118,13 @@
                             <div><a class="uk-link-muted" href="#" target="_blank">({{ domain.type }})</a></div>
                         </div>
                         <div class="uk-text-meta">
-                            Additional domains: <a :href="domain.domaining_link" class="uk-link-muted" target="_blank">{{ domain.domaining_name }}</a>
+                            Additional domains:
+                            <ul>
+                                <li v-if="(domain.additionalDomains).length > 0" v-for="additionalDomain in domain.additionalDomains">
+                                    <a :href="httpAdd(additionalDomain.name)" class="uk-link-muted" target="_blank"> {{additionalDomain.name}}</a>
+                                </li>
+                            </ul>
+
                         </div>
                         <div class="uk-margin">
                             <div class="uk-child-width-1-1 uk-grid-collapse" data-uk-grid>
@@ -111,6 +154,9 @@
 <script>
     export default {
         name: "domains",
+        props:{
+
+        },
         data() {
             return {
                 location: window.location.origin,
@@ -129,6 +175,8 @@
                             name:'host+domain'
                         }
                     ],
+                editedText: null,
+                textEditing: false,
                 domain: {
                     id: '',
                     name: '',
@@ -141,20 +189,35 @@
                     description: '',
                     screen: '',
                     image: '',
-                    addDomain: [],
+                    additionalDomains: [],
                 },
+                newAddDomain: '',
                 domain_id: '',
                 pagination: {},
                 edit: false,
                 validationErrors:[],
-
+                tags: [] ,
+                tag:'',
             };
         },
         created() {
             this.fetchDomains();
         },
         methods:{
+            editText: function(key, text) {
+                //console.log(key, text);
+                this.domain.additionalDomains[key].name = text;
 
+            },
+            newAdditioanalDomain(newDomain) {
+                this.domain.additionalDomains.push({name: newDomain});
+                //console.log(newDomain);
+                return this.newAddDomain = '';
+            },
+            deleteAdditionalDomain(index) {
+                this.domain.additionalDomains.splice(index, 1);
+                return false;
+            },
             screenChanged(e){
                 if(e.target.files[0] !== undefined){
                     console.log(e.target.files[0]);
@@ -169,12 +232,20 @@
 
                 console.log(this.domain);
             },
+            httpAdd(url){
+              if(url.indexOf('http://') > -1) {
+                  return url;
+              }  else {
+                  return 'http://' + url;
+              }
+            },
             typeChange(){
                 let vm = this;
                 let type = event.target.value;
                 this.domain.type = event.target.value;
                 //console.log(this.domain);
             },
+
             fetchDomains(page_url){
                 let vm = this;
 
@@ -211,7 +282,7 @@
             },
             addDomain(){
                 //console.log(this.edit);
-                //console.log(this.domain);
+                console.log(this.domain);
                 if(this.edit === false){
                     //add
                     fetch('/api/domain',{
@@ -231,8 +302,9 @@
                             this.domain.login = '';
                             this.domain.password = '';
                             this.domain.description = '';
-                            this.domain.screen = '',
-                            this.domain.addDomain = [],
+                            this.domain.screen = '';
+                            this.domain.additionalDomains = [];
+                            this.newAddDomain = '';
                             alert('domain added');
                             this.fetchDomains();
                             this.$scrollTo('#page-navigation');
@@ -265,8 +337,9 @@
                                 password: '',
                                 description: '',
                                 screen:'',
-                                addDomain:[],
+                                additionalDomains:[],
                             };
+                            this.newAddDomain = '';
                             alert('domain updated');
                             this.fetchDomains();
                         })
@@ -290,7 +363,7 @@
                 this.domain.login = domain.login;
                 this.domain.password = domain.password;
                 this.domain.description = domain.description;
-                this.domain.addDomain = domain.addDomain;
+                this.domain.additionalDomains = domain.additionalDomains != null ? domain.additionalDomains : [];
 
 
             },
@@ -301,7 +374,14 @@
             forceRerender() {
                 this.componentKey += 1;
             }
-        }
+        },
+        /*watch:{
+            taglist(taglist){
+                this.tags = taglist.reduce(function(agg, val){
+                    return agg.concat(val);
+                }, [])
+            }
+        }*/
     }
 </script>
 

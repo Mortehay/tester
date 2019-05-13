@@ -205,8 +205,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
+  props: {},
   data: function data() {
     return {
       location: window.location.origin,
@@ -222,6 +266,8 @@ __webpack_require__.r(__webpack_exports__);
         code: 'hd',
         name: 'host+domain'
       }],
+      editedText: null,
+      textEditing: false,
       domain: {
         id: '',
         name: '',
@@ -234,18 +280,36 @@ __webpack_require__.r(__webpack_exports__);
         description: '',
         screen: '',
         image: '',
-        addDomain: []
+        additionalDomains: []
       },
+      newAddDomain: '',
       domain_id: '',
       pagination: {},
       edit: false,
-      validationErrors: []
+      validationErrors: [],
+      tags: [],
+      tag: ''
     };
   },
   created: function created() {
     this.fetchDomains();
   },
   methods: {
+    editText: function editText(key, text) {
+      //console.log(key, text);
+      this.domain.additionalDomains[key].name = text;
+    },
+    newAdditioanalDomain: function newAdditioanalDomain(newDomain) {
+      this.domain.additionalDomains.push({
+        name: newDomain
+      }); //console.log(newDomain);
+
+      return this.newAddDomain = '';
+    },
+    deleteAdditionalDomain: function deleteAdditionalDomain(index) {
+      this.domain.additionalDomains.splice(index, 1);
+      return false;
+    },
     screenChanged: function screenChanged(e) {
       var _this = this;
 
@@ -262,6 +326,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       console.log(this.domain);
+    },
+    httpAdd: function httpAdd(url) {
+      if (url.indexOf('http://') > -1) {
+        return url;
+      } else {
+        return 'http://' + url;
+      }
     },
     typeChange: function typeChange() {
       var vm = this;
@@ -314,7 +385,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       //console.log(this.edit);
-      //console.log(this.domain);
+      console.log(this.domain);
+
       if (this.edit === false) {
         //add
         fetch('/api/domain', {
@@ -334,7 +406,10 @@ __webpack_require__.r(__webpack_exports__);
           _this4.domain.login = '';
           _this4.domain.password = '';
           _this4.domain.description = '';
-          _this4.domain.screen = '', _this4.domain.addDomain = [], alert('domain added');
+          _this4.domain.screen = '';
+          _this4.domain.additionalDomains = [];
+          _this4.newAddDomain = '';
+          alert('domain added');
 
           _this4.fetchDomains();
 
@@ -367,8 +442,9 @@ __webpack_require__.r(__webpack_exports__);
             password: '',
             description: '',
             screen: '',
-            addDomain: []
+            additionalDomains: []
           };
+          _this4.newAddDomain = '';
           alert('domain updated');
 
           _this4.fetchDomains();
@@ -394,7 +470,7 @@ __webpack_require__.r(__webpack_exports__);
       this.domain.login = domain.login;
       this.domain.password = domain.password;
       this.domain.description = domain.description;
-      this.domain.addDomain = domain.addDomain;
+      this.domain.additionalDomains = domain.additionalDomains != null ? domain.additionalDomains : [];
     },
 
     /*goToEmployees(domain){
@@ -405,6 +481,14 @@ __webpack_require__.r(__webpack_exports__);
       this.componentKey += 1;
     }
   }
+  /*watch:{
+      taglist(taglist){
+          this.tags = taglist.reduce(function(agg, val){
+              return agg.concat(val);
+          }, [])
+      }
+  }*/
+
 });
 
 /***/ }),
@@ -1232,6 +1316,89 @@ var render = function() {
             0
           ),
           _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "uk-grid-small uk-child-width-auto uk-grid" },
+            [
+              _c(
+                "ul",
+                [
+                  _vm._l(_vm.domain.additionalDomains, function(
+                    additionalDomain,
+                    key
+                  ) {
+                    return _vm.domain.additionalDomains.length > 0
+                      ? _c("li", [
+                          _c("input", {
+                            attrs: { type: "text" },
+                            domProps: { value: additionalDomain.name },
+                            on: {
+                              blur: function($event) {
+                                _vm.textEditing = false
+                                _vm.editText(key, $event.target.value)
+                              }
+                            }
+                          }),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "uk-button uk-button-small uk-button-danger",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteAdditionalDomain(key)
+                                }
+                              }
+                            },
+                            [_vm._v("delete")]
+                          )
+                        ])
+                      : _vm._e()
+                  }),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "search-box" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newAddDomain,
+                          expression: "newAddDomain"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Add domain…" },
+                      domProps: { value: _vm.newAddDomain },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.newAddDomain = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "uk-button uk-button-small uk-button-primary",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.newAdditioanalDomain(_vm.newAddDomain)
+                          }
+                        }
+                      },
+                      [_vm._v("add")]
+                    )
+                  ])
+                ],
+                2
+              )
+            ]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "uk-margin" }, [
             _vm.domain.screen
               ? _c("div", { staticClass: "uk-margin" }, [
@@ -1425,14 +1592,31 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-text-meta" }, [
-                  _vm._v("\n                        Additional domains: "),
+                  _vm._v(
+                    "\n                        Additional domains:\n                        "
+                  ),
                   _c(
-                    "a",
-                    {
-                      staticClass: "uk-link-muted",
-                      attrs: { href: domain.domaining_link, target: "_blank" }
-                    },
-                    [_vm._v(_vm._s(domain.domaining_name))]
+                    "ul",
+                    _vm._l(domain.additionalDomains, function(
+                      additionalDomain
+                    ) {
+                      return domain.additionalDomains.length > 0
+                        ? _c("li", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "uk-link-muted",
+                                attrs: {
+                                  href: _vm.httpAdd(additionalDomain.name),
+                                  target: "_blank"
+                                }
+                              },
+                              [_vm._v(" " + _vm._s(additionalDomain.name))]
+                            )
+                          ])
+                        : _vm._e()
+                    }),
+                    0
                   )
                 ]),
                 _vm._v(" "),
