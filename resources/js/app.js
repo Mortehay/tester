@@ -22,6 +22,7 @@ Vue.use(VueScrollTo);
 
 Vue.component('lang-switcher', require('./components/LangSwitcherComponent.vue').default);
 Vue.component('domains', require('./components/DomainComponent.vue').default);
+Vue.component('domain-list', require('./components/DomainListComponent.vue').default);
 
 
 /**

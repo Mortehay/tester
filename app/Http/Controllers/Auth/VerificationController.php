@@ -36,7 +36,7 @@ class VerificationController extends Controller
     {
         $locale = Config::get('app.locale');
         $locale_prefix = ($locale == 'en')? '' :'/'. $locale;
-        $this->redirectTo = $locale_prefix.'/home';
+        $this->redirectTo = $locale_prefix.'/cabinet';
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');

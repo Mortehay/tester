@@ -49,6 +49,6 @@ class ResetPasswordController extends Controller
         if(Session::get('locale') && Session::get('locale') != 'en'){
             $locale_prefix = '/'.Session::get('locale');
         }
-        return $locale_prefix.'/home';
+        return $locale_prefix.'/cabinet';
     }
 }

@@ -12,7 +12,7 @@
 */
 /*en routes*/
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/cabinet', 'CabinetController@index')->name('cabinet');
 /*en routes*/
 
 //Auth::routes();
@@ -45,20 +45,20 @@ Route::group([ 'prefix' => 'rest'] , function(){
 /*en redirect routes*/
 Route::group([ 'prefix' => 'en', 'middleware' => 'locale'], function () {
     Route::get('/', function(){return redirect('/');})->name('login');
-    Route::get('/home',  function(){return redirect('/home');})->name('home');
+    Route::get('/cabinet',  function(){return redirect('/cabinet');})->name('cabinet');
 });
 /*en redirect routes*/
 
 /*ru routes*/
 Route::group([ 'prefix' => 'ru', 'middleware' => 'locale'], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/cabinet', 'CabinetController@index')->name('cabinet');
 });
 /*ru routes*/
 
 /*uk routes*/
 Route::group([ 'prefix' => 'uk', 'middleware' => 'locale'], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/cabinet', 'CabinetController@index')->name('cabinet');
 });
 /*uk routes*/

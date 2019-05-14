@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-class HomeController extends Controller
+class CabinetController extends Controller
 {
     /**
      * @var array
@@ -34,6 +34,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', $this->data);
+        return view('cabinet', $this->data);
     }
 }

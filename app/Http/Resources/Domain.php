@@ -30,6 +30,7 @@ class Domain extends JsonResource
             'description' =>$this->description,
             'additionalDomains' =>$additionalDomains,
             'screen' => $screen,
+            'state' =>$this->state,
         ];
     }
 }
