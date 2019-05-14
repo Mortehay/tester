@@ -51,6 +51,27 @@ class DomainController extends Controller
 
         $additionalDomains = $request->input('additionalDomains');
         //dd($additionalDomains);
+        //delete additional domain
+        $existingAddDomainIds = []; $postAddDomainIds = [];
+        $additionalDomainsExistingIds = AddDomain::select('id')->where('domain_id', '=', $domain->id)->get()->toArray();
+        if(is_array($additionalDomainsExistingIds) && !empty($additionalDomainsExistingIds)){
+            foreach ($additionalDomainsExistingIds as $additionalDomainsExistingId){
+                array_push($existingAddDomainIds, $additionalDomainsExistingId['id']);
+            }
+        }
+        if(is_array($additionalDomains) && !empty($additionalDomains)){
+            foreach ($additionalDomains as $additionalDomain){
+                if(array_key_exists('id', $additionalDomain)) array_push($postAddDomainIds, $additionalDomain['id']);
+            }
+        }
+        //dd(array_diff($existingAddDomainIds, $postAddDomainIds));
+        $additionalDomainsToRemove = array_diff($existingAddDomainIds, $postAddDomainIds);
+        if(is_array($additionalDomainsToRemove) && !empty($additionalDomainsToRemove)) {
+            foreach ($additionalDomainsToRemove as $additionalDomainToRemove) {
+                $_additionalDomainToRemove = AddDomain::where('id', '=', $additionalDomainToRemove)->delete();
+            }
+        }
+        //add new update existing additional domains
         if($additionalDomains && !empty($additionalDomains)){
             foreach ($additionalDomains as $additionalDomain){
                 if(!array_key_exists('id',$additionalDomain)){
@@ -68,7 +89,7 @@ class DomainController extends Controller
 
         //dd($image);
         $image = $request->input('screen');
-        if(substr_count($image, 'screen\\') == 0) {
+        if(substr_count($image, 'screen') == 0) {
             $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
 
             Image::make($request->input('screen'))->save(public_path('screen'.DIRECTORY_SEPARATOR ).$name);
