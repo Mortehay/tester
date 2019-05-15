@@ -1,9 +1,10 @@
 <div class="uk-margin uk-card uk-card-default uk-card-body">
-    <div class="uk-margin">
+    {{--<div class="uk-margin">
         <a href="" class="uk-button uk-button-primary"><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Add new</a>
     </div>
-    <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>
-        <div>
+    <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>--}}
+        <domain-list></domain-list>
+        {{--<div>
             <div class="uk-grid-small uk-grid-divider" data-uk-grid>
                 <div class="uk-width-expand uk-flex-middle uk-flex">
                     <span class="uk-label uk-label-success uk-margin-small-right">on</span>
@@ -44,7 +45,7 @@
                     <a href="#" class="tm-icon-delete" data-uk-icon="icon: trash;ratio: 0.8" data-uk-tooltip="Delete"></a>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>--}}
+    {{--</div>--}}
+
 </div>
-<domain-list></domain-list>
