@@ -541,6 +541,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
   props: {},
@@ -574,7 +625,8 @@ __webpack_require__.r(__webpack_exports__);
         screen: '',
         image: '',
         additionalDomains: [],
-        state: ''
+        state: '',
+        isOpen: false
       },
       newAddDomain: '',
       domain_id: '',
@@ -589,6 +641,17 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchDomains();
   },
   methods: {
+    toggle: function toggle(domain) {
+      //Vue.set(domain, 'isOpen' , true);
+      //console.log(typeof domain.isOpen);
+      //console.log(domain.isOpen);
+      if (domain.isOpen) {
+        console.log(domain.isOpen);
+        Vue.set(domain, 'isOpen', false); //console.log(domain);
+      } else {
+        Vue.set(domain, 'isOpen', true);
+      }
+    },
     editText: function editText(key, text) {
       //console.log(key, text);
       this.domain.additionalDomains[key].name = text;
@@ -2145,45 +2208,232 @@ var render = function() {
                       "div",
                       { staticClass: "uk-width-expand uk-flex-middle uk-flex" },
                       [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "uk-label uk-margin-small-right",
-                            class: {
-                              "tm-label-stoped":
-                                domain.state == null || domain.state == ""
-                            }
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(
-                                domain.state == null || domain.state == ""
-                                  ? "stoped"
-                                  : domain.state
+                        _c("div", [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "uk-label uk-margin-small-right",
+                              class: {
+                                "tm-label-stoped":
+                                  domain.state == null || domain.state == ""
+                              }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  domain.state == null || domain.state == ""
+                                    ? "stoped"
+                                    : domain.state
+                                )
                               )
-                            )
-                          ]
-                        ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "uk-link-text",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v(_vm._s(domain.name))]
+                          ),
+                          _vm._v(" "),
+                          _c("a", {
+                            staticClass: "tm-margin-xsmall-left",
+                            attrs: {
+                              href: _vm.httpAdd(domain.link),
+                              target: "_blank",
+                              "data-uk-icon": "icon: link;ratio: 0.8",
+                              "data-uk-tooltip": "www..."
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
-                        _c(
-                          "a",
-                          { staticClass: "uk-link-text", attrs: { href: "#" } },
-                          [_vm._v(_vm._s(domain.name))]
-                        ),
-                        _vm._v(" "),
-                        _c("a", {
-                          staticClass: "tm-margin-xsmall-left",
-                          attrs: {
-                            href: _vm.httpAdd(domain.link),
-                            target: "_blank",
-                            "data-uk-icon": "icon: link;ratio: 0.8",
-                            "data-uk-tooltip": "www..."
-                          }
-                        })
+                        domain.isOpen
+                          ? _c("div", { staticClass: "uk-margin" }, [
+                              _c("div", { attrs: { "data-uk-grid": "" } }, [
+                                _c("div", { staticClass: "uk-width-1-3@m" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "uk-cover-container uk-transition-toggle uk-display-block uk-link-reset",
+                                      attrs: {
+                                        href: domain.link,
+                                        target: "_blank"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: {
+                                          src:
+                                            domain.screen !== null
+                                              ? _vm.location +
+                                                "/" +
+                                                domain.screen.image_path
+                                              : ""
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", {
+                                        staticClass:
+                                          "uk-overlay-primary uk-transition-fade uk-position-cover"
+                                      }),
+                                      _vm._v(" "),
+                                      _vm._m(0, true)
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "uk-width-2-3@m" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "uk-flex-middle uk-grid-small",
+                                      attrs: { "data-uk-grid": "" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "uk-text-bold uk-h4" },
+                                        [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass: "uk-link-reset",
+                                              attrs: {
+                                                href: domain.link,
+                                                target: "_blank"
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                " +
+                                                  _vm._s(domain.id) +
+                                                  ". " +
+                                                  _vm._s(domain.name) +
+                                                  "\n                                            "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("div", [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "uk-link-muted",
+                                            attrs: {
+                                              href: "#",
+                                              target: "_blank"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "(" + _vm._s(domain.type) + ")"
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "uk-text-meta" }, [
+                                    _vm._v(
+                                      "\n                                        Additional domains:\n                                        "
+                                    ),
+                                    _c(
+                                      "ul",
+                                      _vm._l(domain.additionalDomains, function(
+                                        additionalDomain
+                                      ) {
+                                        return domain.additionalDomains.length >
+                                          0
+                                          ? _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass: "uk-link-muted",
+                                                  attrs: {
+                                                    href: _vm.httpAdd(
+                                                      additionalDomain.name
+                                                    ),
+                                                    target: "_blank"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(
+                                                        additionalDomain.name
+                                                      )
+                                                  )
+                                                ]
+                                              )
+                                            ])
+                                          : _vm._e()
+                                      }),
+                                      0
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "uk-margin" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "uk-child-width-1-1 uk-grid-collapse",
+                                        attrs: { "data-uk-grid": "" }
+                                      },
+                                      [
+                                        _c("div", [
+                                          _vm._v(
+                                            "\n                                                Login: " +
+                                              _vm._s(domain.login) +
+                                              "\n                                            "
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", [
+                                          _vm._v(
+                                            "\n                                                Password: " +
+                                              _vm._s(domain.password) +
+                                              "\n                                            "
+                                          )
+                                        ])
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "uk-margin" }, [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(domain.description) +
+                                        "\n                                    "
+                                    )
+                                  ])
+                                ])
+                              ])
+                            ])
+                          : _vm._e()
                       ]
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-width-auto" }, [
+                      _c("a", {
+                        attrs: {
+                          "data-uk-icon": "icon: more-vertical;ratio: 0.8",
+                          "data-uk-tooltip": "More"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.toggle(domain)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
                       _c("a", {
                         directives: [
                           {
@@ -2245,7 +2495,20 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-position-center" }, [
+      _c("div", { staticClass: "uk-overlay uk-transition-fade uk-light" }, [
+        _vm._v(
+          "\n                                                Visit web-site\n                                            "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
