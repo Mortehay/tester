@@ -471,76 +471,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
   components: {},
   props: {},
   data: function data() {
     return {
+      paginate: false,
       location: window.location.origin,
       domains: [],
-      domainType: '',
-      types: [{
-        code: 'h_',
-        name: 'host'
-      }, {
-        code: '_d',
-        name: 'domain'
-      }, {
-        code: 'hd',
-        name: 'host+domain'
-      }],
-      editedText: null,
-      textEditing: false,
+      domainSearchName: '',
       domain: {
         id: '',
         name: '',
@@ -557,58 +497,14 @@ __webpack_require__.r(__webpack_exports__);
         state: '',
         isOpen: false
       },
-      newAddDomain: '',
-      domain_id: '',
       pagination: {},
-      edit: false,
-      validationErrors: [],
-      tags: [],
-      tag: ''
+      validationErrors: []
     };
   },
   created: function created() {
     this.fetchDomains();
   },
   methods: {
-    toggle: function toggle(domain) {
-      if (domain.isOpen) {
-        Vue.set(domain, 'isOpen', false);
-      } else {
-        Vue.set(domain, 'isOpen', true);
-      }
-    },
-    editText: function editText(key, text) {
-      //console.log(key, text);
-      this.domain.additionalDomains[key].name = text;
-    },
-    newAdditioanalDomain: function newAdditioanalDomain(newDomain) {
-      this.domain.additionalDomains.push({
-        name: newDomain
-      }); //console.log(newDomain);
-
-      return this.newAddDomain = '';
-    },
-    deleteAdditionalDomain: function deleteAdditionalDomain(index) {
-      this.domain.additionalDomains.splice(index, 1);
-      return false;
-    },
-    screenChanged: function screenChanged(e) {
-      var _this = this;
-
-      if (e.target.files[0] !== undefined) {
-        console.log(e.target.files[0]);
-        var fileReader = new FileReader();
-        fileReader.readAsDataURL(e.target.files[0]);
-
-        fileReader.onload = function (e) {
-          _this.domain.screen = e.target.result;
-        };
-      } else {
-        this.domain.screen = false;
-      }
-
-      console.log(this.domain);
-    },
     httpAdd: function httpAdd(url) {
       if (url.indexOf('http://') > -1) {
         return url;
@@ -616,22 +512,27 @@ __webpack_require__.r(__webpack_exports__);
         return 'http://' + url;
       }
     },
-    typeChange: function typeChange() {
-      var vm = this;
-      var type = event.target.value;
-      this.domain.type = event.target.value; //console.log(this.domain);
-    },
     fetchDomains: function fetchDomains(page_url) {
-      var _this2 = this;
+      var _this = this;
 
       var vm = this;
       page_url = page_url || '/api/domains';
-      fetch(page_url).then(function (res) {
+      fetch(page_url, {
+        method: 'post',
+        body: JSON.stringify({
+          paginate: this.paginate,
+          paginateElements: 5
+        }),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (res) {
         return res.json();
       }).then(function (res) {
         console.log(res.data);
-        _this2.domains = res.data;
-        vm.makePagination(res.meta, res.links);
+        _this.domains = res.data;
+        console.log(_this.domains);
+        if (_this.paginate) vm.makePagination(res.meta, res.links);
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -645,23 +546,6 @@ __webpack_require__.r(__webpack_exports__);
       }; //console.log(pagination);
 
       this.pagination = pagination;
-    },
-    deleteDomain: function deleteDomain(id) {
-      var _this3 = this;
-
-      if (confirm('are you sure?')) {
-        fetch("/api/domain/".concat(id), {
-          method: 'delete'
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          alert('domain removed');
-
-          _this3.fetchDomains();
-        })["catch"](function (err) {
-          return console.log(err);
-        });
-      }
     },
     addDomain: function addDomain() {
       this.$root.$emit("domainData", {
@@ -684,415 +568,40 @@ __webpack_require__.r(__webpack_exports__);
     },
     forceRerender: function forceRerender() {
       this.componentKey += 1;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DomainsComponent.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DomainsComponent.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "domains",
-  props: {},
-  data: function data() {
-    return {
-      location: window.location.origin,
-      domains: [],
-      domainType: '',
-      types: [{
-        code: 'h_',
-        name: 'host'
-      }, {
-        code: '_d',
-        name: 'domain'
-      }, {
-        code: 'hd',
-        name: 'host+domain'
-      }],
-      editedText: null,
-      textEditing: false,
-      domain: {
-        id: '',
-        name: '',
-        link: '',
-        hosting_name: '',
-        hosting_link: '',
-        type: '',
-        login: '',
-        password: '',
-        description: '',
-        screen: '',
-        image: '',
-        additionalDomains: []
-      },
-      newAddDomain: '',
-      domain_id: '',
-      pagination: {},
-      edit: false,
-      validationErrors: [],
-      tags: [],
-      tag: ''
-    };
-  },
-  created: function created() {
-    this.fetchDomains();
-  },
-  methods: {
-    editText: function editText(key, text) {
-      //console.log(key, text);
-      this.domain.additionalDomains[key].name = text;
     },
-    newAdditioanalDomain: function newAdditioanalDomain(newDomain) {
-      this.domain.additionalDomains.push({
-        name: newDomain
-      }); //console.log(newDomain);
-
-      return this.newAddDomain = '';
-    },
-    deleteAdditionalDomain: function deleteAdditionalDomain(index) {
-      this.domain.additionalDomains.splice(index, 1);
-      return false;
-    },
-    screenChanged: function screenChanged(e) {
-      var _this = this;
-
-      if (e.target.files[0] !== undefined) {
-        console.log(e.target.files[0]);
-        var fileReader = new FileReader();
-        fileReader.readAsDataURL(e.target.files[0]);
-
-        fileReader.onload = function (e) {
-          _this.domain.screen = e.target.result;
-        };
-      } else {
-        this.domain.screen = false;
-      }
-
-      console.log(this.domain);
-    },
-    httpAdd: function httpAdd(url) {
-      if (url.indexOf('http://') > -1) {
-        return url;
-      } else {
-        return 'http://' + url;
-      }
-    },
-    typeChange: function typeChange() {
-      var vm = this;
-      var type = event.target.value;
-      this.domain.type = event.target.value; //console.log(this.domain);
-    },
-    fetchDomains: function fetchDomains(page_url) {
-      var _this2 = this;
-
-      var vm = this;
-      page_url = page_url || '/api/domains';
-      fetch(page_url).then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        console.log(res.data);
-        _this2.domains = res.data;
-        vm.makePagination(res.meta, res.links);
-      })["catch"](function (err) {
-        return console.log(err);
-      });
-    },
-    makePagination: function makePagination(meta, links) {
-      var pagination = {
-        current_page: meta.current_page,
-        last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev
-      }; //console.log(pagination);
-
-      this.pagination = pagination;
-    },
-    deleteDomain: function deleteDomain(id) {
-      var _this3 = this;
-
-      if (confirm('are you sure?')) {
-        fetch("/api/domain/".concat(id), {
-          method: 'delete'
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          alert('domain removed');
-
-          _this3.fetchDomains();
-        })["catch"](function (err) {
-          return console.log(err);
-        });
-      }
-    },
-    addDomain: function addDomain() {
-      var _this4 = this;
-
-      //console.log(this.edit);
-      console.log(this.domain);
-
-      if (this.edit === false) {
-        //add
-        fetch('/api/domain', {
-          method: 'post',
-          body: JSON.stringify(this.domain),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          _this4.domain.name = '';
-          _this4.domain.link = '';
-          _this4.domain.domaining_name = '';
-          _this4.domain.domaining_link = '';
-          _this4.domain.type = '';
-          _this4.domain.login = '';
-          _this4.domain.password = '';
-          _this4.domain.description = '';
-          _this4.domain.screen = '';
-          _this4.domain.additionalDomains = [];
-          _this4.newAddDomain = '';
-          alert('domain added');
-
-          _this4.fetchDomains();
-
-          _this4.$scrollTo('#page-navigation');
-        })["catch"](function (err) {
-          return console.log(err);
-        });
-      } else {
-        //update
-        //console.log('update');
-        console.log(this.domain);
-        fetch('/api/domain', {
-          method: 'put',
-          body: JSON.stringify(this.domain),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          _this4.edit = false;
-          _this4.domain = {
-            id: '',
-            name: '',
-            link: '',
-            hosting_name: '',
-            hosting_link: '',
-            type: '',
-            login: '',
-            password: '',
-            description: '',
-            screen: '',
-            additionalDomains: []
-          };
-          _this4.newAddDomain = '';
-          alert('domain updated');
-
-          _this4.fetchDomains();
-        })["catch"](function (err) {
-          return console.log(err);
-        });
-      }
-
+    searchDomainClear: function searchDomainClear() {
+      this.domainSearchName = '';
+      this.fetchDomains();
       this.forceRerender();
     },
-    editdomain: function editdomain(domain) {
-      this.edit = true;
-      this.domain.id = domain.id;
-      this.domain.domain_id = domain.id;
-      this.domain.name = domain.name;
-      this.domain.link = domain.link;
-      this.domain.hosting_name = domain.hosting_name;
-      this.domain.hosting_link = domain.hosting_link;
-      this.domainType = domain.type;
-      this.domain.type = domain.type; //console.log(domain.type);
+    searchDomain: function searchDomain(searchName) {
+      var _this2 = this;
 
-      this.domain.screen = domain.screen != null ? domain.screen.image_path : '';
-      this.domain.login = domain.login;
-      this.domain.password = domain.password;
-      this.domain.description = domain.description;
-      this.domain.additionalDomains = domain.additionalDomains != null ? domain.additionalDomains : [];
-    },
-
-    /*goToEmployees(domain){
-        //this.$route.push({ path: `/domains/${domain.id}/employees` }) // -> /domains/1/employees
-        window.location.href = `/tabledomains/${domain.id}/tableadditionaldomains`;
-    },*/
-    forceRerender: function forceRerender() {
-      this.componentKey += 1;
+      if (this.domainSearchName.length >= 2) {
+        console.log('change', this.domainSearchName);
+        var vm = this;
+        fetch('/api/domains', {
+          method: 'post',
+          body: JSON.stringify({
+            paginate: this.paginate,
+            paginateElements: 5,
+            searchDomain: this.domainSearchName
+          }),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          //console.log(res.data);
+          _this2.domains = res.data;
+          if (_this2.paginate) vm.makePagination(res.meta, res.links);
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      }
     }
   }
-  /*watch:{
-      taglist(taglist){
-          this.tags = taglist.reduce(function(agg, val){
-              return agg.concat(val);
-          }, [])
-      }
-  }*/
-
 });
 
 /***/ }),
@@ -4002,12 +3511,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "message" }, [
-      _c("p", [
-        _vm._v(_vm._s(_vm.$t("texts.login.title", { name: "visitor" })))
-      ])
-    ]),
-    _vm._v(" "),
     _c("div", { staticClass: "uk-margin" }, [
       _c(
         "a",
@@ -4029,6 +3532,47 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _c("div", { staticClass: "d-inline" }, [
+      _c("h6", [_vm._v("search:")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.domainSearchName,
+            expression: "domainSearchName"
+          }
+        ],
+        staticClass: "w-50",
+        class: { danger: _vm.domainSearchName.length < 4 },
+        attrs: { type: "text", placeholder: "searchname" },
+        domProps: { value: _vm.domainSearchName },
+        on: {
+          keyup: _vm.searchDomain,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.domainSearchName = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          on: {
+            click: function($event) {
+              return _vm.searchDomainClear()
+            }
+          }
+        },
+        [_vm._v("clear")]
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       {
@@ -4036,91 +3580,101 @@ var render = function() {
         attrs: { "data-uk-grid": "" }
       },
       [
-        _c("div", { staticClass: "uk-margin" }, [
-          _c(
-            "nav",
-            {
-              attrs: {
-                "aria-label": "Page navigation example",
-                id: "page-navigation"
-              }
-            },
-            [
+        _vm.paginate
+          ? _c("div", { staticClass: "uk-margin" }, [
               _c(
-                "ul",
+                "nav",
                 {
-                  staticClass: "uk-pagination uk-flex-center",
-                  attrs: { "data-uk-margin": "" }
+                  attrs: {
+                    "aria-label": "Page navigation example",
+                    id: "page-navigation"
+                  }
                 },
                 [
                   _c(
-                    "li",
-                    { class: [{ disabled: !_vm.pagination.prev_page_url }] },
+                    "ul",
+                    {
+                      staticClass: "uk-pagination uk-flex-center",
+                      attrs: { "data-uk-margin": "" }
+                    },
                     [
                       _c(
-                        "a",
+                        "li",
                         {
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              return _vm.fetchDomains(
-                                _vm.pagination.prev_page_url
-                              )
-                            }
-                          }
+                          class: [{ disabled: !_vm.pagination.prev_page_url }]
                         },
                         [
-                          _c("span", {
-                            attrs: { "uk-pagination-previous": "" }
-                          })
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.fetchDomains(
+                                    _vm.pagination.prev_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("span", {
+                                attrs: { "uk-pagination-previous": "" }
+                              })
+                            ]
+                          )
                         ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("li", { staticClass: "page-item disabled" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "page-link text-dark",
-                        attrs: { href: "#" }
-                      },
-                      [
-                        _vm._v(
-                          "Page " +
-                            _vm._s(_vm.pagination.current_page) +
-                            " of " +
-                            _vm._s(_vm.pagination.last_page)
+                      ),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "page-item disabled" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "page-link text-dark",
+                            attrs: { href: "#" }
+                          },
+                          [
+                            _vm._v(
+                              "Page " +
+                                _vm._s(_vm.pagination.current_page) +
+                                " of " +
+                                _vm._s(_vm.pagination.last_page)
+                            )
+                          ]
                         )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    { class: [{ disabled: !_vm.pagination.next_page_url }] },
-                    [
+                      ]),
+                      _vm._v(" "),
                       _c(
-                        "a",
+                        "li",
                         {
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              return _vm.fetchDomains(
-                                _vm.pagination.next_page_url
-                              )
-                            }
-                          }
+                          class: [{ disabled: !_vm.pagination.next_page_url }]
                         },
-                        [_c("span", { attrs: { "uk-pagination-next": "" } })]
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.fetchDomains(
+                                    _vm.pagination.next_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("span", {
+                                attrs: { "uk-pagination-next": "" }
+                              })
+                            ]
+                          )
+                        ]
                       )
                     ]
                   )
                 ]
               )
-            ]
-          )
-        ]),
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _vm._l(_vm.domains, function(domain) {
           return _c("div", { key: domain.id }, [
@@ -4184,195 +3738,11 @@ var render = function() {
                                 "data-uk-tooltip": "www..."
                               }
                             })
-                          ]),
-                          _vm._v(" "),
-                          domain.isOpen
-                            ? _c("div", { staticClass: "uk-margin" }, [
-                                _c("div", { attrs: { "data-uk-grid": "" } }, [
-                                  _c("div", { staticClass: "uk-width-1-3@m" }, [
-                                    _c(
-                                      "a",
-                                      {
-                                        staticClass:
-                                          "uk-cover-container uk-transition-toggle uk-display-block uk-link-reset",
-                                        attrs: {
-                                          href: domain.link,
-                                          target: "_blank"
-                                        }
-                                      },
-                                      [
-                                        _c("img", {
-                                          attrs: {
-                                            src:
-                                              domain.screen !== null
-                                                ? _vm.location +
-                                                  "/" +
-                                                  domain.screen.image_path
-                                                : ""
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("div", {
-                                          staticClass:
-                                            "uk-overlay-primary uk-transition-fade uk-position-cover"
-                                        }),
-                                        _vm._v(" "),
-                                        _vm._m(0, true)
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "uk-width-2-3@m" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "uk-flex-middle uk-grid-small",
-                                        attrs: { "data-uk-grid": "" }
-                                      },
-                                      [
-                                        _c(
-                                          "div",
-                                          { staticClass: "uk-text-bold uk-h4" },
-                                          [
-                                            _c(
-                                              "a",
-                                              {
-                                                staticClass: "uk-link-reset",
-                                                attrs: {
-                                                  href: domain.link,
-                                                  target: "_blank"
-                                                }
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    " +
-                                                    _vm._s(domain.id) +
-                                                    ". " +
-                                                    _vm._s(domain.name) +
-                                                    "\n                                                "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("div", [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "uk-link-muted",
-                                              attrs: {
-                                                href: "#",
-                                                target: "_blank"
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "(" + _vm._s(domain.type) + ")"
-                                              )
-                                            ]
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "uk-text-meta" }, [
-                                      _vm._v(
-                                        "\n                                            Additional domains:\n                                            "
-                                      ),
-                                      _c(
-                                        "ul",
-                                        _vm._l(
-                                          domain.additionalDomains,
-                                          function(additionalDomain) {
-                                            return domain.additionalDomains
-                                              .length > 0
-                                              ? _c("li", [
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "uk-link-muted",
-                                                      attrs: {
-                                                        href: _vm.httpAdd(
-                                                          additionalDomain.name
-                                                        ),
-                                                        target: "_blank"
-                                                      }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        " " +
-                                                          _vm._s(
-                                                            additionalDomain.name
-                                                          )
-                                                      )
-                                                    ]
-                                                  )
-                                                ])
-                                              : _vm._e()
-                                          }
-                                        ),
-                                        0
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "uk-margin" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "uk-child-width-1-1 uk-grid-collapse",
-                                          attrs: { "data-uk-grid": "" }
-                                        },
-                                        [
-                                          _c("div", [
-                                            _vm._v(
-                                              "\n                                                    Login: " +
-                                                _vm._s(domain.login) +
-                                                "\n                                                "
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("div", [
-                                            _vm._v(
-                                              "\n                                                    Password: " +
-                                                _vm._s(domain.password) +
-                                                "\n                                                "
-                                            )
-                                          ])
-                                        ]
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "uk-margin" }, [
-                                      _vm._v(
-                                        "\n                                            " +
-                                          _vm._s(domain.description) +
-                                          "\n                                        "
-                                      )
-                                    ])
-                                  ])
-                                ])
-                              ])
-                            : _vm._e()
+                          ])
                         ]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "uk-width-auto" }, [
-                        _c("a", {
-                          attrs: {
-                            "data-uk-icon": "icon: more-vertical;ratio: 0.8",
-                            "data-uk-tooltip": "More"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.toggle(domain)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
                         _c("a", {
                           directives: [
                             {
@@ -4392,36 +3762,6 @@ var render = function() {
                               return _vm.editdomain(domain)
                             }
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("a", {
-                          staticClass: "tm-link-active",
-                          attrs: {
-                            href: "#",
-                            "data-uk-icon": "icon: play-circle;ratio: 0.8",
-                            "data-uk-tooltip": "Stop"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("a", {
-                          directives: [
-                            {
-                              name: "scroll-to",
-                              rawName: "v-scroll-to",
-                              value: { el: "#page-navigation" },
-                              expression: "{el : '#page-navigation'}"
-                            }
-                          ],
-                          staticClass: "tm-icon-delete",
-                          attrs: {
-                            "data-uk-icon": "icon: trash;ratio: 0.8",
-                            "data-uk-tooltip": "Delete"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteDomain(domain.id)
-                            }
-                          }
                         })
                       ])
                     ]
@@ -4436,674 +3776,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-position-center" }, [
-      _c("div", { staticClass: "uk-overlay uk-transition-fade uk-light" }, [
-        _vm._v(
-          "\n                                                    Visit web-site\n                                                "
-        )
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DomainsComponent.vue?vue&type=template&id=58b9d8f9&scoped=true&":
-/*!*******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DomainsComponent.vue?vue&type=template&id=58b9d8f9&scoped=true& ***!
-  \*******************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "form",
-        {
-          staticClass: "uk-form",
-          attrs: { id: "domain-editor" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addDomain($event)
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "uk-grid-small uk-child-width-1-2@s",
-              attrs: { "data-uk-grid": "" }
-            },
-            [
-              _c("div", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.domain.name,
-                      expression: "domain.name"
-                    }
-                  ],
-                  staticClass: "uk-input",
-                  attrs: { type: "text", placeholder: "domain name" },
-                  domProps: { value: _vm.domain.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.domain, "name", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.domain.link,
-                      expression: "domain.link"
-                    }
-                  ],
-                  staticClass: "uk-input",
-                  attrs: { type: "text", placeholder: "domain link" },
-                  domProps: { value: _vm.domain.link },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.domain, "link", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.domain.hosting_name,
-                      expression: "domain.hosting_name"
-                    }
-                  ],
-                  staticClass: "uk-input",
-                  attrs: { type: "text", placeholder: "domain domaining_name" },
-                  domProps: { value: _vm.domain.hosting_name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.domain, "hosting_name", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.domain.hosting_link,
-                      expression: "domain.hosting_link"
-                    }
-                  ],
-                  staticClass: "uk-input",
-                  attrs: { type: "text", placeholder: "domain domaining_link" },
-                  domProps: { value: _vm.domain.hosting_link },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.domain, "hosting_link", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.domain.login,
-                      expression: "domain.login"
-                    }
-                  ],
-                  staticClass: "uk-input",
-                  attrs: { type: "text", placeholder: "domain login" },
-                  domProps: { value: _vm.domain.login },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.domain, "login", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.domain.password,
-                      expression: "domain.password"
-                    }
-                  ],
-                  staticClass: "uk-input",
-                  attrs: { type: "text", placeholder: "domain password" },
-                  domProps: { value: _vm.domain.password },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.domain, "password", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "uk-width-1-1" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.domain.description,
-                      expression: "domain.description"
-                    }
-                  ],
-                  staticClass: "uk-input",
-                  attrs: { type: "text", placeholder: "domain description" },
-                  domProps: { value: _vm.domain.description },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.domain, "description", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "uk-grid-small uk-child-width-auto uk-grid" },
-            _vm._l(_vm.types, function(type) {
-              return _c("div", [
-                _c("label", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.domainType,
-                        expression: "domainType"
-                      }
-                    ],
-                    staticClass: "uk-radio",
-                    attrs: { type: "radio" },
-                    domProps: {
-                      value: type.code,
-                      checked: _vm._q(_vm.domainType, type.code)
-                    },
-                    on: {
-                      click: _vm.typeChange,
-                      change: function($event) {
-                        _vm.domainType = type.code
-                      }
-                    }
-                  }),
-                  _vm._v(" " + _vm._s(type.name) + "\n                ")
-                ])
-              ])
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "uk-grid-small uk-child-width-auto uk-grid" },
-            [
-              _c(
-                "ul",
-                [
-                  _vm._l(_vm.domain.additionalDomains, function(
-                    additionalDomain,
-                    key
-                  ) {
-                    return _vm.domain.additionalDomains.length > 0
-                      ? _c("li", [
-                          _c("input", {
-                            attrs: { type: "text" },
-                            domProps: { value: additionalDomain.name },
-                            on: {
-                              blur: function($event) {
-                                _vm.textEditing = false
-                                _vm.editText(key, $event.target.value)
-                              }
-                            }
-                          }),
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "uk-button uk-button-small uk-button-danger",
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteAdditionalDomain(key)
-                                }
-                              }
-                            },
-                            [_vm._v("delete")]
-                          )
-                        ])
-                      : _vm._e()
-                  }),
-                  _vm._v(" "),
-                  _c("li", { staticClass: "search-box" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.newAddDomain,
-                          expression: "newAddDomain"
-                        }
-                      ],
-                      attrs: { type: "text", placeholder: "Add domain…" },
-                      domProps: { value: _vm.newAddDomain },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.newAddDomain = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "uk-button uk-button-small uk-button-primary",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.newAdditioanalDomain(_vm.newAddDomain)
-                          }
-                        }
-                      },
-                      [_vm._v("add")]
-                    )
-                  ])
-                ],
-                2
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-margin" }, [
-            _vm.domain.screen
-              ? _c("div", { staticClass: "uk-margin" }, [
-                  _c("img", {
-                    staticClass: "img-responsive",
-                    attrs: { src: _vm.domain.screen, height: "70", width: "90" }
-                  })
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { attrs: { "uk-form-custom": "target: true" } }, [
-              _c("input", {
-                attrs: { type: "file" },
-                on: { change: _vm.screenChanged }
-              }),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "uk-input uk-form-width-medium",
-                attrs: {
-                  type: "text",
-                  placeholder: "Select file",
-                  disabled: ""
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "uk-button uk-button-primary",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("Save")]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "uk-margin" }, [
-        _c(
-          "nav",
-          {
-            attrs: {
-              "aria-label": "Page navigation example",
-              id: "page-navigation"
-            }
-          },
-          [
-            _c(
-              "ul",
-              {
-                staticClass: "uk-pagination uk-flex-center",
-                attrs: { "data-uk-margin": "" }
-              },
-              [
-                _c(
-                  "li",
-                  { class: [{ disabled: !_vm.pagination.prev_page_url }] },
-                  [
-                    _c(
-                      "a",
-                      {
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.fetchDomains(
-                              _vm.pagination.prev_page_url
-                            )
-                          }
-                        }
-                      },
-                      [_c("span", { attrs: { "uk-pagination-previous": "" } })]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("li", { staticClass: "page-item disabled" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "page-link text-dark",
-                      attrs: { href: "#" }
-                    },
-                    [
-                      _vm._v(
-                        "Page " +
-                          _vm._s(_vm.pagination.current_page) +
-                          " of " +
-                          _vm._s(_vm.pagination.last_page)
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  { class: [{ disabled: !_vm.pagination.next_page_url }] },
-                  [
-                    _c(
-                      "a",
-                      {
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.fetchDomains(
-                              _vm.pagination.next_page_url
-                            )
-                          }
-                        }
-                      },
-                      [_c("span", { attrs: { "uk-pagination-next": "" } })]
-                    )
-                  ]
-                )
-              ]
-            )
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.domains, function(domain) {
-        return _c("div", { key: domain.id }, [
-          _c("div", { staticClass: "uk-margin" }, [
-            _c("div", { attrs: { "data-uk-grid": "" } }, [
-              _c("div", { staticClass: "uk-width-1-3@m" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "uk-cover-container uk-transition-toggle uk-display-block uk-link-reset",
-                    attrs: { href: domain.link, target: "_blank" }
-                  },
-                  [
-                    _c("img", {
-                      attrs: {
-                        src:
-                          domain.screen !== null
-                            ? _vm.location + "/" + domain.screen.image_path
-                            : ""
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("div", {
-                      staticClass:
-                        "uk-overlay-primary uk-transition-fade uk-position-cover"
-                    }),
-                    _vm._v(" "),
-                    _vm._m(0, true)
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "uk-width-2-3@m" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "uk-flex-middle uk-grid-small",
-                    attrs: { "data-uk-grid": "" }
-                  },
-                  [
-                    _c("div", { staticClass: "uk-text-bold uk-h4" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "uk-link-reset",
-                          attrs: { href: domain.link, target: "_blank" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                " +
-                              _vm._s(domain.id) +
-                              ". " +
-                              _vm._s(domain.name) +
-                              "\n                            "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "uk-link-muted",
-                          attrs: { href: "#", target: "_blank" }
-                        },
-                        [_vm._v("(" + _vm._s(domain.type) + ")")]
-                      )
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "uk-text-meta" }, [
-                  _vm._v(
-                    "\n                        Additional domains:\n                        "
-                  ),
-                  _c(
-                    "ul",
-                    _vm._l(domain.additionalDomains, function(
-                      additionalDomain
-                    ) {
-                      return domain.additionalDomains.length > 0
-                        ? _c("li", [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "uk-link-muted",
-                                attrs: {
-                                  href: _vm.httpAdd(additionalDomain.name),
-                                  target: "_blank"
-                                }
-                              },
-                              [_vm._v(" " + _vm._s(additionalDomain.name))]
-                            )
-                          ])
-                        : _vm._e()
-                    }),
-                    0
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "uk-margin" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "uk-child-width-1-1 uk-grid-collapse",
-                      attrs: { "data-uk-grid": "" }
-                    },
-                    [
-                      _c("div", [
-                        _vm._v(
-                          "\n                                Login: " +
-                            _vm._s(domain.login) +
-                            "\n                            "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _vm._v(
-                          "\n                                Password: " +
-                            _vm._s(domain.password) +
-                            "\n                            "
-                        )
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "uk-margin" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(domain.description) +
-                      "\n                    "
-                  )
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c(
-              "button",
-              {
-                directives: [
-                  {
-                    name: "scroll-to",
-                    rawName: "v-scroll-to",
-                    value: { el: "#domain-editor", offset: -70 },
-                    expression: "{ el: '#domain-editor', offset: -70, }"
-                  }
-                ],
-                staticClass: "uk-button uk-button-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.editdomain(domain)
-                  }
-                }
-              },
-              [_vm._v("edit")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                directives: [
-                  {
-                    name: "scroll-to",
-                    rawName: "v-scroll-to",
-                    value: { el: "#page-navigation" },
-                    expression: "{el : '#page-navigation'}"
-                  }
-                ],
-                staticClass: "uk-button uk-button-danger",
-                on: {
-                  click: function($event) {
-                    return _vm.deleteDomain(domain.id)
-                  }
-                }
-              },
-              [_vm._v("delete")]
-            )
-          ])
-        ])
-      })
-    ],
-    2
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-position-center" }, [
-      _c("div", { staticClass: "uk-overlay uk-transition-fade uk-light" }, [
-        _vm._v(
-          "\n                                Visit web-site\n                            "
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -17828,8 +16501,8 @@ var i18n = new vue_i18n__WEBPACK_IMPORTED_MODULE_0__["default"]({
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-Vue.component('lang-switcher', __webpack_require__(/*! ./components/LangSwitcherComponent.vue */ "./resources/js/components/LangSwitcherComponent.vue")["default"]);
-Vue.component('domains', __webpack_require__(/*! ./components/DomainsComponent.vue */ "./resources/js/components/DomainsComponent.vue")["default"]);
+Vue.component('lang-switcher', __webpack_require__(/*! ./components/LangSwitcherComponent.vue */ "./resources/js/components/LangSwitcherComponent.vue")["default"]); //Vue.component('domains', require('./components/DomainsComponent.vue').default);
+
 Vue.component('domain-list', __webpack_require__(/*! ./components/DomainListComponent.vue */ "./resources/js/components/DomainListComponent.vue")["default"]);
 Vue.component('domain', __webpack_require__(/*! ./components/DomainComponent.vue */ "./resources/js/components/DomainComponent.vue")["default"]);
 /**
@@ -17978,75 +16651,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DomainListComponent_vue_vue_type_template_id_5b6fb000_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DomainListComponent_vue_vue_type_template_id_5b6fb000_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/DomainsComponent.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/DomainsComponent.vue ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DomainsComponent_vue_vue_type_template_id_58b9d8f9_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DomainsComponent.vue?vue&type=template&id=58b9d8f9&scoped=true& */ "./resources/js/components/DomainsComponent.vue?vue&type=template&id=58b9d8f9&scoped=true&");
-/* harmony import */ var _DomainsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DomainsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/DomainsComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _DomainsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _DomainsComponent_vue_vue_type_template_id_58b9d8f9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _DomainsComponent_vue_vue_type_template_id_58b9d8f9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "58b9d8f9",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/DomainsComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/DomainsComponent.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/DomainsComponent.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DomainsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DomainsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DomainsComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DomainsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/DomainsComponent.vue?vue&type=template&id=58b9d8f9&scoped=true&":
-/*!*************************************************************************************************!*\
-  !*** ./resources/js/components/DomainsComponent.vue?vue&type=template&id=58b9d8f9&scoped=true& ***!
-  \*************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DomainsComponent_vue_vue_type_template_id_58b9d8f9_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DomainsComponent.vue?vue&type=template&id=58b9d8f9&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DomainsComponent.vue?vue&type=template&id=58b9d8f9&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DomainsComponent_vue_vue_type_template_id_58b9d8f9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DomainsComponent_vue_vue_type_template_id_58b9d8f9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

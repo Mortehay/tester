@@ -29,7 +29,7 @@ const i18n = new VueInternationalization({
  */
 
 Vue.component('lang-switcher', require('./components/LangSwitcherComponent.vue').default);
-Vue.component('domains', require('./components/DomainsComponent.vue').default);
+//Vue.component('domains', require('./components/DomainsComponent.vue').default);
 Vue.component('domain-list', require('./components/DomainListComponent.vue').default);
 Vue.component('domain', require('./components/DomainComponent.vue').default);
 

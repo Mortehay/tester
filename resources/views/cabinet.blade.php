@@ -99,7 +99,7 @@
                         </div>
 
                         <div class="uk-margin">
-                            <domains></domains>
+                            {{--<domains></domains>--}}
                         </div>
                     </div>
                 </div>

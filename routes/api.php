@@ -23,7 +23,7 @@ Route::get('langs/{lang}', 'Api\LangController@change');
 
 /*domain api routs*/
 //list domains
-Route::get('domains', 'Api\DomainController@getAll');
+Route::post('domains', 'Api\DomainController@getAll');
 //list single domain
 Route::get('domain/{id}', 'Api\DomainController@show');
 //create new domain

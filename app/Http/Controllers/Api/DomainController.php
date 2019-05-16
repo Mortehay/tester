@@ -12,9 +12,31 @@ use App\ImageUploads;
 
 class DomainController extends Controller
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
-        $domains = Domain::orderBy('created_at','desc')->paginate(5);
+        //dd($request->input());
+        if(array_key_exists('paginate', $request->input()) && $request->input('paginate') == true) {
+            if(array_key_exists('paginateElements', $request->input()) && is_int($request->input('paginateElements'))){
+                if(array_key_exists('searchDomain',$request->input()) && $request->input('searchDomain')){
+                    $domains = Domain::where('name', 'like', '%'.$request->input('searchDomain').'%')->orderBy('created_at','desc')->paginate($request->input('paginateElements'));
+                } else {
+                    $domains = Domain::orderBy('created_at','desc')->paginate($request->input('paginateElements'));
+                }
+            } else {
+                if(array_key_exists('searchDomain',$request->input()) && $request->input('searchDomain')){
+                    $domains = Domain::where('name', 'like', '%'.$request->input('searchDomain').'%')->orderBy('created_at','desc')->paginate(5);
+                } else {
+                    $domains = Domain::orderBy('created_at','desc')->paginate(5);
+                }
+
+            }
+        } else {
+            if(array_key_exists('searchDomain',$request->input()) && $request->input('searchDomain')){
+                $domains = Domain::where('name', 'like', '%'.$request->input('searchDomain').'%')->orderBy('created_at','desc')->get();
+            } else {
+                $domains = Domain::orderBy('created_at','desc')->get();
+            }
+        }
         // returnn collection of domains as a resource
         return  DomainResource::collection($domains);
     }
