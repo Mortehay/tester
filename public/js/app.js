@@ -577,29 +577,36 @@ __webpack_require__.r(__webpack_exports__);
     searchDomain: function searchDomain(searchName) {
       var _this2 = this;
 
+      var params = {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json'
+        }
+      };
+
       if (this.domainSearchName.length >= 2) {
-        console.log('change', this.domainSearchName);
-        var vm = this;
-        fetch('/api/domains', {
-          method: 'post',
-          body: JSON.stringify({
-            paginate: this.paginate,
-            paginateElements: 5,
-            searchDomain: this.domainSearchName
-          }),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (res) {
-          return res.json();
-        }).then(function (res) {
-          //console.log(res.data);
-          _this2.domains = res.data;
-          if (_this2.paginate) vm.makePagination(res.meta, res.links);
-        })["catch"](function (err) {
-          return console.log(err);
+        params['body'] = JSON.stringify({
+          paginate: this.paginate,
+          paginateElements: 5,
+          searchDomain: this.domainSearchName
+        }); //console.log('change', this.domainSearchName);
+      } else {
+        params['body'] = JSON.stringify({
+          paginate: this.paginate,
+          paginateElements: 5
         });
       }
+
+      var vm = this;
+      fetch('/api/domains', params).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        //console.log(res.data);
+        _this2.domains = res.data;
+        if (_this2.paginate) vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     }
   }
 });

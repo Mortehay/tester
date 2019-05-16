@@ -150,24 +150,28 @@
                 this.forceRerender();
             },
             searchDomain(searchName){
+                let params = {
+                    method: 'post',
+                    headers:{
+                        'content-type':'application/json'
+                    }
+                };
                 if((this.domainSearchName).length >= 2 ){
-                    console.log('change', this.domainSearchName);
-                    let vm = this;
-                    fetch('/api/domains', {
-                            method: 'post',
-                            body : JSON.stringify({paginate: this.paginate, paginateElements: 5 , searchDomain: this.domainSearchName}),
-                            headers:{
-                                'content-type':'application/json'
-                            }
-                        })
-                        .then(res => res.json())
-                        .then(res =>{
-                            //console.log(res.data);
-                            this.domains = res.data;
-                            if(this.paginate) vm.makePagination(res.meta, res.links);
-                        })
-                        .catch(err => console.log(err));
+                    params['body'] = JSON.stringify({paginate: this.paginate, paginateElements: 5 , searchDomain: this.domainSearchName});
+                    //console.log('change', this.domainSearchName);
+
+                } else {
+                    params['body'] = JSON.stringify({paginate: this.paginate, paginateElements: 5 });
                 }
+                let vm = this;
+                fetch('/api/domains', params)
+                    .then(res => res.json())
+                    .then(res =>{
+                        //console.log(res.data);
+                        this.domains = res.data;
+                        if(this.paginate) vm.makePagination(res.meta, res.links);
+                    })
+                    .catch(err => console.log(err));
             }
         },
     }
