@@ -7,11 +7,19 @@
 
 
 window.Vue = require('vue');
+import VueInternationalization from 'vue-i18n';
+import Locale from './vue-i18n-locales.generated';
 
 var VueScrollTo = require('vue-scrollto');
-
+Vue.use(VueInternationalization);
 Vue.use(VueScrollTo);
 
+const lang = document.documentElement.lang.substr(0, 2);
+const i18n = new VueInternationalization({
+    locale: lang,
+    fallbackLocale: 'en',
+    messages: Locale
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -33,5 +41,6 @@ Vue.component('domain', require('./components/DomainComponent.vue').default);
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    i18n,
 });

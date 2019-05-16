@@ -26,7 +26,9 @@
     "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
+    "vue-i18n": "^8.11.2",
     "vue-image-crop-upload": "^2.5.0",
-    "vue-scrollto": "^2.15.0"
+    "vue-scrollto": "^2.15.0",
+    "webpack-shell-plugin": "^0.5.0"
   }
 }

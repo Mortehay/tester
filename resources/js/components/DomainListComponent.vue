@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="message">
+            <p>{{ $t('texts.login.title', {name: 'visitor'}) }}</p>
+        </div>
         <div class="uk-margin">
             <a class="uk-button uk-button-primary" @click="addDomain()"><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Add new</a>
         </div>
