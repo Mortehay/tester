@@ -491,6 +491,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
   components: {},
@@ -3540,94 +3547,101 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "uk-margin" }, [
-      _c("div", { staticClass: "uk-flex-midlle", attrs: { "uk-grid": "" } }, [
-        _c("div", { staticClass: "uk-width-expand" }, [
-          _c(
-            "a",
-            {
-              staticClass: "uk-button uk-button-primary",
-              on: {
-                click: function($event) {
-                  return _vm.addDomain()
-                }
-              }
-            },
-            [
-              _c("span", {
-                staticClass: "uk-margin-small-right",
-                attrs: { "uk-icon": "icon: plus" }
-              }),
-              _vm._v(" Add new")
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _vm._m(0)
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "uk-margin" }, [
-      _c("div", { staticClass: "uk-grid-collapse", attrs: { "uk-grid": "" } }, [
-        _c("div", { staticClass: "uk-width-expand" }, [
-          _c("div", { staticClass: "uk-inline uk-width-1-1" }, [
-            _c("span", {
-              staticClass: "uk-form-icon",
-              attrs: { "uk-icon": "icon: search" }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.domainSearchName,
-                  expression: "domainSearchName"
-                }
-              ],
-              staticClass: "uk-input uk-width-1-1",
-              class: { danger: _vm.domainSearchName.length < 4 },
-              attrs: { type: "text", placeholder: "search" },
-              domProps: { value: _vm.domainSearchName },
-              on: {
-                keyup: _vm.searchDomain,
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+    _c("div", { staticClass: "uk-card-body" }, [
+      _c("div", { staticClass: "uk-margin" }, [
+        _c("div", { staticClass: "uk-flex-midlle", attrs: { "uk-grid": "" } }, [
+          _c("div", { staticClass: "uk-width-expand" }, [
+            _c(
+              "a",
+              {
+                staticClass: "uk-button uk-button-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.addDomain()
                   }
-                  _vm.domainSearchName = $event.target.value
                 }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "uk-width-auto" }, [
-          _c(
-            "button",
-            {
-              staticClass: "uk-button uk-button-primary tm-refresh-button",
-              on: {
-                click: function($event) {
-                  return _vm.searchDomainClear()
-                }
-              }
-            },
-            [
-              _c("span", {
-                staticClass: "tm-svg-top-fix",
-                attrs: { "uk-icon": "icon: close" }
-              })
-            ]
-          )
+              },
+              [
+                _c("span", {
+                  staticClass: "uk-margin-small-right",
+                  attrs: { "uk-icon": "icon: plus" }
+                }),
+                _vm._v(" Add new")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-margin" }, [
+        _c(
+          "div",
+          { staticClass: "uk-grid-collapse", attrs: { "uk-grid": "" } },
+          [
+            _c("div", { staticClass: "uk-width-expand" }, [
+              _c("div", { staticClass: "uk-inline uk-width-1-1" }, [
+                _c("span", {
+                  staticClass: "uk-form-icon",
+                  attrs: { "uk-icon": "icon: search" }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.domainSearchName,
+                      expression: "domainSearchName"
+                    }
+                  ],
+                  staticClass: "uk-input uk-width-1-1",
+                  class: { danger: _vm.domainSearchName.length < 4 },
+                  attrs: { type: "text", placeholder: "search" },
+                  domProps: { value: _vm.domainSearchName },
+                  on: {
+                    keyup: _vm.searchDomain,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.domainSearchName = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-width-auto" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "uk-button uk-button-primary tm-refresh-button tm-button-default",
+                  on: {
+                    click: function($event) {
+                      return _vm.searchDomainClear()
+                    }
+                  }
+                },
+                [
+                  _c("span", {
+                    staticClass: "tm-svg-top-fix",
+                    attrs: { "uk-icon": "icon: close" }
+                  })
+                ]
+              )
+            ])
+          ]
+        )
       ])
     ]),
     _vm._v(" "),
     _c(
       "div",
       {
-        staticClass: "uk-grid-small uk-child-width-1-1",
+        staticClass: "uk-grid-small tm-padding-bottom uk-child-width-1-1",
         attrs: { "data-uk-grid": "" }
       },
       [
@@ -3737,40 +3751,91 @@ var render = function() {
               },
               [
                 _c("div", [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "uk-grid-small uk-grid-divider",
-                      attrs: { "data-uk-grid": "" }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "uk-width-expand uk-flex-middle uk-flex"
-                        },
-                        [
-                          _c("div", [
+                  _c("div", { staticClass: "tm-list-hover" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "uk-grid-small uk-grid-divider",
+                        attrs: { "data-uk-grid": "" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "uk-width-expand uk-flex-middle uk-flex"
+                          },
+                          [
                             _c(
-                              "span",
-                              {
-                                staticClass: "uk-label uk-margin-small-right",
-                                class: {
-                                  "tm-label-stoped":
-                                    domain.state == null || domain.state == ""
-                                }
-                              },
+                              "div",
+                              { staticClass: "uk-flex-middle uk-flex" },
                               [
-                                _vm._v(
-                                  _vm._s(
-                                    domain.state == null || domain.state == ""
-                                      ? "stoped"
-                                      : domain.state
-                                  )
-                                )
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "uk-label uk-margin-small-right",
+                                    class: {
+                                      "tm-label-stoped":
+                                        domain.state == null ||
+                                        domain.state == ""
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        domain.state == null ||
+                                          domain.state == ""
+                                          ? "stoped"
+                                          : domain.state
+                                      )
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "scroll-to",
+                                        rawName: "v-scroll-to",
+                                        value: {
+                                          el: "#domain-widget",
+                                          offset: -70
+                                        },
+                                        expression:
+                                          "{ el: '#domain-widget', offset: -70, }"
+                                      }
+                                    ],
+                                    staticClass: "uk-link-text",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.editdomain(domain)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(domain.name))]
+                                ),
+                                _vm._v(" "),
+                                _c("a", {
+                                  staticClass: "tm-margin-xsmall-left",
+                                  attrs: {
+                                    href: _vm.httpAdd(domain.link),
+                                    target: "_blank",
+                                    "data-uk-icon": "icon: link;ratio: 0.8",
+                                    "data-uk-tooltip": "www..."
+                                  }
+                                })
                               ]
-                            ),
-                            _vm._v(" "),
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "uk-width-auto uk-flex-middle" },
+                          [
                             _c(
                               "a",
                               {
@@ -3786,53 +3851,26 @@ var render = function() {
                                       "{ el: '#domain-widget', offset: -70, }"
                                   }
                                 ],
-                                staticClass: "uk-link-text",
+                                staticClass: "uk-link-heading",
+                                attrs: { "data-uk-tooltip": "Edit" },
                                 on: {
                                   click: function($event) {
                                     return _vm.editdomain(domain)
                                   }
                                 }
                               },
-                              [_vm._v(_vm._s(domain.name))]
-                            ),
-                            _vm._v(" "),
-                            _c("a", {
-                              staticClass: "tm-margin-xsmall-left",
-                              attrs: {
-                                href: _vm.httpAdd(domain.link),
-                                target: "_blank",
-                                "data-uk-icon": "icon: link;ratio: 0.8",
-                                "data-uk-tooltip": "www..."
-                              }
-                            })
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "uk-width-auto" }, [
-                        _c("a", {
-                          directives: [
-                            {
-                              name: "scroll-to",
-                              rawName: "v-scroll-to",
-                              value: { el: "#domain-widget", offset: -70 },
-                              expression:
-                                "{ el: '#domain-widget', offset: -70, }"
-                            }
-                          ],
-                          attrs: {
-                            "data-uk-icon": "icon: cog;ratio: 0.8",
-                            "data-uk-tooltip": "Edit"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.editdomain(domain)
-                            }
-                          }
-                        })
-                      ])
-                    ]
-                  )
+                              [
+                                _c("span", {
+                                  staticClass: "tm-svg-top-fix",
+                                  attrs: { "uk-icon": "icon: cog;ratio: 1" }
+                                })
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
                 ])
               ]
             )

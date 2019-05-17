@@ -1,35 +1,38 @@
 <template>
     <div>
-        <div class="uk-margin">
-            <div class="uk-flex-midlle" uk-grid>
-                <div class="uk-width-expand">
-                    <a class="uk-button uk-button-primary" @click="addDomain()"><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Add new</a>
-                </div>
-                <div class="uk-width-auto">
-                    <a href="" class="uk-button uk-button-primary tm-refresh-button">
-                        <span class="tm-svg-top-fix" uk-icon="icon: refresh"></span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-        <div class="uk-margin">
-            <div class="uk-grid-collapse" uk-grid>
-                <div class="uk-width-expand">
-                    <div class="uk-inline uk-width-1-1">
-                        <span class="uk-form-icon" uk-icon="icon: search"></span>
-                        <input  class="uk-input uk-width-1-1" type="text" placeholder="search" v-model="domainSearchName" v-on:keyup="searchDomain" v-bind:class="{ danger: domainSearchName.length < 4 }">
+        <div class="uk-card-body">
+            <div class="uk-margin">
+                <div class="uk-flex-midlle" uk-grid>
+                    <div class="uk-width-expand">
+                        <a class="uk-button uk-button-primary" @click="addDomain()"><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Add new</a>
+                    </div>
+                    <div class="uk-width-auto">
+                        <a href="" class="uk-button uk-button-primary tm-refresh-button">
+                            <span class="tm-svg-top-fix" uk-icon="icon: refresh"></span>
+                        </a>
                     </div>
                 </div>
-                <div class="uk-width-auto">
-                    <button @click="searchDomainClear()" class="uk-button uk-button-primary tm-refresh-button">
-                        <span class="tm-svg-top-fix" uk-icon="icon: close"></span>
-                    </button>
+
+            </div>
+            <div class="uk-margin">
+                <div class="uk-grid-collapse" uk-grid>
+                    <div class="uk-width-expand">
+                        <div class="uk-inline uk-width-1-1">
+                            <span class="uk-form-icon" uk-icon="icon: search"></span>
+                            <input  class="uk-input uk-width-1-1" type="text" placeholder="search" v-model="domainSearchName" v-on:keyup="searchDomain" v-bind:class="{ danger: domainSearchName.length < 4 }">
+                        </div>
+                    </div>
+                    <div class="uk-width-auto">
+                        <button @click="searchDomainClear()" class="uk-button uk-button-primary tm-refresh-button tm-button-default">
+                            <span class="tm-svg-top-fix" uk-icon="icon: close"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>
+
+        <div class="uk-grid-small tm-padding-bottom uk-child-width-1-1" data-uk-grid>
             <div v-if="paginate" class="uk-margin">
                 <nav aria-label="Page navigation example" id="page-navigation">
                     <ul class="uk-pagination uk-flex-center" data-uk-margin>
@@ -43,19 +46,23 @@
                     </ul>
                 </nav>
             </div>
-            <div class="" v-for="domain in domains" v-bind:key="domain.id">
+            <div v-for="domain in domains" v-bind:key="domain.id">
                 <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>
                     <div>
-                        <div class="uk-grid-small uk-grid-divider" data-uk-grid>
-                            <div class="uk-width-expand uk-flex-middle uk-flex">
-                                <div>
-                                    <span  :class="{ 'tm-label-stoped' : domain.state == null || domain.state == ''}" class="uk-label uk-margin-small-right">{{domain.state == null || domain.state == '' ? 'stoped' : domain.state}}</span>
-                                    <a @click="editdomain(domain)" v-scroll-to="{ el: '#domain-widget', offset: -70, }" class="uk-link-text">{{ domain.name }}</a>
-                                    <a :href="httpAdd(domain.link)" target="_blank" class="tm-margin-xsmall-left" data-uk-icon="icon: link;ratio: 0.8" data-uk-tooltip="www..."></a>
+                        <div class="tm-list-hover">
+                            <div class="uk-grid-small uk-grid-divider" data-uk-grid>
+                                <div class="uk-width-expand uk-flex-middle uk-flex">
+                                    <div class="uk-flex-middle uk-flex">
+                                        <span  :class="{ 'tm-label-stoped' : domain.state == null || domain.state == ''}" class="uk-label uk-margin-small-right">{{domain.state == null || domain.state == '' ? 'stoped' : domain.state}}</span>
+                                        <a @click="editdomain(domain)" v-scroll-to="{ el: '#domain-widget', offset: -70, }" class="uk-link-text">{{ domain.name }}</a>
+                                        <a :href="httpAdd(domain.link)" target="_blank" class="tm-margin-xsmall-left" data-uk-icon="icon: link;ratio: 0.8" data-uk-tooltip="www..."></a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="uk-width-auto">
-                                <a @click="editdomain(domain)" v-scroll-to="{ el: '#domain-widget', offset: -70, }" class="" data-uk-icon="icon: cog;ratio: 0.8" data-uk-tooltip="Edit"></a>
+                                <div class="uk-width-auto uk-flex-middle">
+                                    <a @click="editdomain(domain)" v-scroll-to="{ el: '#domain-widget', offset: -70, }" class="uk-link-heading" data-uk-tooltip="Edit">
+                                        <span class="tm-svg-top-fix" uk-icon="icon: cog;ratio: 1"></span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

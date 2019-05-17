@@ -1,8 +1,18 @@
 .uk-button-primary {
   border: 0px solid transparent;
 }
-.uk-button {
+.tm-button-default {
   line-height: 40px;
+}
+.tm-list-hover {
+  padding: 5px 40px;
+}
+.tm-list-hover:hover,
+.tm-list-hover.uk-active {
+  background-color: #f9f9f9;
+}
+.tm-padding-bottom {
+  padding-bottom: 40px;
 }
 .tm-svg-top-fix svg {
   margin-top: -5px;

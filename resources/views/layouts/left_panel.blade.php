@@ -1,4 +1,4 @@
-<div class="uk-margin uk-card uk-card-default uk-card-body">
+<div class="uk-margin uk-card uk-card-default">
     {{--<div class="uk-margin">
         <a href="" class="uk-button uk-button-primary"><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Add new</a>
     </div>
