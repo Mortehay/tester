@@ -8,10 +8,10 @@
                 @include('layouts.left_panel')
             </div>
             <div class="uk-width-2-3@s uk-width-expand@l">
-                <div class="uk-margin">
+                <div>
                     <domain></domain>
                 </div>
-                <div class="uk-margin">
+                <div>
                     <div class="uk-card uk-card-default uk-card-body" data-uk-height-viewport="expand: true">
                         <div class="uk-card uk-card-primary uk-text-center uk-width-large uk-margin-auto uk-padding">
                             <div class="uk-h2 uk-margin">
