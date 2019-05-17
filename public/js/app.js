@@ -349,8 +349,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$root.$emit("domainList", {
         rerender: true
-      });
-      this.forceRerender();
+      }); //this.forceRerender();
     },
     editdomainParams: function editdomainParams(domainParams) {
       this.edit = true;
@@ -469,6 +468,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   props: {},
   data: function data() {
     return {
+      rerender: false,
       domainListKey: 0,
       paginate: false,
       location: window.location.origin,
@@ -494,16 +494,20 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       validationErrors: []
     };
   },
-  mounted: function mounted() {
+  beforeMount: function beforeMount() {
     var _this = this;
 
     this.$root.$on('domainList', function (data) {
-      console.log(data);
-
-      if (data.rerender) {
-        _this.fetchDomains();
-      }
+      _this.rerender = data.rerender;
     });
+  },
+  watch: {
+    rerender: function rerender(val) {
+      if (this.rerender) {
+        this.fetchDomains();
+        this.rerender = false;
+      }
+    }
   },
   created: function created() {
     this.fetchDomains();

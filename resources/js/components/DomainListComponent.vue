@@ -80,6 +80,7 @@
         props: {},
         data() {
             return {
+                rerender: false,
                 domainListKey: 0,
                 paginate: false,
                 location: window.location.origin,
@@ -105,13 +106,21 @@
                 validationErrors:[],
             };
         },
-        mounted() {
+        beforeMount() {
             this.$root.$on('domainList', (data) => {
-                console.log(data);
-                if(data.rerender) {
-                   this.fetchDomains();
-                }
+                this.rerender = data.rerender;
             })
+        },
+        watch:{
+          rerender: function(val) {
+
+              if(this.rerender) {
+
+                  this.fetchDomains();
+                  this.rerender = false;
+              }
+
+          }
         },
         created() {
             this.fetchDomains();
