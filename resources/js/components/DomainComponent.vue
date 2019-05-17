@@ -1,6 +1,6 @@
 <template>
     <div v-show="domainWidgetIsVisible" id="domain-widget">
-        <form id="domainParams-editor" @submit.prevent="adddomainParams" class="uk-form">
+        <form id="domainParams-editor" @submit.prevent="addDomainParams" class="uk-form">
             <div class="uk-grid-small uk-child-width-1-2@s" data-uk-grid>
                 <div>
                     <input type="text" class="uk-input" placeholder="domainParams name" v-model="domainParams.name">
@@ -33,18 +33,18 @@
             </div>
             <div class="uk-grid-small uk-child-width-auto uk-grid">
                 <ul>
-                    <li v-if="(domainParams.additionaldomainParams).length > 0" v-for="(additionaldomainParams, key) in domainParams.additionaldomainParams">
-                        <input type="text" :value="additionaldomainParams.name" v-on:blur= "textEditing=false; editText(key, $event.target.value)"><button class="uk-button uk-button-small uk-button-danger"                                                                                  @click="deleteAdditionaldomainParams(key)">delete</button>
+                    <li v-if="(domainParams.additionalDomains).length > 0" v-for="(additionaldomain, key) in domainParams.additionalDomains">
+                        <input type="text" :value="additionaldomain.name" v-on:blur= "textEditing=false; editText(key, $event.target.value)"><button class="uk-button uk-button-small uk-button-danger"                                                                                  @click="deleteAdditionalDomain(key)">delete</button>
                     </li>
                     <li class="search-box">
-                        <input type="text" placeholder="Add domainParams…"  v-model="newAdddomainParams">
-                        <button class="uk-button uk-button-small uk-button-primary" @click.prevent="newAdditioanaldomainParams(newAdddomainParams)">add</button>
+                        <input type="text" placeholder="Add domainParams…"  v-model="newAdddomain">
+                        <button class="uk-button uk-button-small uk-button-primary" @click.prevent="newAdditioanalDomain(newAdddomain)">add</button>
                     </li>
                 </ul>
             </div>
             <div class="uk-margin">
                 <div class="uk-margin" v-if="domainParams.screen">
-                    <img :src="domainParams.screen" class="img-responsive" height="70" width="90">
+                    <img :src="(domainParams.screen).indexOf('data:image') > -1 ? domainParams.screen : location + '/' + domainParams.screen" class="img-responsive" height="70" width="90">
                 </div>
                 <div uk-form-custom="target: true">
                     <input type="file" @change="screenChanged">
@@ -65,7 +65,7 @@
         data() {
             return {
                 location: window.location.origin,
-                domainParamss: [],
+                domainParams: [],
                 domainParamsType: '',
                 types:[
                     {
@@ -94,10 +94,10 @@
                     description: '',
                     screen: '',
                     image: '',
-                    additionaldomainParams: [],
+                    additionalDomains: [],
                 },
-                newAdddomainParams: '',
-                domainParams_id: '',
+                newAdddomain: '',
+                domain_id: '',
                 pagination: {},
                 edit: false,
                 domainWidgetIsVisible: false,
@@ -114,7 +114,7 @@
                 if(typeof this.domainParams.id != undefined) this.domainWidgetIsVisible = true;
                 this.edit = true;
                 this.domainParams.id = data.id;
-                this.domainParams.domainParams_id = data.id;
+                this.domainParams.domain_id = data.id;
                 this.domainParams.name = data.name;
                 this.domainParams.link = data.link;
                 this.domainParams.hosting_name = data.hosting_name;
@@ -126,7 +126,7 @@
                 this.domainParams.login = data.login;
                 this.domainParams.password = data.password;
                 this.domainParams.description = data.description;
-                this.domainParams.additionaldomainParams = data.additionaldomainParams;
+                this.domainParams.additionalDomains = data.additionalDomains;
             })
         },
         methods:{
@@ -135,13 +135,13 @@
                 this.domainParams.additionaldomainParams[key].name = text;
 
             },
-            newAdditioanaldomainParams(newdomainParams) {
-                this.domainParams.additionaldomainParams.push({name: newdomainParams});
+            newAdditioanalDomain(newdomainParams) {
+                this.domainParams.additionalDomains.push({name: newdomainParams});
                 //console.log(newdomainParams);
-                return this.newAdddomainParams = '';
+                return this.newAdddomain = '';
             },
-            deleteAdditionaldomainParams(index) {
-                this.domainParams.additionaldomainParams.splice(index, 1);
+            deleteAdditionalDomain(index) {
+                this.domainParams.additionalDomains.splice(index, 1);
                 return false;
             },
             screenChanged(e){
@@ -169,49 +169,24 @@
                 let vm = this;
                 let type = event.target.value;
                 this.domainParams.type = event.target.value;
-                //console.log(this.domainParams);
             },
-
-           /* fetchdomainParamss(page_url){
-                let vm = this;
-
-                page_url = page_url || '/api/domainParamss';
-                fetch(page_url)
-                    .then(res => res.json())
-                    .then(res =>{
-                        console.log(res.data);
-                        this.domainParamss = res.data;
-                        vm.makePagination(res.meta, res.links);
-                    })
-                    .catch(err => console.log(err));
-            },*/
-            /*makePagination(meta, links){
-                let pagination = {
-                    current_page: meta.current_page,
-                    last_page:meta.last_page,
-                    next_page_url: links.next,
-                    prev_page_url: links.prev
-                };
-                //console.log(pagination);
-                this.pagination = pagination;
-            },*/
-            deletedomainParams(id){
+            deleteDomainParams(id){
                 if(confirm('are you sure?')){
                     fetch(`/api/domainParams/${id}`,{method:'delete'})
                         .then(res => res.json())
                         .then(data => {
                             alert('domainParams removed');
-                            this.fetchdomainParamss();
+                            this.fetchdomainParams();
                         })
                         .catch(err =>console.log(err));
                 }
+                this.forceRerender();
             },
-            adddomainParams(){
-                //console.log(this.edit);
-                console.log(this.domainParams);
+            addDomainParams(){
+                //console.log(this.domainParams);
                 if(this.edit === false){
                     //add
-                    fetch('/api/domainParams',{
+                    fetch('/api/domain',{
                         method: 'post',
                         body : JSON.stringify(this.domainParams),
                         headers:{
@@ -232,20 +207,17 @@
                             this.domainParams.additionaldomainParams = [];
                             this.newAdddomainParams = '';
                             alert('domainParams added');
-                            this.fetchdomainParamss();
-                            this.$scrollTo('#page-navigation');
                         })
                         .catch(err => console.log(err));
                 } else {
                     //update
                     //console.log('update');
-                    console.log(this.domainParams);
+                    //console.log(this.domainParams);
 
-                    fetch('/api/domainParams',{
+                    fetch('/api/domain',{
                         method: 'put',
                         body : JSON.stringify(this.domainParams),
                         headers:{
-
                             'content-type':'application/json'
                         }
                     })
@@ -263,21 +235,21 @@
                                 password: '',
                                 description: '',
                                 screen:'',
-                                additionaldomainParams:[],
+                                additionalDomains:[],
                             };
-                            this.newAdddomainParams = '';
-                            alert('domainParams updated');
-                            this.fetchdomainParamss();
+                            this.newAdddomain = '';
+                            alert('domain updated');
                         })
                         .catch(err => console.log(err));
 
                 }
+                this.$root.$emit ("domainList", {rerender: true});
                 this.forceRerender();
             },
             editdomainParams(domainParams){
                 this.edit = true;
                 this.domainParams.id = domainParams.id;
-                this.domainParams.domainParams_id = domainParams.id;
+                this.domainParams.domain_id = domainParams.id;
                 this.domainParams.name = domainParams.name;
                 this.domainParams.link = domainParams.link;
                 this.domainParams.hosting_name = domainParams.hosting_name;
@@ -289,14 +261,10 @@
                 this.domainParams.login = domainParams.login;
                 this.domainParams.password = domainParams.password;
                 this.domainParams.description = domainParams.description;
-                this.domainParams.additionaldomainParams = domainParams.additionaldomainParams;
+                this.domainParams.additionaldomainParams = domainParams.additionalDomains;
 
 
             },
-            /*goToEmployees(domainParams){
-                //this.$route.push({ path: `/domainParamss/${domainParams.id}/employees` }) // -> /domainParamss/1/employees
-                window.location.href = `/tabledomainParamss/${domainParams.id}/tableadditionaldomainParams`;
-            },*/
             forceRerender() {
                 this.componentKey += 1;
             }
