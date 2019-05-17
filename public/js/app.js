@@ -307,7 +307,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     editText: function editText(key, text) {
       //console.log(key, text);
-      this.domainParams.additionaldomainParams[key].name = text;
+      this.domainParams.additionalDomains[key].name = text;
     },
     newAdditioanalDomain: function newAdditioanalDomain(newdomainParams) {
       this.domainParams.additionalDomains.push({
@@ -3575,6 +3575,7 @@ var render = function() {
                                 "uk-button uk-button-small uk-button-danger",
                               on: {
                                 click: function($event) {
+                                  $event.preventDefault()
                                   return _vm.deleteAdditionalDomain(key)
                                 }
                               }
@@ -17528,8 +17529,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\OSPanel\domains\tester\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\OSPanel\domains\tester\resources\less\style.less */"./resources/less/style.less");
+__webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\less\style.less */"./resources/less/style.less");
 
 
 /***/ })
