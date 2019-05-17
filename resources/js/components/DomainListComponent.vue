@@ -2,6 +2,7 @@
     <div>
         <div class="uk-margin">
             <a class="uk-button uk-button-primary" @click="addDomain()"><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Add new</a>
+            <a class="uk-button uk-button-primary" @click="fetchDomains()"><span class="uk-margin-small-right" uk-icon="icon: refresh"></span></a>
         </div>
         <div class="d-inline">
             <h6>search:</h6>
@@ -24,25 +25,27 @@
                 </nav>
             </div>
 
-
-            <div class="" v-for="domain in domains" v-bind:key="domain.id">
-                <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>
-                    <div>
-                        <div class="uk-grid-small uk-grid-divider" data-uk-grid>
-                            <div class="uk-width-expand uk-flex-middle uk-flex">
-                                <div>
-                                    <span  :class="{ 'tm-label-stoped' : domain.state == null || domain.state == ''}" class="uk-label uk-margin-small-right">{{domain.state == null || domain.state == '' ? 'stoped' : domain.state}}</span>
-                                    <a @click="editdomain(domain)" v-scroll-to="{ el: '#domain-widget', offset: -70, }" class="uk-link-text">{{ domain.name }}</a>
-                                    <a :href="httpAdd(domain.link)" target="_blank" class="tm-margin-xsmall-left" data-uk-icon="icon: link;ratio: 0.8" data-uk-tooltip="www..."></a>
+            <div :key="domainListKey">
+                <div class="" v-for="domain in domains" v-bind:key="domain.id" >
+                    <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>
+                        <div>
+                            <div class="uk-grid-small uk-grid-divider" data-uk-grid>
+                                <div class="uk-width-expand uk-flex-middle uk-flex">
+                                    <div>
+                                        <span  :class="{ 'tm-label-stoped' : domain.state == null || domain.state == ''}" class="uk-label uk-margin-small-right">{{domain.state == null || domain.state == '' ? 'stoped' : domain.state}}</span>
+                                        <a @click="editdomain(domain)" v-scroll-to="{ el: '#domain-widget', offset: -70, }" class="uk-link-text">{{ domain.name }}</a>
+                                        <a :href="httpAdd(domain.link)" target="_blank" class="tm-margin-xsmall-left" data-uk-icon="icon: link;ratio: 0.8" data-uk-tooltip="www..."></a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="uk-width-auto">
-                                <a @click="editdomain(domain)" v-scroll-to="{ el: '#domain-widget', offset: -70, }" class="" data-uk-icon="icon: cog;ratio: 0.8" data-uk-tooltip="Edit"></a>
+                                <div class="uk-width-auto">
+                                    <a @click="editdomain(domain)" v-scroll-to="{ el: '#domain-widget', offset: -70, }" class="" data-uk-icon="icon: cog;ratio: 0.8" data-uk-tooltip="Edit"></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -55,6 +58,7 @@
         props: {},
         data() {
             return {
+                domainListKey: 0,
                 paginate: false,
                 location: window.location.origin,
                 domains: [],
@@ -78,6 +82,14 @@
                 pagination: {},
                 validationErrors:[],
             };
+        },
+        mounted() {
+            this.$root.$on('domainList', (data) => {
+                console.log(data);
+                if(data.rerender) {
+                   this.fetchDomains();
+                }
+            })
         },
         created() {
             this.fetchDomains();
@@ -105,7 +117,7 @@
                     })
                     .then(res => res.json())
                     .then(res =>{
-                        console.log(res.data);
+                        //console.log(res.data);
                         this.domains = res.data;
                         console.log(this.domains);
                         if(this.paginate) vm.makePagination(res.meta, res.links);
@@ -141,15 +153,28 @@
                 );
             },
             editdomain(domain){
-                this.$root.$emit ("domainData", domain);
+                this.$root.$emit ("domainData", {
+                    id: domain.id,
+                    name: domain.name,
+                    link: domain.link,
+                    hosting_name: domain.hosting_name,
+                    hosting_link: domain.hosting_link,
+                    type: domain.type,
+                    login: domain.login,
+                    password: domain.password,
+                    description: domain.description,
+                    screen: (typeof domain.screen != undefined) && domain.screen.image_path != null ? domain.screen.image_path : 'storage/test.jpg',
+                    additionalDomains: domain.additionalDomains,
+                    state: domain.state,
+                });
             },
-            forceRerender() {
-                this.componentKey += 1;
+            forceRerender(key) {
+                this[key] += 1;
             },
             searchDomainClear(){
                 this.domainSearchName = '';
                 this.fetchDomains();
-                this.forceRerender();
+                this.forceRerender('domainListKey');
             },
             searchDomain(searchName){
                 let params = {

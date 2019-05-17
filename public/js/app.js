@@ -97,6 +97,8 @@
 __webpack_require__.r(__webpack_exports__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -161,9 +163,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   name: "domain",
   props: {},
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       location: window.location.origin,
-      domainParamss: [],
+      domainParams: [],
       domainParamsType: '',
       types: [{
         code: 'h_',
@@ -176,28 +180,21 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         name: 'host+domainParams'
       }],
       editedText: null,
-      textEditing: false,
-      domainParams: {
-        id: '',
-        name: '',
-        link: '',
-        hosting_name: '',
-        hosting_link: '',
-        type: '',
-        login: '',
-        password: '',
-        description: '',
-        screen: '',
-        image: '',
-        additionaldomainParams: []
-      },
-      newAdddomainParams: '',
-      domainParams_id: '',
-      pagination: {},
-      edit: false,
-      domainWidgetIsVisible: false,
-      validationErrors: []
-    };
+      textEditing: false
+    }, _defineProperty(_ref, "domainParams", {
+      id: '',
+      name: '',
+      link: '',
+      hosting_name: '',
+      hosting_link: '',
+      type: '',
+      login: '',
+      password: '',
+      description: '',
+      screen: '',
+      image: '',
+      additionalDomains: []
+    }), _defineProperty(_ref, "newAdddomain", ''), _defineProperty(_ref, "domain_id", ''), _defineProperty(_ref, "pagination", {}), _defineProperty(_ref, "edit", false), _defineProperty(_ref, "domainWidgetIsVisible", false), _defineProperty(_ref, "validationErrors", []), _ref;
   },
   created: function created() {},
   mounted: function mounted() {
@@ -207,7 +204,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       if (_typeof(_this.domainParams.id) != undefined) _this.domainWidgetIsVisible = true;
       _this.edit = true;
       _this.domainParams.id = data.id;
-      _this.domainParams.domainParams_id = data.id;
+      _this.domainParams.domain_id = data.id;
       _this.domainParams.name = data.name;
       _this.domainParams.link = data.link;
       _this.domainParams.hosting_name = data.hosting_name;
@@ -219,7 +216,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _this.domainParams.login = data.login;
       _this.domainParams.password = data.password;
       _this.domainParams.description = data.description;
-      _this.domainParams.additionaldomainParams = data.additionaldomainParams;
+      _this.domainParams.additionalDomains = data.additionalDomains;
     });
   },
   methods: {
@@ -227,15 +224,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       //console.log(key, text);
       this.domainParams.additionaldomainParams[key].name = text;
     },
-    newAdditioanaldomainParams: function newAdditioanaldomainParams(newdomainParams) {
-      this.domainParams.additionaldomainParams.push({
+    newAdditioanalDomain: function newAdditioanalDomain(newdomainParams) {
+      this.domainParams.additionalDomains.push({
         name: newdomainParams
       }); //console.log(newdomainParams);
 
-      return this.newAdddomainParams = '';
+      return this.newAdddomain = '';
     },
-    deleteAdditionaldomainParams: function deleteAdditionaldomainParams(index) {
-      this.domainParams.additionaldomainParams.splice(index, 1);
+    deleteAdditionalDomain: function deleteAdditionalDomain(index) {
+      this.domainParams.additionalDomains.splice(index, 1);
       return false;
     },
     screenChanged: function screenChanged(e) {
@@ -265,33 +262,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     typeChange: function typeChange() {
       var vm = this;
       var type = event.target.value;
-      this.domainParams.type = event.target.value; //console.log(this.domainParams);
+      this.domainParams.type = event.target.value;
     },
-
-    /* fetchdomainParamss(page_url){
-         let vm = this;
-          page_url = page_url || '/api/domainParamss';
-         fetch(page_url)
-             .then(res => res.json())
-             .then(res =>{
-                 console.log(res.data);
-                 this.domainParamss = res.data;
-                 vm.makePagination(res.meta, res.links);
-             })
-             .catch(err => console.log(err));
-     },*/
-
-    /*makePagination(meta, links){
-        let pagination = {
-            current_page: meta.current_page,
-            last_page:meta.last_page,
-            next_page_url: links.next,
-            prev_page_url: links.prev
-        };
-        //console.log(pagination);
-        this.pagination = pagination;
-    },*/
-    deletedomainParams: function deletedomainParams(id) {
+    deleteDomainParams: function deleteDomainParams(id) {
       var _this3 = this;
 
       if (confirm('are you sure?')) {
@@ -302,21 +275,21 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }).then(function (data) {
           alert('domainParams removed');
 
-          _this3.fetchdomainParamss();
+          _this3.fetchdomainParams();
         })["catch"](function (err) {
           return console.log(err);
         });
       }
+
+      this.forceRerender();
     },
-    adddomainParams: function adddomainParams() {
+    addDomainParams: function addDomainParams() {
       var _this4 = this;
 
-      //console.log(this.edit);
-      console.log(this.domainParams);
-
+      //console.log(this.domainParams);
       if (this.edit === false) {
         //add
-        fetch('/api/domainParams', {
+        fetch('/api/domain', {
           method: 'post',
           body: JSON.stringify(this.domainParams),
           headers: {
@@ -337,18 +310,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           _this4.domainParams.additionaldomainParams = [];
           _this4.newAdddomainParams = '';
           alert('domainParams added');
-
-          _this4.fetchdomainParamss();
-
-          _this4.$scrollTo('#page-navigation');
         })["catch"](function (err) {
           return console.log(err);
         });
       } else {
         //update
         //console.log('update');
-        console.log(this.domainParams);
-        fetch('/api/domainParams', {
+        //console.log(this.domainParams);
+        fetch('/api/domain', {
           method: 'put',
           body: JSON.stringify(this.domainParams),
           headers: {
@@ -369,23 +338,24 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             password: '',
             description: '',
             screen: '',
-            additionaldomainParams: []
+            additionalDomains: []
           };
-          _this4.newAdddomainParams = '';
-          alert('domainParams updated');
-
-          _this4.fetchdomainParamss();
+          _this4.newAdddomain = '';
+          alert('domain updated');
         })["catch"](function (err) {
           return console.log(err);
         });
       }
 
+      this.$root.$emit("domainList", {
+        rerender: true
+      });
       this.forceRerender();
     },
     editdomainParams: function editdomainParams(domainParams) {
       this.edit = true;
       this.domainParams.id = domainParams.id;
-      this.domainParams.domainParams_id = domainParams.id;
+      this.domainParams.domain_id = domainParams.id;
       this.domainParams.name = domainParams.name;
       this.domainParams.link = domainParams.link;
       this.domainParams.hosting_name = domainParams.hosting_name;
@@ -397,13 +367,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this.domainParams.login = domainParams.login;
       this.domainParams.password = domainParams.password;
       this.domainParams.description = domainParams.description;
-      this.domainParams.additionaldomainParams = domainParams.additionaldomainParams;
+      this.domainParams.additionaldomainParams = domainParams.additionalDomains;
     },
-
-    /*goToEmployees(domainParams){
-        //this.$route.push({ path: `/domainParamss/${domainParams.id}/employees` }) // -> /domainParamss/1/employees
-        window.location.href = `/tabledomainParamss/${domainParams.id}/tableadditionaldomainParams`;
-    },*/
     forceRerender: function forceRerender() {
       this.componentKey += 1;
     }
@@ -473,12 +438,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
   components: {},
   props: {},
   data: function data() {
     return {
+      domainListKey: 0,
       paginate: false,
       location: window.location.origin,
       domains: [],
@@ -503,6 +472,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       validationErrors: []
     };
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$root.$on('domainList', function (data) {
+      console.log(data);
+
+      if (data.rerender) {
+        _this.fetchDomains();
+      }
+    });
+  },
   created: function created() {
     this.fetchDomains();
   },
@@ -517,7 +497,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
     },
     fetchDomains: function fetchDomains(page_url) {
-      var _this = this;
+      var _this2 = this;
 
       var vm = this;
       page_url = page_url || '/api/domains';
@@ -533,10 +513,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        console.log(res.data);
-        _this.domains = res.data;
-        console.log(_this.domains);
-        if (_this.paginate) vm.makePagination(res.meta, res.links);
+        //console.log(res.data);
+        _this2.domains = res.data;
+        console.log(_this2.domains);
+        if (_this2.paginate) vm.makePagination(res.meta, res.links);
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -568,18 +548,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       });
     },
     editdomain: function editdomain(domain) {
-      this.$root.$emit("domainData", domain);
+      this.$root.$emit("domainData", {
+        id: domain.id,
+        name: domain.name,
+        link: domain.link,
+        hosting_name: domain.hosting_name,
+        hosting_link: domain.hosting_link,
+        type: domain.type,
+        login: domain.login,
+        password: domain.password,
+        description: domain.description,
+        screen: _typeof(domain.screen) != undefined && domain.screen.image_path != null ? domain.screen.image_path : 'storage/test.jpg',
+        additionalDomains: domain.additionalDomains,
+        state: domain.state
+      });
     },
-    forceRerender: function forceRerender() {
-      this.componentKey += 1;
+    forceRerender: function forceRerender(key) {
+      this[key] += 1;
     },
     searchDomainClear: function searchDomainClear() {
       this.domainSearchName = '';
       this.fetchDomains();
-      this.forceRerender();
+      this.forceRerender('domainListKey');
     },
     searchDomain: function searchDomain(searchName) {
-      var _this2 = this;
+      var _this3 = this;
 
       var params = {
         method: 'post',
@@ -606,8 +599,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return res.json();
       }).then(function (res) {
         //console.log(res.data);
-        _this2.domains = res.data;
-        if (_this2.paginate) vm.makePagination(res.meta, res.links);
+        _this3.domains = res.data;
+        if (_this3.paginate) vm.makePagination(res.meta, res.links);
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -3128,7 +3121,7 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.adddomainParams($event)
+              return _vm.addDomainParams($event)
             }
           }
         },
@@ -3377,15 +3370,15 @@ var render = function() {
               _c(
                 "ul",
                 [
-                  _vm._l(_vm.domainParams.additionaldomainParams, function(
-                    additionaldomainParams,
+                  _vm._l(_vm.domainParams.additionalDomains, function(
+                    additionaldomain,
                     key
                   ) {
-                    return _vm.domainParams.additionaldomainParams.length > 0
+                    return _vm.domainParams.additionalDomains.length > 0
                       ? _c("li", [
                           _c("input", {
                             attrs: { type: "text" },
-                            domProps: { value: additionaldomainParams.name },
+                            domProps: { value: additionaldomain.name },
                             on: {
                               blur: function($event) {
                                 _vm.textEditing = false
@@ -3400,7 +3393,7 @@ var render = function() {
                                 "uk-button uk-button-small uk-button-danger",
                               on: {
                                 click: function($event) {
-                                  return _vm.deleteAdditionaldomainParams(key)
+                                  return _vm.deleteAdditionalDomain(key)
                                 }
                               }
                             },
@@ -3416,18 +3409,18 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.newAdddomainParams,
-                          expression: "newAdddomainParams"
+                          value: _vm.newAdddomain,
+                          expression: "newAdddomain"
                         }
                       ],
                       attrs: { type: "text", placeholder: "Add domainParams…" },
-                      domProps: { value: _vm.newAdddomainParams },
+                      domProps: { value: _vm.newAdddomain },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.newAdddomainParams = $event.target.value
+                          _vm.newAdddomain = $event.target.value
                         }
                       }
                     }),
@@ -3440,9 +3433,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.newAdditioanaldomainParams(
-                              _vm.newAdddomainParams
-                            )
+                            return _vm.newAdditioanalDomain(_vm.newAdddomain)
                           }
                         }
                       },
@@ -3461,7 +3452,10 @@ var render = function() {
                   _c("img", {
                     staticClass: "img-responsive",
                     attrs: {
-                      src: _vm.domainParams.screen,
+                      src:
+                        _vm.domainParams.screen.indexOf("data:image") > -1
+                          ? _vm.domainParams.screen
+                          : _vm.location + "/" + _vm.domainParams.screen,
                       height: "70",
                       width: "90"
                     }
@@ -3539,6 +3533,24 @@ var render = function() {
             attrs: { "uk-icon": "icon: plus" }
           }),
           _vm._v(" Add new")
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "uk-button uk-button-primary",
+          on: {
+            click: function($event) {
+              return _vm.fetchDomains()
+            }
+          }
+        },
+        [
+          _c("span", {
+            staticClass: "uk-margin-small-right",
+            attrs: { "uk-icon": "icon: refresh" }
+          })
         ]
       )
     ]),
@@ -3687,119 +3699,124 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm._l(_vm.domains, function(domain) {
-          return _c("div", { key: domain.id }, [
-            _c(
-              "div",
-              {
-                staticClass: "uk-grid-small uk-child-width-1-1",
-                attrs: { "data-uk-grid": "" }
-              },
-              [
-                _c("div", [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "uk-grid-small uk-grid-divider",
-                      attrs: { "data-uk-grid": "" }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "uk-width-expand uk-flex-middle uk-flex"
-                        },
-                        [
-                          _c("div", [
-                            _c(
-                              "span",
-                              {
-                                staticClass: "uk-label uk-margin-small-right",
-                                class: {
-                                  "tm-label-stoped":
-                                    domain.state == null || domain.state == ""
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    domain.state == null || domain.state == ""
-                                      ? "stoped"
-                                      : domain.state
-                                  )
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                directives: [
-                                  {
-                                    name: "scroll-to",
-                                    rawName: "v-scroll-to",
-                                    value: {
-                                      el: "#domain-widget",
-                                      offset: -70
-                                    },
-                                    expression:
-                                      "{ el: '#domain-widget', offset: -70, }"
-                                  }
-                                ],
-                                staticClass: "uk-link-text",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.editdomain(domain)
-                                  }
-                                }
-                              },
-                              [_vm._v(_vm._s(domain.name))]
-                            ),
-                            _vm._v(" "),
-                            _c("a", {
-                              staticClass: "tm-margin-xsmall-left",
-                              attrs: {
-                                href: _vm.httpAdd(domain.link),
-                                target: "_blank",
-                                "data-uk-icon": "icon: link;ratio: 0.8",
-                                "data-uk-tooltip": "www..."
-                              }
-                            })
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "uk-width-auto" }, [
-                        _c("a", {
-                          directives: [
-                            {
-                              name: "scroll-to",
-                              rawName: "v-scroll-to",
-                              value: { el: "#domain-widget", offset: -70 },
-                              expression:
-                                "{ el: '#domain-widget', offset: -70, }"
-                            }
-                          ],
-                          attrs: {
-                            "data-uk-icon": "icon: cog;ratio: 0.8",
-                            "data-uk-tooltip": "Edit"
+        _c(
+          "div",
+          { key: _vm.domainListKey },
+          _vm._l(_vm.domains, function(domain) {
+            return _c("div", { key: domain.id }, [
+              _c(
+                "div",
+                {
+                  staticClass: "uk-grid-small uk-child-width-1-1",
+                  attrs: { "data-uk-grid": "" }
+                },
+                [
+                  _c("div", [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "uk-grid-small uk-grid-divider",
+                        attrs: { "data-uk-grid": "" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "uk-width-expand uk-flex-middle uk-flex"
                           },
-                          on: {
-                            click: function($event) {
-                              return _vm.editdomain(domain)
+                          [
+                            _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "uk-label uk-margin-small-right",
+                                  class: {
+                                    "tm-label-stoped":
+                                      domain.state == null || domain.state == ""
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      domain.state == null || domain.state == ""
+                                        ? "stoped"
+                                        : domain.state
+                                    )
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  directives: [
+                                    {
+                                      name: "scroll-to",
+                                      rawName: "v-scroll-to",
+                                      value: {
+                                        el: "#domain-widget",
+                                        offset: -70
+                                      },
+                                      expression:
+                                        "{ el: '#domain-widget', offset: -70, }"
+                                    }
+                                  ],
+                                  staticClass: "uk-link-text",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editdomain(domain)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(domain.name))]
+                              ),
+                              _vm._v(" "),
+                              _c("a", {
+                                staticClass: "tm-margin-xsmall-left",
+                                attrs: {
+                                  href: _vm.httpAdd(domain.link),
+                                  target: "_blank",
+                                  "data-uk-icon": "icon: link;ratio: 0.8",
+                                  "data-uk-tooltip": "www..."
+                                }
+                              })
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "uk-width-auto" }, [
+                          _c("a", {
+                            directives: [
+                              {
+                                name: "scroll-to",
+                                rawName: "v-scroll-to",
+                                value: { el: "#domain-widget", offset: -70 },
+                                expression:
+                                  "{ el: '#domain-widget', offset: -70, }"
+                              }
+                            ],
+                            attrs: {
+                              "data-uk-icon": "icon: cog;ratio: 0.8",
+                              "data-uk-tooltip": "Edit"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.editdomain(domain)
+                              }
                             }
-                          }
-                        })
-                      ])
-                    ]
-                  )
-                ])
-              ]
-            )
-          ])
-        })
-      ],
-      2
+                          })
+                        ])
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          }),
+          0
+        )
+      ]
     )
   ])
 }
