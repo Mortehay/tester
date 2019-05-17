@@ -7,7 +7,7 @@
                         <a class="uk-button uk-button-primary" @click="addDomain()"><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Add new</a>
                     </div>
                     <div class="uk-width-auto">
-                        <a href="" class="uk-button uk-button-primary tm-refresh-button">
+                        <a class="uk-button uk-button-primary tm-refresh-button" @click="fetchDomains()">
                             <span class="tm-svg-top-fix" uk-icon="icon: refresh"></span>
                         </a>
                     </div>
@@ -80,6 +80,7 @@
         props: {},
         data() {
             return {
+                domainListKey: 0,
                 paginate: false,
                 location: window.location.origin,
                 domains: [],
@@ -103,6 +104,14 @@
                 pagination: {},
                 validationErrors:[],
             };
+        },
+        mounted() {
+            this.$root.$on('domainList', (data) => {
+                console.log(data);
+                if(data.rerender) {
+                   this.fetchDomains();
+                }
+            })
         },
         created() {
             this.fetchDomains();
@@ -130,7 +139,7 @@
                     })
                     .then(res => res.json())
                     .then(res =>{
-                        console.log(res.data);
+                        //console.log(res.data);
                         this.domains = res.data;
                         console.log(this.domains);
                         if(this.paginate) vm.makePagination(res.meta, res.links);
@@ -166,15 +175,28 @@
                 );
             },
             editdomain(domain){
-                this.$root.$emit ("domainData", domain);
+                this.$root.$emit ("domainData", {
+                    id: domain.id,
+                    name: domain.name,
+                    link: domain.link,
+                    hosting_name: domain.hosting_name,
+                    hosting_link: domain.hosting_link,
+                    type: domain.type,
+                    login: domain.login,
+                    password: domain.password,
+                    description: domain.description,
+                    screen: (typeof domain.screen != undefined) && domain.screen.image_path != null ? domain.screen.image_path : 'storage/test.jpg',
+                    additionalDomains: domain.additionalDomains,
+                    state: domain.state,
+                });
             },
-            forceRerender() {
-                this.componentKey += 1;
+            forceRerender(key) {
+                this[key] += 1;
             },
             searchDomainClear(){
                 this.domainSearchName = '';
                 this.fetchDomains();
-                this.forceRerender();
+                this.forceRerender('domainListKey');
             },
             searchDomain(searchName){
                 let params = {
