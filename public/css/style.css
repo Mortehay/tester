@@ -1,10 +1,19 @@
 .uk-button-primary {
   border: 0px solid transparent;
 }
+.uk-button {
+  line-height: 40px;
+}
+.tm-svg-top-fix svg {
+  margin-top: -5px;
+}
 .tm-container-xsmall {
   max-width: 450px;
   margin-left: auto;
   margin-right: auto;
+}
+.tm-refresh-button {
+  padding: 0 10px;
 }
 .tm-navbar-container:not(.uk-navbar-transparent) {
   background: linear-gradient(to left, #28a5f5, #1e87f0);

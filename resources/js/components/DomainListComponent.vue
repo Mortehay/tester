@@ -1,15 +1,35 @@
 <template>
     <div>
         <div class="uk-margin">
-            <a class="uk-button uk-button-primary" @click="addDomain()"><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Add new</a>
-        </div>
-        <div class="d-inline">
-            <h6>search:</h6>
-            <input  class="w-50" type="text" placeholder="searchname" v-model="domainSearchName" v-on:keyup="searchDomain" v-bind:class="{ danger: domainSearchName.length < 4 }">
-            <button @click="searchDomainClear()" class="btn btn-secondary">clear</button>
-        </div>
-        <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>
+            <div class="uk-flex-midlle" uk-grid>
+                <div class="uk-width-expand">
+                    <a class="uk-button uk-button-primary" @click="addDomain()"><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Add new</a>
+                </div>
+                <div class="uk-width-auto">
+                    <a href="" class="uk-button uk-button-primary tm-refresh-button">
+                        <span class="tm-svg-top-fix" uk-icon="icon: refresh"></span>
+                    </a>
+                </div>
+            </div>
 
+        </div>
+        <div class="uk-margin">
+            <div class="uk-grid-collapse" uk-grid>
+                <div class="uk-width-expand">
+                    <div class="uk-inline uk-width-1-1">
+                        <span class="uk-form-icon" uk-icon="icon: search"></span>
+                        <input  class="uk-input uk-width-1-1" type="text" placeholder="search" v-model="domainSearchName" v-on:keyup="searchDomain" v-bind:class="{ danger: domainSearchName.length < 4 }">
+                    </div>
+                </div>
+                <div class="uk-width-auto">
+                    <button @click="searchDomainClear()" class="uk-button uk-button-primary tm-refresh-button">
+                        <span class="tm-svg-top-fix" uk-icon="icon: close"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>
             <div v-if="paginate" class="uk-margin">
                 <nav aria-label="Page navigation example" id="page-navigation">
                     <ul class="uk-pagination uk-flex-center" data-uk-margin>
@@ -23,8 +43,6 @@
                     </ul>
                 </nav>
             </div>
-
-
             <div class="" v-for="domain in domains" v-bind:key="domain.id">
                 <div class="uk-grid-small uk-child-width-1-1" data-uk-grid>
                     <div>

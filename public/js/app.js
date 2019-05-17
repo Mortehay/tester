@@ -473,6 +473,24 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domains",
   components: {},
@@ -3523,65 +3541,87 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "uk-margin" }, [
-      _c(
-        "a",
-        {
-          staticClass: "uk-button uk-button-primary",
-          on: {
-            click: function($event) {
-              return _vm.addDomain()
-            }
-          }
-        },
-        [
-          _c("span", {
-            staticClass: "uk-margin-small-right",
-            attrs: { "uk-icon": "icon: plus" }
-          }),
-          _vm._v(" Add new")
-        ]
-      )
+      _c("div", { staticClass: "uk-flex-midlle", attrs: { "uk-grid": "" } }, [
+        _c("div", { staticClass: "uk-width-expand" }, [
+          _c(
+            "a",
+            {
+              staticClass: "uk-button uk-button-primary",
+              on: {
+                click: function($event) {
+                  return _vm.addDomain()
+                }
+              }
+            },
+            [
+              _c("span", {
+                staticClass: "uk-margin-small-right",
+                attrs: { "uk-icon": "icon: plus" }
+              }),
+              _vm._v(" Add new")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "d-inline" }, [
-      _c("h6", [_vm._v("search:")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.domainSearchName,
-            expression: "domainSearchName"
-          }
-        ],
-        staticClass: "w-50",
-        class: { danger: _vm.domainSearchName.length < 4 },
-        attrs: { type: "text", placeholder: "searchname" },
-        domProps: { value: _vm.domainSearchName },
-        on: {
-          keyup: _vm.searchDomain,
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.domainSearchName = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          on: {
-            click: function($event) {
-              return _vm.searchDomainClear()
-            }
-          }
-        },
-        [_vm._v("clear")]
-      )
+    _c("div", { staticClass: "uk-margin" }, [
+      _c("div", { staticClass: "uk-grid-collapse", attrs: { "uk-grid": "" } }, [
+        _c("div", { staticClass: "uk-width-expand" }, [
+          _c("div", { staticClass: "uk-inline uk-width-1-1" }, [
+            _c("span", {
+              staticClass: "uk-form-icon",
+              attrs: { "uk-icon": "icon: search" }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.domainSearchName,
+                  expression: "domainSearchName"
+                }
+              ],
+              staticClass: "uk-input uk-width-1-1",
+              class: { danger: _vm.domainSearchName.length < 4 },
+              attrs: { type: "text", placeholder: "search" },
+              domProps: { value: _vm.domainSearchName },
+              on: {
+                keyup: _vm.searchDomain,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.domainSearchName = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "uk-width-auto" }, [
+          _c(
+            "button",
+            {
+              staticClass: "uk-button uk-button-primary tm-refresh-button",
+              on: {
+                click: function($event) {
+                  return _vm.searchDomainClear()
+                }
+              }
+            },
+            [
+              _c("span", {
+                staticClass: "tm-svg-top-fix",
+                attrs: { "uk-icon": "icon: close" }
+              })
+            ]
+          )
+        ])
+      ])
     ]),
     _vm._v(" "),
     _c(
@@ -3787,7 +3827,28 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-width-auto" }, [
+      _c(
+        "a",
+        {
+          staticClass: "uk-button uk-button-primary tm-refresh-button",
+          attrs: { href: "" }
+        },
+        [
+          _c("span", {
+            staticClass: "tm-svg-top-fix",
+            attrs: { "uk-icon": "icon: refresh" }
+          })
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
