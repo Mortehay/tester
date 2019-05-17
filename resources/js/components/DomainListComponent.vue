@@ -50,7 +50,7 @@
                             <div class="uk-width-expand uk-flex-middle uk-flex">
                                 <div>
                                     <span  :class="{ 'tm-label-stoped' : domain.state == null || domain.state == ''}" class="uk-label uk-margin-small-right">{{domain.state == null || domain.state == '' ? 'stoped' : domain.state}}</span>
-                                    <a href="#" class="uk-link-text">{{ domain.name }}</a>
+                                    <a @click="editdomain(domain)" v-scroll-to="{ el: '#domain-widget', offset: -70, }" class="uk-link-text">{{ domain.name }}</a>
                                     <a :href="httpAdd(domain.link)" target="_blank" class="tm-margin-xsmall-left" data-uk-icon="icon: link;ratio: 0.8" data-uk-tooltip="www..."></a>
                                 </div>
                             </div>

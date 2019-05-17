@@ -3774,8 +3774,24 @@ var render = function() {
                             _c(
                               "a",
                               {
+                                directives: [
+                                  {
+                                    name: "scroll-to",
+                                    rawName: "v-scroll-to",
+                                    value: {
+                                      el: "#domain-widget",
+                                      offset: -70
+                                    },
+                                    expression:
+                                      "{ el: '#domain-widget', offset: -70, }"
+                                  }
+                                ],
                                 staticClass: "uk-link-text",
-                                attrs: { href: "#" }
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editdomain(domain)
+                                  }
+                                }
                               },
                               [_vm._v(_vm._s(domain.name))]
                             ),
