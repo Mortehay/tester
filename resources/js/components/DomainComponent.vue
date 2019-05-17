@@ -1,36 +1,114 @@
 <template>
-    <div v-show="domainWidgetIsVisible" id="domain-widget">
-        <form id="domainParams-editor" @submit.prevent="addDomainParams" class="uk-form">
-            <div class="uk-grid-small uk-child-width-1-2@s" data-uk-grid>
-                <div>
-                    <input type="text" class="uk-input" placeholder="domainParams name" v-model="domainParams.name">
+    <div v-show="domainWidgetIsVisible" id="domain-widget" class="uk-card uk-card-default uk-card-body uk-margin-bottom">
+        <div class="uk-h3 uk-margin-bottom">
+            domain.com
+            <span class="uk-text-small">(edit mode)</span>
+        </div>
+        <form id="domainParams-editor" @submit.prevent="addDomainParams" class="uk-form uk-form-stacked">
+            <div class="uk-grid-small" data-uk-grid>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-margin" v-if="domainParams.screen">
+                        <img :src="(domainParams.screen).indexOf('data:image') > -1 ? domainParams.screen : location + '/' + domainParams.screen" class="img-responsive" height="70" width="90">
+                    </div>
+                    <div uk-form-custom="target: true">
+                        <input type="file" @change="screenChanged">
+                        <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
+                    </div>
                 </div>
-                <div>
-                    <input type="text" class="uk-input" placeholder="domainParams link" v-model="domainParams.link">
+                <div class="uk-width-1-2@s">
+                    <div class="uk-grid-small uk-child-width-1-1 uk-grid">
+                        <div v-for="type in types">
+                            <label>
+                                <input v-on:click="typeChange" type="radio" class="uk-radio" :value="type.code"  v-model="domainParamsType" > {{type.name}}
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <input type="text" class="uk-input" placeholder="domainParams domainParamsing_name" v-model="domainParams.hosting_name">
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label uk-text-bold">Site name</div>
+                    <input type="text" class="uk-input" placeholder="Site name" v-model="domainParams.name">
                 </div>
-                <div>
-                    <input type="text" class="uk-input" placeholder="domainParams domainParamsing_link" v-model="domainParams.hosting_link">
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label uk-text-bold">Site link</div>
+                    <input type="text" class="uk-input" placeholder="Site link" v-model="domainParams.link">
                 </div>
-                <div>
+                 <div class="uk-width-1-2@s">
+                     <div class="uk-form-label uk-text-bold">Additional domain name</div>
+                     <input type="text" class="uk-input" placeholder="Additional domain name">
+                 </div>
+                 <div class="uk-width-1-2@s">
+                     <div class="uk-form-label uk-text-bold">Additional domain link</div>
+                     <input type="text" class="uk-input" placeholder="Additional domain link">
+                 </div>
+                 <div class="uk-width-1-2@s" id="my-id" hidden>
+                    <div class="uk-form-label uk-text-bold">Additional domain name</div>
+                    <input type="text" class="uk-input" placeholder="Additional domain name">
+                </div>
+                <div class="uk-width-1-2@s" id="my-id" hidden>
+                    <div class="uk-form-label uk-text-bold">Additional domain link</div>
+                    <input type="text" class="uk-input" placeholder="Additional domain link">
+                </div>
+
+                <div class="uk-width-1-1">
+                     <button class="uk-button uk-button-default uk-width-1-1" uk-toggle="target: #my-id; animation: uk-animation-fade">Add additional domain</button>
+                 </div>
+
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label uk-text-bold">Hosing name</div>
+                    <input type="text" class="uk-input" placeholder="Hosing name" v-model="domainParams.hosting_name">
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label uk-text-bold">Hosing link</div>
+                    <input type="text" class="uk-input" placeholder="Hosing link" v-model="domainParams.hosting_link">
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label uk-text-bold">Login</div>
                     <input type="text" class="uk-input" placeholder="domainParams login" v-model="domainParams.login">
                 </div>
-                <div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label uk-text-bold">Password</div>
                     <input type="text" class="uk-input" placeholder="domainParams password" v-model="domainParams.password">
                 </div>
                 <div class="uk-width-1-1">
-                    <textarea type="text" class="uk-input" placeholder="domainParams description" v-model="domainParams.description"></textarea>
+                    <textarea type="text" class="uk-textarea" rows="5" placeholder="domainParams description" v-model="domainParams.description"></textarea>
                 </div>
             </div>
-            <div class="uk-grid-small uk-child-width-auto uk-grid">
-                <div v-for="type in types">
-                    <label>
-                        <input v-on:click="typeChange" type="radio" class="uk-radio" :value="type.code"  v-model="domainParamsType" > {{type.name}}
-                    </label>
+            <div class="uk-hr"></div>
+
+            <div class="uk-grid-small" data-uk-grid>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label uk-text-bold">Monitor interval</div>
+                    <div class="uk-grid-small uk-grid">
+                        <div>
+                            <label>
+                                <input type="radio" class="uk-radio" value=""> 5 min
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" class="uk-radio" value=""> 15 min
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" class="uk-radio" value=""> 30 min
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" class="uk-radio" value=""> 1 hour
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label uk-text-bold">Additional alert contact</div>
+                    <input type="text" class="uk-input uk-margin-small" placeholder="email">
+                    <input type="text" class="uk-input uk-margin-small" placeholder="email" id="my-id1" hidden>
+                    <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small" uk-toggle="target: #my-id1; animation: uk-animation-fade">Add more</button>
                 </div>
             </div>
+
             <div class="uk-grid-small uk-child-width-auto uk-grid">
                 <ul>
                     <li v-if="(domainParams.additionalDomains).length > 0" v-for="(additionaldomain, key) in domainParams.additionalDomains">
@@ -42,16 +120,23 @@
                     </li>
                 </ul>
             </div>
-            <div class="uk-margin">
-                <div class="uk-margin" v-if="domainParams.screen">
-                    <img :src="(domainParams.screen).indexOf('data:image') > -1 ? domainParams.screen : location + '/' + domainParams.screen" class="img-responsive" height="70" width="90">
-                </div>
-                <div uk-form-custom="target: true">
-                    <input type="file" @change="screenChanged">
-                    <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
-                </div>
+            <div class="uk-margin uk-text-right">
+                <button type="submit" class="uk-button tm-button-save" data-uk-tooltip="Save">
+                    <span class="tm-svg-top-fix" uk-icon="icon: check"></span>
+                </button>
+                <button class="uk-button uk-button-secondary" data-uk-tooltip="Stop">
+                    <span class="tm-svg-top-fix" uk-icon="icon: arrow-down"></span>
+                </button>
+                <button class="uk-button uk-button-secondary" data-uk-tooltip="Start">
+                    <span class="tm-svg-top-fix" uk-icon="icon: arrow-up"></span>
+                </button>
+                <button class="uk-button uk-button-primary" data-uk-tooltip="Cancel">
+                    <span class="tm-svg-top-fix" uk-icon="icon: close"></span>
+                </button>
+                <button class="uk-button uk-button-danger" data-uk-tooltip="Delete">
+                    <span class="tm-svg-top-fix" uk-icon="icon: trash"></span>
+                </button>
             </div>
-            <button type="submit" class="uk-button uk-button-primary">Save</button>
         </form>
 
     </div>

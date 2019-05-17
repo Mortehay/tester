@@ -1,4 +1,6 @@
-.uk-button-primary {
+.uk-button-primary,
+.uk-button-secondary,
+.uk-button-danger {
   border: 0px solid transparent;
 }
 .tm-button-default {
@@ -10,6 +12,15 @@
 .tm-list-hover:hover,
 .tm-list-hover.uk-active {
   background-color: #f9f9f9;
+}
+.tm-button-save {
+  border: 0px solid transparent;
+  background-color: #32d296;
+  color: #fff;
+}
+.tm-button-save:hover,
+.tm-button-save:focus {
+  background-color: #24a273;
 }
 .tm-padding-bottom {
   padding-bottom: 40px;
