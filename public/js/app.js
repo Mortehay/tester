@@ -421,6 +421,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 //
 //
 //
@@ -506,10 +508,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     httpAdd: function httpAdd(url) {
-      if (url.indexOf('http://') > -1) {
+      if (url != null && _typeof(url) != undefined && url.indexOf('http://') > -1) {
         return url;
-      } else {
+      } else if (url != null) {
         return 'http://' + url;
+      } else {
+        return 'javascript:void(0);';
       }
     },
     fetchDomains: function fetchDomains(page_url) {
@@ -17042,8 +17046,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\tester-dev\resources\less\style.less */"./resources/less/style.less");
+__webpack_require__(/*! D:\OSPanel\domains\tester\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\OSPanel\domains\tester\resources\less\style.less */"./resources/less/style.less");
 
 
 /***/ })

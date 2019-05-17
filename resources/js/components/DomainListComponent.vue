@@ -84,10 +84,12 @@
         },
         methods:{
             httpAdd(url){
-                if(url.indexOf('http://') > -1) {
+                if(url != null && (typeof url != undefined) &&  url.indexOf('http://') > -1 ) {
                     return url;
-                }  else {
+                }  else if(url != null) {
                     return 'http://' + url;
+                } else {
+                    return 'javascript:void(0);'
                 }
             },
             fetchDomains(page_url){
