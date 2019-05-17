@@ -244,7 +244,7 @@
 
                 }
                 this.$root.$emit ("domainList", {rerender: true});
-                this.forceRerender();
+                //this.forceRerender();
             },
             editdomainParams(domainParams){
                 this.edit = true;
@@ -262,7 +262,6 @@
                 this.domainParams.password = domainParams.password;
                 this.domainParams.description = domainParams.description;
                 this.domainParams.additionaldomainParams = domainParams.additionalDomains;
-
 
             },
             forceRerender() {
