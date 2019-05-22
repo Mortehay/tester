@@ -11,4 +11,7 @@ return [
         'form_btn_reset' => 'Очистить',
         'form_remember' => 'Зпомнить меня',
     ],
+    'scroll' => [
+        'title' => 'ВВЕРХ'
+    ],
 ];

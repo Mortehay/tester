@@ -5,7 +5,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-
 window.Vue = require('vue');
 import VueInternationalization from 'vue-i18n';
 import Locale from './vue-i18n-locales.generated';
@@ -32,6 +31,7 @@ Vue.component('lang-switcher', require('./components/LangSwitcherComponent.vue')
 //Vue.component('domains', require('./components/DomainsComponent.vue').default);
 Vue.component('domain-list', require('./components/DomainListComponent.vue').default);
 Vue.component('domain', require('./components/DomainComponent.vue').default);
+Vue.component('scroll', require('./components/ScrollComponent.vue').default);
 
 
 /**

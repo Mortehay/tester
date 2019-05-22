@@ -11,4 +11,7 @@ return [
         'form_btn_reset' => 'Reset',
         'form_remember' => 'Remember Me',
     ],
+    'scroll' => [
+        'title' => 'UP'
+    ],
 ];

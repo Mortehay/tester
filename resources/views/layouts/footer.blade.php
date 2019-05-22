@@ -1,4 +1,4 @@
-{{--@include('layouts.scroll_up')--}}
+@include('layouts.scroll_up')
 {{--@if(session()->get('cookie'))
     @include('layouts.cookie')
 @endif--}}

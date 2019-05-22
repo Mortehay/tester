@@ -25,6 +25,9 @@ export default {
                 "form_btn": "Enter",
                 "form_btn_reset": "Reset",
                 "form_remember": "Remember Me"
+            },
+            "scroll": {
+                "title": "UP"
             }
         },
         "validation": {
@@ -164,6 +167,9 @@ export default {
                 "form_btn": "Ввод",
                 "form_btn_reset": "Очистить",
                 "form_remember": "Зпомнить меня"
+            },
+            "scroll": {
+                "title": "ВВЕРХ"
             }
         },
         "validation": {
