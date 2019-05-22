@@ -21,9 +21,7 @@
                     </div>
                     <div class="uk-navbar-right">
                         <lang-switcher></lang-switcher>
-                        @if(!Auth::guest())
-                            @include('layouts.login_menu')
-                        @endif
+                        @include('layouts.login_menu')
                     </div>
                 </nav>
             </div>

@@ -11,7 +11,8 @@
 |
 */
 /*en routes*/
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/', 'MainController@index')->name('main');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/cabinet', 'CabinetController@index')->name('cabinet');
 /*en routes*/
 
@@ -19,7 +20,7 @@ Route::get('/cabinet', 'CabinetController@index')->name('cabinet');
 
 // Authentication Routes...
 //Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::get('login', function(){ return redirect('/');})->name('login');
+//Route::get('login', function(){ return redirect('/');})->name('login');
 
 
 Route::group([ 'prefix' => 'rest'] , function(){
@@ -44,21 +45,24 @@ Route::group([ 'prefix' => 'rest'] , function(){
 });
 /*en redirect routes*/
 Route::group([ 'prefix' => 'en', 'middleware' => 'locale'], function () {
-    Route::get('/', function(){return redirect('/');})->name('login');
+    Route::get('/', 'MainController@index')->name('main');
+    Route::get('/login', function(){return redirect('/');})->name('login');
     Route::get('/cabinet',  function(){return redirect('/cabinet');})->name('cabinet');
 });
 /*en redirect routes*/
 
 /*ru routes*/
 Route::group([ 'prefix' => 'ru', 'middleware' => 'locale'], function () {
-    Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::get('/', 'MainController@index')->name('main');
+    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::get('/cabinet', 'CabinetController@index')->name('cabinet');
 });
 /*ru routes*/
 
 /*uk routes*/
 Route::group([ 'prefix' => 'uk', 'middleware' => 'locale'], function () {
-    Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::get('/', 'MainController@index')->name('main');
+    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::get('/cabinet', 'CabinetController@index')->name('cabinet');
 });
 /*uk routes*/

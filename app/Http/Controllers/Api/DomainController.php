@@ -69,6 +69,8 @@ class DomainController extends Controller
         $domain->login = $request->input('login');
         $domain->password = $request->input('password');
         $domain->description = $request->input('description');
+        $domain->state = $request->input('state');
+        $domain->display = $request->input('display');
         $domain->save();
 
         $additionalDomains = $request->input('additionalDomains');

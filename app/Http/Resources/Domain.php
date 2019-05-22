@@ -31,6 +31,7 @@ class Domain extends JsonResource
             'additionalDomains' =>$additionalDomains,
             'screen' => $screen,
             'state' =>$this->state,
+            'display' =>$this->display,
         ];
     }
 }

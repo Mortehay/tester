@@ -3559,6 +3559,7 @@ var render = function() {
                     return _vm.domainParams.additionalDomains.length > 0
                       ? _c("li", [
                           _c("input", {
+                            staticClass: "uk-input uk-margin-small",
                             attrs: { type: "text" },
                             domProps: { value: additionaldomain.name },
                             on: {
@@ -3572,7 +3573,7 @@ var render = function() {
                             "button",
                             {
                               staticClass:
-                                "uk-button uk-button-small uk-button-danger",
+                                "uk-button uk-button-default uk-width-1-1 uk-margin-small",
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
@@ -3596,6 +3597,7 @@ var render = function() {
                           expression: "newAdddomain"
                         }
                       ],
+                      staticClass: "uk-input uk-margin-small",
                       attrs: { type: "text", placeholder: "Add domainParams…" },
                       domProps: { value: _vm.newAdddomain },
                       on: {
@@ -3612,7 +3614,7 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "uk-button uk-button-small uk-button-primary",
+                          "uk-button uk-button-default uk-width-1-1 uk-margin-small",
                         on: {
                           click: function($event) {
                             $event.preventDefault()

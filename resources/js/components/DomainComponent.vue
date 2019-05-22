@@ -112,11 +112,11 @@
             <div class="uk-grid-small uk-child-width-auto uk-grid">
                 <ul>
                     <li v-if="(domainParams.additionalDomains).length > 0" v-for="(additionaldomain, key) in domainParams.additionalDomains">
-                        <input type="text" :value="additionaldomain.name" v-on:blur= "textEditing=false; editText(key, $event.target.value)"><button class="uk-button uk-button-small uk-button-danger"                                                                                  @click.prevent="deleteAdditionalDomain(key)">delete</button>
+                        <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.name" v-on:blur= "textEditing=false; editText(key, $event.target.value)"><button class="uk-button uk-button-default uk-width-1-1 uk-margin-small"                                                                                  @click.prevent="deleteAdditionalDomain(key)">delete</button>
                     </li>
                     <li class="search-box">
-                        <input type="text" placeholder="Add domainParams…"  v-model="newAdddomain">
-                        <button class="uk-button uk-button-small uk-button-primary" @click.prevent="newAdditioanalDomain(newAdddomain)">add</button>
+                        <input type="text" class="uk-input uk-margin-small" placeholder="Add domainParams…"  v-model="newAdddomain">
+                        <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small" @click.prevent="newAdditioanalDomain(newAdddomain)">add</button>
                     </li>
                 </ul>
             </div>

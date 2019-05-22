@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
 class Domain extends Model
 {
@@ -15,7 +16,7 @@ class Domain extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'link', 'hosting_name', 'hosting_link', 'type', 'login', 'password', 'description', 'state'
+        'name', 'link', 'hosting_name', 'hosting_link', 'type', 'login', 'password', 'description', 'state', 'display'
     ];
 
     public function addDomains()
