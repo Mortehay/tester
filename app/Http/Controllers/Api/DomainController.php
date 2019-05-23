@@ -102,10 +102,12 @@ class DomainController extends Controller
                     $newAdditionalDomain = new AddDomain();
                     $newAdditionalDomain->domain_id = $domain->id;
                     $newAdditionalDomain->name = $additionalDomain['name'];
+                    $newAdditionalDomain->link = $additionalDomain['link'];
                     $newAdditionalDomain->save();
                 } else {
                     $existingAdditionalDomain = AddDomain::findOrFail($additionalDomain['id']);
                     $existingAdditionalDomain->name = $additionalDomain['name'];
+                    $existingAdditionalDomain->link = $additionalDomain['link'];
                     $existingAdditionalDomain->save();
                 }
             }

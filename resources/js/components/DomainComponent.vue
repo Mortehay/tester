@@ -32,26 +32,40 @@
                     <div class="uk-form-label uk-text-bold">Site link</div>
                     <input type="text" class="uk-input" placeholder="Site link" v-model="domainParams.link">
                 </div>
-                 <div class="uk-width-1-2@s">
-                     <div class="uk-form-label uk-text-bold">Additional domain name</div>
-                     <input type="text" class="uk-input" placeholder="Additional domain name">
-                 </div>
-                 <div class="uk-width-1-2@s">
-                     <div class="uk-form-label uk-text-bold">Additional domain link</div>
-                     <input type="text" class="uk-input" placeholder="Additional domain link">
-                 </div>
-                 <div class="uk-width-1-2@s" id="my-id" hidden>
-                    <div class="uk-form-label uk-text-bold">Additional domain name</div>
-                    <input type="text" class="uk-input" placeholder="Additional domain name">
+                <div  class="uk-width-1-1@s">
+                    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+                        <div class="uk-form-label uk-text-bold uk-text-left@s">Additional domain name</div>
+                        <div class="uk-form-label uk-text-bold uk-text-left@s">Additional domain link</div>
+                        <div></div>
+                    </div>
+                    <ul class="uk-list">
+                        <li v-if="(domainParams.additionalDomains).length > 0" v-for="(additionaldomain, key) in domainParams.additionalDomains">
+                            <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+                                <div>
+                                    <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.name" v-on:blur= "textEditing=false; editText(key, $event.target.value, 'name')">
+                                </div>
+                                <div>
+                                    <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.link" v-on:blur= "textEditing=false; editText(key, $event.target.value, 'link')">
+                                </div>
+                                <div>
+                                    <span style="color:red;" uk-icon="icon: minus-circle; ratio: 1" @click.prevent="deleteAdditionalDomain(key)"></span>
+                                </div>
+                            </div>
+                        <li class="uk-margin-top">
+                            <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+                                <div>
+                                    <input type="text" class="uk-input uk-margin-small" placeholder="Add domain name…"  v-model="newAdddomain.name">
+                                </div>
+                                <div>
+                                    <input type="text" class="uk-input uk-margin-small" placeholder="Add domain link…"  v-model="newAdddomain.link">
+                                </div>
+                                <div>
+                                    <span style="color:blue;" uk-icon="icon: plus-circle; ratio: 1" @click.prevent="newAdditioanalDomain(newAdddomain)"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="uk-width-1-2@s" id="my-id" hidden>
-                    <div class="uk-form-label uk-text-bold">Additional domain link</div>
-                    <input type="text" class="uk-input" placeholder="Additional domain link">
-                </div>
-
-                <div class="uk-width-1-1">
-                     <button class="uk-button uk-button-default uk-width-1-1" uk-toggle="target: #my-id; animation: uk-animation-fade">Add additional domain</button>
-                 </div>
 
                 <div class="uk-width-1-2@s">
                     <div class="uk-form-label uk-text-bold">Hosing name</div>
@@ -109,17 +123,56 @@
                 </div>
             </div>
 
-            <div class="uk-grid-small uk-child-width-auto uk-grid">
-                <ul>
+            <!--<div>
+                <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+                    <div>
+                        <div class="uk-form-label uk-text-bold">Additional domain name</div>
+                    </div>
+                    <div>
+                        <div class="uk-form-label uk-text-bold">Additional domain link</div>
+                    </div>
+                    <div></div>
+                </div>
+                <ul class="uk-list">
                     <li v-if="(domainParams.additionalDomains).length > 0" v-for="(additionaldomain, key) in domainParams.additionalDomains">
+                        <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+                            <div>
+                                <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.name" v-on:blur= "textEditing=false; editText(key, $event.target.value, 'name')">
+                            </div>
+                            <div>
+                                <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.link" v-on:blur= "textEditing=false; editText(key, $event.target.value, 'link')">
+                            </div>
+                            <div>
+                                <span style="color:red;" uk-icon="icon: minus-circle; ratio: 1" @click.prevent="deleteAdditionalDomain(key)"></span>
+                            </div>
+                        </div>-->
+                       <!-- <div class="uk-width-1-3@s">
+                            <div class="uk-form-label uk-text-bold">Additional domain name</div>
+                            <input type="text" class="uk-input" placeholder="Additional domain name">
+                        </div>
+                        <div class="uk-width-1-3@s">
+                            <div class="uk-form-label uk-text-bold">Additional domain link</div>
+                            <input type="text" class="uk-input" placeholder="Additional domain link">
+                        </div>
                         <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.name" v-on:blur= "textEditing=false; editText(key, $event.target.value)"><button class="uk-button uk-button-default uk-width-1-1 uk-margin-small"                                                                                  @click.prevent="deleteAdditionalDomain(key)">delete</button>
-                    </li>
-                    <li class="search-box">
-                        <input type="text" class="uk-input uk-margin-small" placeholder="Add domainParams…"  v-model="newAdddomain">
-                        <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small" @click.prevent="newAdditioanalDomain(newAdddomain)">add</button>
+                    </li>-->
+                    <!--<li class="uk-margin-top">
+                        <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+                            <div>
+                                <input type="text" class="uk-input uk-margin-small" placeholder="Add domain name…"  v-model="newAdddomain.name">
+                            </div>
+                            <div>
+                                <input type="text" class="uk-input uk-margin-small" placeholder="Add domain link…"  v-model="newAdddomain.link">
+                            </div>
+                            <div>
+                                <span style="color:blue;" uk-icon="icon: plus-circle; ratio: 1" @click.prevent="newAdditioanalDomain(newAdddomain)"></span>
+                            </div>
+                        </div>
+                        &lt;!&ndash;<input type="text" class="uk-input uk-margin-small" placeholder="Add domainParams…"  v-model="newAdddomain">
+                        <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small" @click.prevent="newAdditioanalDomain(newAdddomain)">add</button>&ndash;&gt;
                     </li>
                 </ul>
-            </div>
+            </div>-->
             <div class="uk-margin uk-text-right">
                 <button type="submit" class="uk-button tm-button-save" data-uk-tooltip="Save">
                     <span class="tm-svg-top-fix" uk-icon="icon: check"></span>
@@ -181,7 +234,7 @@
                     image: '',
                     additionalDomains: [],
                 },
-                newAdddomain: '',
+                newAdddomain: {name: '', link : ''},
                 domain_id: '',
                 pagination: {},
                 edit: false,
@@ -215,15 +268,19 @@
             })
         },
         methods:{
-            editText: function(key, text) {
+            editText: function(key, text, field) {
                 //console.log(key, text);
-                this.domainParams.additionalDomains[key].name = text;
+                this.domainParams.additionalDomains[key].field = text;
 
             },
             newAdditioanalDomain(newdomainParams) {
-                this.domainParams.additionalDomains.push({name: newdomainParams});
-                //console.log(newdomainParams);
-                return this.newAdddomain = '';
+                if(newdomainParams.name != '' && newdomainParams.link != ''){
+                    this.domainParams.additionalDomains.push({name: newdomainParams.name , link: newdomainParams.link});
+                    return this.newAdddomain = {name: '', link : ''};
+                } else {
+                    alert('pleas enter add domain params');
+                }
+
             },
             deleteAdditionalDomain(index) {
                 this.domainParams.additionalDomains.splice(index, 1);
@@ -291,6 +348,7 @@
                             this.domainParams.screen = '';
                             this.domainParams.additionaldomainParams = [];
                             this.newAdddomainParams = '';
+                            this.newAdddomain =  {name: '', link : ''};
                             alert('domainParams added');
                         })
                         .catch(err => console.log(err));
@@ -322,7 +380,7 @@
                                 screen:'',
                                 additionalDomains:[],
                             };
-                            this.newAdddomain = '';
+                            this.newAdddomain = {name: '', link : ''};
                             alert('domain updated');
                         })
                         .catch(err => console.log(err));

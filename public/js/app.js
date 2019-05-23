@@ -244,6 +244,59 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domain",
   props: {},
@@ -279,7 +332,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       screen: '',
       image: '',
       additionalDomains: []
-    }), _defineProperty(_ref, "newAdddomain", ''), _defineProperty(_ref, "domain_id", ''), _defineProperty(_ref, "pagination", {}), _defineProperty(_ref, "edit", false), _defineProperty(_ref, "domainWidgetIsVisible", false), _defineProperty(_ref, "validationErrors", []), _ref;
+    }), _defineProperty(_ref, "newAdddomain", {
+      name: '',
+      link: ''
+    }), _defineProperty(_ref, "domain_id", ''), _defineProperty(_ref, "pagination", {}), _defineProperty(_ref, "edit", false), _defineProperty(_ref, "domainWidgetIsVisible", false), _defineProperty(_ref, "validationErrors", []), _ref;
   },
   created: function created() {},
   mounted: function mounted() {
@@ -305,16 +361,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
   },
   methods: {
-    editText: function editText(key, text) {
+    editText: function editText(key, text, field) {
       //console.log(key, text);
-      this.domainParams.additionalDomains[key].name = text;
+      this.domainParams.additionalDomains[key].field = text;
     },
     newAdditioanalDomain: function newAdditioanalDomain(newdomainParams) {
-      this.domainParams.additionalDomains.push({
-        name: newdomainParams
-      }); //console.log(newdomainParams);
-
-      return this.newAdddomain = '';
+      if (newdomainParams.name != '' && newdomainParams.link != '') {
+        this.domainParams.additionalDomains.push({
+          name: newdomainParams.name,
+          link: newdomainParams.link
+        });
+        return this.newAdddomain = {
+          name: '',
+          link: ''
+        };
+      } else {
+        alert('pleas enter add domain params');
+      }
     },
     deleteAdditionalDomain: function deleteAdditionalDomain(index) {
       this.domainParams.additionalDomains.splice(index, 1);
@@ -394,6 +457,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this4.domainParams.screen = '';
           _this4.domainParams.additionaldomainParams = [];
           _this4.newAdddomainParams = '';
+          _this4.newAdddomain = {
+            name: '',
+            link: ''
+          };
           alert('domainParams added');
         })["catch"](function (err) {
           return console.log(err);
@@ -425,7 +492,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             screen: '',
             additionalDomains: []
           };
-          _this4.newAdddomain = '';
+          _this4.newAdddomain = {
+            name: '',
+            link: ''
+          };
           alert('domain updated');
         })["catch"](function (err) {
           return console.log(err);
@@ -3418,15 +3488,176 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _vm._m(2),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _vm._m(4),
-              _vm._v(" "),
-              _vm._m(5),
+              _c("div", { staticClass: "uk-width-1-1@s" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "uk-list" },
+                  [
+                    _vm._l(_vm.domainParams.additionalDomains, function(
+                      additionaldomain,
+                      key
+                    ) {
+                      return _vm.domainParams.additionalDomains.length > 0
+                        ? _c("li", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "uk-grid-collapse uk-child-width-expand@s uk-text-center",
+                                attrs: { "uk-grid": "" }
+                              },
+                              [
+                                _c("div", [
+                                  _c("input", {
+                                    staticClass: "uk-input uk-margin-small",
+                                    attrs: { type: "text" },
+                                    domProps: { value: additionaldomain.name },
+                                    on: {
+                                      blur: function($event) {
+                                        _vm.textEditing = false
+                                        _vm.editText(
+                                          key,
+                                          $event.target.value,
+                                          "name"
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _c("input", {
+                                    staticClass: "uk-input uk-margin-small",
+                                    attrs: { type: "text" },
+                                    domProps: { value: additionaldomain.link },
+                                    on: {
+                                      blur: function($event) {
+                                        _vm.textEditing = false
+                                        _vm.editText(
+                                          key,
+                                          $event.target.value,
+                                          "link"
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _c("span", {
+                                    staticStyle: { color: "red" },
+                                    attrs: {
+                                      "uk-icon": "icon: minus-circle; ratio: 1"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteAdditionalDomain(key)
+                                      }
+                                    }
+                                  })
+                                ])
+                              ]
+                            )
+                          ])
+                        : _vm._e()
+                    }),
+                    _c("li", { staticClass: "uk-margin-top" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "uk-grid-collapse uk-child-width-expand@s uk-text-center",
+                          attrs: { "uk-grid": "" }
+                        },
+                        [
+                          _c("div", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.newAdddomain.name,
+                                  expression: "newAdddomain.name"
+                                }
+                              ],
+                              staticClass: "uk-input uk-margin-small",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Add domain name…"
+                              },
+                              domProps: { value: _vm.newAdddomain.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.newAdddomain,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.newAdddomain.link,
+                                  expression: "newAdddomain.link"
+                                }
+                              ],
+                              staticClass: "uk-input uk-margin-small",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Add domain link…"
+                              },
+                              domProps: { value: _vm.newAdddomain.link },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.newAdddomain,
+                                    "link",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("span", {
+                              staticStyle: { color: "blue" },
+                              attrs: {
+                                "uk-icon": "icon: plus-circle; ratio: 1"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.newAdditioanalDomain(
+                                    _vm.newAdddomain
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]
+                      )
+                    ])
+                  ],
+                  2
+                )
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-width-1-2@s" }, [
                 _c("div", { staticClass: "uk-form-label uk-text-bold" }, [
@@ -3588,95 +3819,9 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "uk-hr" }),
           _vm._v(" "),
-          _vm._m(6),
+          _vm._m(2),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "uk-grid-small uk-child-width-auto uk-grid" },
-            [
-              _c(
-                "ul",
-                [
-                  _vm._l(_vm.domainParams.additionalDomains, function(
-                    additionaldomain,
-                    key
-                  ) {
-                    return _vm.domainParams.additionalDomains.length > 0
-                      ? _c("li", [
-                          _c("input", {
-                            staticClass: "uk-input uk-margin-small",
-                            attrs: { type: "text" },
-                            domProps: { value: additionaldomain.name },
-                            on: {
-                              blur: function($event) {
-                                _vm.textEditing = false
-                                _vm.editText(key, $event.target.value)
-                              }
-                            }
-                          }),
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "uk-button uk-button-default uk-width-1-1 uk-margin-small",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.deleteAdditionalDomain(key)
-                                }
-                              }
-                            },
-                            [_vm._v("delete")]
-                          )
-                        ])
-                      : _vm._e()
-                  }),
-                  _vm._v(" "),
-                  _c("li", { staticClass: "search-box" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.newAdddomain,
-                          expression: "newAdddomain"
-                        }
-                      ],
-                      staticClass: "uk-input uk-margin-small",
-                      attrs: { type: "text", placeholder: "Add domainParams…" },
-                      domProps: { value: _vm.newAdddomain },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.newAdddomain = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "uk-button uk-button-default uk-width-1-1 uk-margin-small",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.newAdditioanalDomain(_vm.newAdddomain)
-                          }
-                        }
-                      },
-                      [_vm._v("add")]
-                    )
-                  ])
-                ],
-                2
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm._m(7)
+          _vm._m(3)
         ]
       )
     ]
@@ -3696,84 +3841,28 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-width-1-2@s" }, [
-      _c("div", { staticClass: "uk-form-label uk-text-bold" }, [
-        _vm._v("Additional domain name")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "uk-input",
-        attrs: { type: "text", placeholder: "Additional domain name" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-width-1-2@s" }, [
-      _c("div", { staticClass: "uk-form-label uk-text-bold" }, [
-        _vm._v("Additional domain link")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "uk-input",
-        attrs: { type: "text", placeholder: "Additional domain link" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "uk-width-1-2@s", attrs: { id: "my-id", hidden: "" } },
+      {
+        staticClass: "uk-grid-collapse uk-child-width-expand@s uk-text-center",
+        attrs: { "uk-grid": "" }
+      },
       [
-        _c("div", { staticClass: "uk-form-label uk-text-bold" }, [
-          _vm._v("Additional domain name")
-        ]),
+        _c(
+          "div",
+          { staticClass: "uk-form-label uk-text-bold uk-text-left@s" },
+          [_vm._v("Additional domain name")]
+        ),
         _vm._v(" "),
-        _c("input", {
-          staticClass: "uk-input",
-          attrs: { type: "text", placeholder: "Additional domain name" }
-        })
+        _c(
+          "div",
+          { staticClass: "uk-form-label uk-text-bold uk-text-left@s" },
+          [_vm._v("Additional domain link")]
+        ),
+        _vm._v(" "),
+        _c("div")
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "uk-width-1-2@s", attrs: { id: "my-id", hidden: "" } },
-      [
-        _c("div", { staticClass: "uk-form-label uk-text-bold" }, [
-          _vm._v("Additional domain link")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "uk-input",
-          attrs: { type: "text", placeholder: "Additional domain link" }
-        })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-width-1-1" }, [
-      _c(
-        "button",
-        {
-          staticClass: "uk-button uk-button-default uk-width-1-1",
-          attrs: { "uk-toggle": "target: #my-id; animation: uk-animation-fade" }
-        },
-        [_vm._v("Add additional domain")]
-      )
-    ])
   },
   function() {
     var _vm = this

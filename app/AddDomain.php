@@ -15,7 +15,7 @@ class AddDomain extends Model
      * @var array
      */
     protected $fillable = [
-        'domain_id', 'name'
+        'domain_id', 'name', 'link'
     ];
 
     public function domain()

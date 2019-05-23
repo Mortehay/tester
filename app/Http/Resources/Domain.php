@@ -16,7 +16,7 @@ class Domain extends JsonResource
      */
     public function toArray($request)
     {
-        $additionalDomains = AddDomain::select('id', 'name')->where('domain_id', '=', $this->id)->get()->toArray();
+        $additionalDomains = AddDomain::select('id', 'name', 'link')->where('domain_id', '=', $this->id)->get()->toArray();
         $screen = ImageUploads::select('image_path')->where('domain_id', '=', $this->id)->first();
         return [
             'id' =>$this->id,
