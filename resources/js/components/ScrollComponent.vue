@@ -1,8 +1,6 @@
 <template>
     <div>
-        <a if="display" uk-icon="chevron-up" v-scroll-to="{ el: '#app', offset: -70, }">{{ $t('texts.scroll.title')}}</a>
-        <!--<br> Window height: {{ windowHeight }} <br/>
-        {{ txt }}-->
+        <a v-if="scrolled" class="scroll" uk-icon="icon: chevron-up; ratio: 3" @scroll="handleScroll" v-scroll-to="{ el: '#app', offset: -70, }"><!--{{ $t('texts.scroll.title')}}--></a>
     </div>
 </template>
 
@@ -15,29 +13,26 @@
         data() {
             return {
                 windowHeight: 0,
-                txt: '',
-                display: false,
+                scrolled: false,
             };
         },
-        mounted() {
-            this.windowHeight = window.innerHeight;
-            this.$nextTick(() => {
-                window.addEventListener('scroll', () => {
-                    this.windowHeight = window.innerHeight
-                });
-            })
-        },
-        beforeDestroy() {
-            window.removeEventListener('scroll', this.onScrollFunction);
-        },
-        methods:{
+        methods: {
+            handleScroll: function (event) {
+                this.windowHeight = window.pageYOffset;
+                if(window.pageYOffset > 70) {
+                    this.scrolled = true;
+                } else {
+                    this.scrolled = false;
+                }
 
-        },
-        watch:{
-            windowHeight(newHeight, oldHeight) {
-                //this.txt = `it changed to ${newHeight} from ${oldHeight}`;
-                if(newHeight > oldHeight) this.display = true;
             }
+        },
+
+        created: function () {
+            window.addEventListener('scroll', this.handleScroll);
+        },
+        destroyed: function () {
+            window.removeEventListener('scroll', this.handleScroll);
         }
     }
 </script>

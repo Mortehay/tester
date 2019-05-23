@@ -848,37 +848,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "scroll",
   props: {},
   data: function data() {
     return {
       windowHeight: 0,
-      txt: '',
-      display: false
+      scrolled: false
     };
   },
-  mounted: function mounted() {
-    var _this = this;
+  methods: {
+    handleScroll: function handleScroll(event) {
+      this.windowHeight = window.pageYOffset;
 
-    this.windowHeight = window.innerHeight;
-    this.$nextTick(function () {
-      window.addEventListener('scroll', function () {
-        _this.windowHeight = window.innerHeight;
-      });
-    });
-  },
-  beforeDestroy: function beforeDestroy() {
-    window.removeEventListener('scroll', this.onScrollFunction);
-  },
-  methods: {},
-  watch: {
-    windowHeight: function windowHeight(newHeight, oldHeight) {
-      //this.txt = `it changed to ${newHeight} from ${oldHeight}`;
-      if (newHeight > oldHeight) this.display = true;
+      if (window.pageYOffset > 70) {
+        this.scrolled = true;
+      } else {
+        this.scrolled = false;
+      }
     }
+  },
+  created: function created() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  destroyed: function destroyed() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 });
 
@@ -4403,21 +4397,21 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "a",
-      {
-        directives: [
-          {
-            name: "scroll-to",
-            rawName: "v-scroll-to",
-            value: { el: "#app", offset: -70 },
-            expression: "{ el: '#app', offset: -70, }"
-          }
-        ],
-        attrs: { if: "display", "uk-icon": "chevron-up" }
-      },
-      [_vm._v(_vm._s(_vm.$t("texts.scroll.title")))]
-    )
+    _vm.scrolled
+      ? _c("a", {
+          directives: [
+            {
+              name: "scroll-to",
+              rawName: "v-scroll-to",
+              value: { el: "#app", offset: -70 },
+              expression: "{ el: '#app', offset: -70, }"
+            }
+          ],
+          staticClass: "scroll",
+          attrs: { "uk-icon": "icon: chevron-up; ratio: 3" },
+          on: { scroll: _vm.handleScroll }
+        })
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
