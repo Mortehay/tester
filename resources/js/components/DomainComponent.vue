@@ -15,11 +15,20 @@
                         <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
                     </div>
                 </div>
-                <div class="uk-width-1-2@s">
+                <div class="uk-width-1-4@s">
                     <div class="uk-grid-small uk-child-width-1-1 uk-grid">
                         <div v-for="type in types">
                             <label>
                                 <input v-on:click="typeChange" type="radio" class="uk-radio" :value="type.code"  v-model="domainParamsType" > {{type.name}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-4@s">
+                    <div class="uk-grid-small uk-child-width-1-1 uk-grid">
+                        <div v-for="display in displayStatus">
+                            <label>
+                                <input v-on:click="displayChange" type="radio" class="uk-radio" :value="display.code"  v-model="domainParamsDisplay" > {{display.name}}
                             </label>
                         </div>
                     </div>
@@ -123,56 +132,6 @@
                 </div>
             </div>
 
-            <!--<div>
-                <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
-                    <div>
-                        <div class="uk-form-label uk-text-bold">Additional domain name</div>
-                    </div>
-                    <div>
-                        <div class="uk-form-label uk-text-bold">Additional domain link</div>
-                    </div>
-                    <div></div>
-                </div>
-                <ul class="uk-list">
-                    <li v-if="(domainParams.additionalDomains).length > 0" v-for="(additionaldomain, key) in domainParams.additionalDomains">
-                        <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
-                            <div>
-                                <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.name" v-on:blur= "textEditing=false; editText(key, $event.target.value, 'name')">
-                            </div>
-                            <div>
-                                <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.link" v-on:blur= "textEditing=false; editText(key, $event.target.value, 'link')">
-                            </div>
-                            <div>
-                                <span style="color:red;" uk-icon="icon: minus-circle; ratio: 1" @click.prevent="deleteAdditionalDomain(key)"></span>
-                            </div>
-                        </div>-->
-                       <!-- <div class="uk-width-1-3@s">
-                            <div class="uk-form-label uk-text-bold">Additional domain name</div>
-                            <input type="text" class="uk-input" placeholder="Additional domain name">
-                        </div>
-                        <div class="uk-width-1-3@s">
-                            <div class="uk-form-label uk-text-bold">Additional domain link</div>
-                            <input type="text" class="uk-input" placeholder="Additional domain link">
-                        </div>
-                        <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.name" v-on:blur= "textEditing=false; editText(key, $event.target.value)"><button class="uk-button uk-button-default uk-width-1-1 uk-margin-small"                                                                                  @click.prevent="deleteAdditionalDomain(key)">delete</button>
-                    </li>-->
-                    <!--<li class="uk-margin-top">
-                        <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
-                            <div>
-                                <input type="text" class="uk-input uk-margin-small" placeholder="Add domain name…"  v-model="newAdddomain.name">
-                            </div>
-                            <div>
-                                <input type="text" class="uk-input uk-margin-small" placeholder="Add domain link…"  v-model="newAdddomain.link">
-                            </div>
-                            <div>
-                                <span style="color:blue;" uk-icon="icon: plus-circle; ratio: 1" @click.prevent="newAdditioanalDomain(newAdddomain)"></span>
-                            </div>
-                        </div>
-                        &lt;!&ndash;<input type="text" class="uk-input uk-margin-small" placeholder="Add domainParams…"  v-model="newAdddomain">
-                        <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small" @click.prevent="newAdditioanalDomain(newAdddomain)">add</button>&ndash;&gt;
-                    </li>
-                </ul>
-            </div>-->
             <div class="uk-margin uk-text-right">
                 <button type="submit" class="uk-button tm-button-save" data-uk-tooltip="Save">
                     <span class="tm-svg-top-fix" uk-icon="icon: check"></span>
@@ -205,17 +164,28 @@
                 location: window.location.origin,
                 domainParams: [],
                 domainParamsType: '',
+                domainParamsDisplay: '',
                 types:[
                     {
                         code: 'h_',
                         name:'host',
                     }, {
                         code: '_d',
-                        name:'domainParams',
+                        name:'domain',
                     },
                     {
                         code:'hd',
-                        name:'host+domainParams'
+                        name:'host+domain'
+                    }
+                ],
+                displayStatus:[
+                    {
+                        code: 'show',
+                        name: 'show',
+                    },
+                    {
+                        code: 'hide',
+                        name: 'hide',
                     }
                 ],
                 editedText: null,
@@ -232,6 +202,7 @@
                     description: '',
                     screen: '',
                     image: '',
+                    display:'',
                     additionalDomains: [],
                 },
                 newAdddomain: {name: '', link : ''},
@@ -258,7 +229,9 @@
                 this.domainParams.hosting_name = data.hosting_name;
                 this.domainParams.hosting_link = data.hosting_link;
                 this.domainParamsType = data.type;
+                this.domainParamsDisplay = data.display;
                 this.domainParams.type = data.type;
+                this.domainParams.display = data.display;
                 //console.log(domainParams.type);
                 this.domainParams.screen = data.screen;
                 this.domainParams.login = data.login;
@@ -312,6 +285,11 @@
                 let type = event.target.value;
                 this.domainParams.type = event.target.value;
             },
+            displayChange(){
+                let vm = this;
+                let type = event.target.value;
+                this.domainParams.type = event.target.value;
+            },
             deleteDomainParams(id){
                 if(confirm('are you sure?')){
                     fetch(`/api/domainParams/${id}`,{method:'delete'})
@@ -342,6 +320,7 @@
                             this.domainParams.domainParamsing_name = '';
                             this.domainParams.domainParamsing_link = '';
                             this.domainParams.type = '';
+                            this.domainParams.display = '';
                             this.domainParams.login = '';
                             this.domainParams.password = '';
                             this.domainParams.description = '';
@@ -399,6 +378,8 @@
                 this.domainParams.hosting_link = domainParams.hosting_link;
                 this.domainParamsType = domainParams.type;
                 this.domainParams.type = domainParams.type;
+                this.domainParamsDisplay = domainParams.display;
+                this.domainParams.display = domainParams.display;
                 //console.log(domainParams.type);
                 this.domainParams.screen = domainParams.screen;
                 this.domainParams.login = domainParams.login;

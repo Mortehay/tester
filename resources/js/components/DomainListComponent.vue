@@ -174,6 +174,7 @@
                         hosting_name: '',
                         hosting_link: '',
                         type: '',
+                        display: '',
                         login: '',
                         password: '',
                         description: '',
@@ -197,6 +198,7 @@
                     screen: (typeof domain.screen != undefined) && domain.screen.image_path != null ? domain.screen.image_path : 'storage/test.jpg',
                     additionalDomains: domain.additionalDomains,
                     state: domain.state,
+                    display: domain.display != '' && domain.display != null ? domain.display : 'hide',
                 });
             },
             forceRerender(key) {

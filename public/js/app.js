@@ -256,47 +256,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domain",
   props: {},
@@ -307,15 +266,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       location: window.location.origin,
       domainParams: [],
       domainParamsType: '',
+      domainParamsDisplay: '',
       types: [{
         code: 'h_',
         name: 'host'
       }, {
         code: '_d',
-        name: 'domainParams'
+        name: 'domain'
       }, {
         code: 'hd',
-        name: 'host+domainParams'
+        name: 'host+domain'
+      }],
+      displayStatus: [{
+        code: 'show',
+        name: 'show'
+      }, {
+        code: 'hide',
+        name: 'hide'
       }],
       editedText: null,
       textEditing: false
@@ -331,6 +298,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       description: '',
       screen: '',
       image: '',
+      display: '',
       additionalDomains: []
     }), _defineProperty(_ref, "newAdddomain", {
       name: '',
@@ -351,7 +319,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _this.domainParams.hosting_name = data.hosting_name;
       _this.domainParams.hosting_link = data.hosting_link;
       _this.domainParamsType = data.type;
-      _this.domainParams.type = data.type; //console.log(domainParams.type);
+      _this.domainParamsDisplay = data.display;
+      _this.domainParams.type = data.type;
+      _this.domainParams.display = data.display; //console.log(domainParams.type);
 
       _this.domainParams.screen = data.screen;
       _this.domainParams.login = data.login;
@@ -412,6 +382,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var type = event.target.value;
       this.domainParams.type = event.target.value;
     },
+    displayChange: function displayChange() {
+      var vm = this;
+      var type = event.target.value;
+      this.domainParams.type = event.target.value;
+    },
     deleteDomainParams: function deleteDomainParams(id) {
       var _this3 = this;
 
@@ -451,6 +426,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this4.domainParams.domainParamsing_name = '';
           _this4.domainParams.domainParamsing_link = '';
           _this4.domainParams.type = '';
+          _this4.domainParams.display = '';
           _this4.domainParams.login = '';
           _this4.domainParams.password = '';
           _this4.domainParams.description = '';
@@ -515,7 +491,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.domainParams.hosting_name = domainParams.hosting_name;
       this.domainParams.hosting_link = domainParams.hosting_link;
       this.domainParamsType = domainParams.type;
-      this.domainParams.type = domainParams.type; //console.log(domainParams.type);
+      this.domainParams.type = domainParams.type;
+      this.domainParamsDisplay = domainParams.display;
+      this.domainParams.display = domainParams.display; //console.log(domainParams.type);
 
       this.domainParams.screen = domainParams.screen;
       this.domainParams.login = domainParams.login;
@@ -720,6 +698,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         hosting_name: '',
         hosting_link: '',
         type: '',
+        display: '',
         login: '',
         password: '',
         description: '',
@@ -741,7 +720,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         description: domain.description,
         screen: _typeof(domain.screen) != undefined && domain.screen.image_path != null ? domain.screen.image_path : 'storage/test.jpg',
         additionalDomains: domain.additionalDomains,
-        state: domain.state
+        state: domain.state,
+        display: domain.display != '' && domain.display != null ? domain.display : 'hide'
       });
     },
     forceRerender: function forceRerender(key) {
@@ -3393,7 +3373,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "uk-width-1-2@s" }, [
+              _c("div", { staticClass: "uk-width-1-4@s" }, [
                 _c(
                   "div",
                   { staticClass: "uk-grid-small uk-child-width-1-1 uk-grid" },
@@ -3424,6 +3404,50 @@ var render = function() {
                         }),
                         _vm._v(
                           " " + _vm._s(type.name) + "\n                        "
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-4@s" }, [
+                _c(
+                  "div",
+                  { staticClass: "uk-grid-small uk-child-width-1-1 uk-grid" },
+                  _vm._l(_vm.displayStatus, function(display) {
+                    return _c("div", [
+                      _c("label", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.domainParamsDisplay,
+                              expression: "domainParamsDisplay"
+                            }
+                          ],
+                          staticClass: "uk-radio",
+                          attrs: { type: "radio" },
+                          domProps: {
+                            value: display.code,
+                            checked: _vm._q(
+                              _vm.domainParamsDisplay,
+                              display.code
+                            )
+                          },
+                          on: {
+                            click: _vm.displayChange,
+                            change: function($event) {
+                              _vm.domainParamsDisplay = display.code
+                            }
+                          }
+                        }),
+                        _vm._v(
+                          " " +
+                            _vm._s(display.name) +
+                            "\n                        "
                         )
                       ])
                     ])
