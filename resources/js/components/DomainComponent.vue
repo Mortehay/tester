@@ -38,7 +38,7 @@
                     <div class="uk-grid-small uk-child-width-1-1 uk-grid">
                         <div v-for="type in types">
                             <label>
-                                <input v-on:click="typeChange" type="radio" class="uk-radio" :value="type.code"  v-model="domainParamsType" > {{type.name}}
+                                <input v-on:click="radioOptionChange('type')" type="radio" class="uk-radio" :value="type.code"  v-model="domainParamsType" > {{type.name}}
                             </label>
                         </div>
                     </div>
@@ -47,11 +47,12 @@
                     <div class="uk-grid-small uk-child-width-1-1 uk-grid">
                         <div v-for="display in displayStatus">
                             <label>
-                                <input v-on:click="displayChange" type="radio" class="uk-radio" :value="display.code"  v-model="domainParamsDisplay" > {{display.name}}
+                                <input v-on:click="radioOptionChange('display')" type="radio" class="uk-radio" :value="display.code"  v-model="domainParamsDisplay" > {{display.name}}
                             </label>
                         </div>
                     </div>
                 </div>
+
                 <div class="uk-width-1-2@s">
                     <div class="uk-form-label uk-text-bold">Site name</div>
                     <input type="text" class="uk-input" placeholder="Site name" v-model="domainParams.name">
@@ -120,29 +121,17 @@
             <div class="uk-grid-small" data-uk-grid>
                 <div class="uk-width-1-2@s">
                     <div class="uk-form-label uk-text-bold">Monitor interval</div>
-                    <div class="uk-grid-small uk-grid">
-                        <div>
+                    <div class="uk-grid-small  uk-grid">
+                        <div v-for="timer in timers">
                             <label>
-                                <input type="radio" class="uk-radio" value=""> 5 min
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="radio" class="uk-radio" value=""> 15 min
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="radio" class="uk-radio" value=""> 30 min
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="radio" class="uk-radio" value=""> 1 hour
+                                <input v-on:click="radioOptionChange('timer')" type="radio" class="uk-radio" :value="timer.code"  v-model="domainParamsTimer" > {{timer.name}} {{ $t('texts.timer.title')}}
                             </label>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="uk-hr"></div>
+            <div class="uk-grid-small" data-uk-grid>
                 <div class="uk-width-1-2@s">
                     <div class="uk-form-label uk-text-bold">Additional alert contact</div>
                     <input type="text" class="uk-input uk-margin-small" placeholder="email">
@@ -167,11 +156,13 @@
                 domainParams: [],
                 domainParamsType: '',
                 domainParamsDisplay: '',
+                domainParamsTimer: '',
                 types:[
                     {
                         code: 'h_',
                         name:'host',
-                    }, {
+                    },
+                    {
                         code: '_d',
                         name:'domain',
                     },
@@ -190,6 +181,24 @@
                         name: 'hide',
                     }
                 ],
+                timers:[
+                    {
+                        code: 5,
+                        name: 5,
+                    },
+                    {
+                        code: 15,
+                        name: 15,
+                    },
+                    {
+                        code: 30,
+                        name: 30,
+                    },
+                    {
+                        code: 60,
+                        name: 60,
+                    },
+                ],
                 editedText: null,
                 textEditing: false,
                 domainParams: {
@@ -205,7 +214,9 @@
                     screen: '',
                     image: '',
                     display:'',
+                    timer:'',
                     additionalDomains: [],
+                    additionalMails: [],
                 },
                 newAdddomain: {name: '', link : ''},
                 domain_id: '',
@@ -236,8 +247,10 @@
                     this.domainParams.hosting_link = data.hosting_link;
                     this.domainParamsType = data.type;
                     this.domainParamsDisplay = data.display;
+                    this.domainParamsTimer = data.timer;
                     this.domainParams.type = data.type;
                     this.domainParams.display = data.display;
+                    this.domainParams.timer = data.timer;
                     //console.log(domainParams.type);
                     this.domainParams.screen = data.screen;
                     this.domainParams.login = data.login;
@@ -287,7 +300,12 @@
                     return 'http://' + url;
                 }
             },
-            typeChange(){
+            radioOptionChange(option){
+                let vm = this;
+                this.domainParams[option] = event.target.value;
+                //console.log(this.domainParams);
+            },
+            /*typeChange(){
                 let vm = this;
                 let type = event.target.value;
                 this.domainParams.type = event.target.value;
@@ -296,7 +314,7 @@
                 let vm = this;
                 let display = event.target.value;
                 this.domainParams.display = event.target.value;
-            },
+            },*/
             deleteDomainParams(id){
                 if(confirm('are you sure?')){
                     fetch(`/api/domain/${id}`,{method:'delete'})
@@ -309,7 +327,7 @@
                 this.clearDomainForm()
             },
             addDomainParams(){
-                //console.log(this.domainParams);
+                console.log(this.domainParams);
                 if(this.edit === false){
                     //add
                     fetch('/api/domain',{
@@ -367,7 +385,9 @@
                                 screen:'',
                                 image: '',
                                 display:'',
+                                timer:'',
                                 additionalDomains:[],
+                                additionalMails:[],
                             };
                             this.newAdddomain = {name: '', link : ''};
                             alert('domain updated');

@@ -14,4 +14,7 @@ return [
     'scroll' => [
         'title' => 'UP'
     ],
+    'timer' => [
+        'title' => 'min'
+    ],
 ];

@@ -28,6 +28,9 @@ export default {
             },
             "scroll": {
                 "title": "UP"
+            },
+            "timer": {
+                "title": "min"
             }
         },
         "validation": {
@@ -170,6 +173,9 @@ export default {
             },
             "scroll": {
                 "title": "ВВЕРХ"
+            },
+            "timer": {
+                "title": "мин"
             }
         },
         "validation": {

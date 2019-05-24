@@ -247,17 +247,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domain",
   props: {},
@@ -269,6 +258,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       domainParams: [],
       domainParamsType: '',
       domainParamsDisplay: '',
+      domainParamsTimer: '',
       types: [{
         code: 'h_',
         name: 'host'
@@ -286,6 +276,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         code: 'hide',
         name: 'hide'
       }],
+      timers: [{
+        code: 5,
+        name: 5
+      }, {
+        code: 15,
+        name: 15
+      }, {
+        code: 30,
+        name: 30
+      }, {
+        code: 60,
+        name: 60
+      }],
       editedText: null,
       textEditing: false
     }, _defineProperty(_ref, "domainParams", {
@@ -301,7 +304,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       screen: '',
       image: '',
       display: '',
-      additionalDomains: []
+      timer: '',
+      additionalDomains: [],
+      additionalMails: []
     }), _defineProperty(_ref, "newAdddomain", {
       name: '',
       link: ''
@@ -327,8 +332,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.domainParams.hosting_link = data.hosting_link;
         _this.domainParamsType = data.type;
         _this.domainParamsDisplay = data.display;
+        _this.domainParamsTimer = data.timer;
         _this.domainParams.type = data.type;
-        _this.domainParams.display = data.display; //console.log(domainParams.type);
+        _this.domainParams.display = data.display;
+        _this.domainParams.timer = data.timer; //console.log(domainParams.type);
 
         _this.domainParams.screen = data.screen;
         _this.domainParams.login = data.login;
@@ -385,16 +392,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return 'http://' + url;
       }
     },
-    typeChange: function typeChange() {
+    radioOptionChange: function radioOptionChange(option) {
       var vm = this;
-      var type = event.target.value;
-      this.domainParams.type = event.target.value;
+      this.domainParams[option] = event.target.value; //console.log(this.domainParams);
     },
-    displayChange: function displayChange() {
-      var vm = this;
-      var display = event.target.value;
-      this.domainParams.display = event.target.value;
+
+    /*typeChange(){
+        let vm = this;
+        let type = event.target.value;
+        this.domainParams.type = event.target.value;
     },
+    displayChange(){
+        let vm = this;
+        let display = event.target.value;
+        this.domainParams.display = event.target.value;
+    },*/
     deleteDomainParams: function deleteDomainParams(id) {
       if (confirm('are you sure?')) {
         fetch("/api/domain/".concat(id), {
@@ -413,7 +425,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addDomainParams: function addDomainParams() {
       var _this3 = this;
 
-      //console.log(this.domainParams);
+      console.log(this.domainParams);
+
       if (this.edit === false) {
         //add
         fetch('/api/domain', {
@@ -474,7 +487,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             screen: '',
             image: '',
             display: '',
-            additionalDomains: []
+            timer: '',
+            additionalDomains: [],
+            additionalMails: []
           };
           _this3.newAdddomain = {
             name: '',
@@ -731,11 +746,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         hosting_link: '',
         type: '',
         display: '',
+        timer: '',
         login: '',
         password: '',
         description: '',
         screen: '',
         additionalDomains: [],
+        additionalMails: [],
         state: ''
       });
     },
@@ -750,10 +767,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         login: domain.login,
         password: domain.password,
         description: domain.description,
-        screen: _typeof(domain.screen) != undefined && domain.screen.image_path != null ? domain.screen.image_path : 'storage/test.jpg',
+        screen: _typeof(domain.screen) != undefined && domain.screen != null && domain.screen.image_path != null ? domain.screen.image_path : 'storage/test.jpg',
         additionalDomains: domain.additionalDomains,
+        additionalMails: domain.additionalMails,
         state: domain.state,
-        display: domain.display != '' && domain.display != null ? domain.display : 'hide'
+        display: domain.display != '' && domain.display != null ? domain.display : 'hide',
+        timer: domain.timer != '' && domain.timer != null ? domain.timer : 60
       });
     },
     forceRerender: function forceRerender(key) {
@@ -3503,7 +3522,9 @@ var render = function() {
                             checked: _vm._q(_vm.domainParamsType, type.code)
                           },
                           on: {
-                            click: _vm.typeChange,
+                            click: function($event) {
+                              return _vm.radioOptionChange("type")
+                            },
                             change: function($event) {
                               _vm.domainParamsType = type.code
                             }
@@ -3545,7 +3566,9 @@ var render = function() {
                             )
                           },
                           on: {
-                            click: _vm.displayChange,
+                            click: function($event) {
+                              return _vm.radioOptionChange("display")
+                            },
                             change: function($event) {
                               _vm.domainParamsDisplay = display.code
                             }
@@ -3950,6 +3973,63 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "uk-hr" }),
           _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "uk-grid-small", attrs: { "data-uk-grid": "" } },
+            [
+              _c("div", { staticClass: "uk-width-1-2@s" }, [
+                _c("div", { staticClass: "uk-form-label uk-text-bold" }, [
+                  _vm._v("Monitor interval")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "uk-grid-small  uk-grid" },
+                  _vm._l(_vm.timers, function(timer) {
+                    return _c("div", [
+                      _c("label", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.domainParamsTimer,
+                              expression: "domainParamsTimer"
+                            }
+                          ],
+                          staticClass: "uk-radio",
+                          attrs: { type: "radio" },
+                          domProps: {
+                            value: timer.code,
+                            checked: _vm._q(_vm.domainParamsTimer, timer.code)
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.radioOptionChange("timer")
+                            },
+                            change: function($event) {
+                              _vm.domainParamsTimer = timer.code
+                            }
+                          }
+                        }),
+                        _vm._v(
+                          " " +
+                            _vm._s(timer.name) +
+                            " " +
+                            _vm._s(_vm.$t("texts.timer.title")) +
+                            "\n                        "
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-hr" }),
+          _vm._v(" "),
           _vm._m(3)
         ]
       )
@@ -4028,54 +4108,6 @@ var staticRenderFns = [
       "div",
       { staticClass: "uk-grid-small", attrs: { "data-uk-grid": "" } },
       [
-        _c("div", { staticClass: "uk-width-1-2@s" }, [
-          _c("div", { staticClass: "uk-form-label uk-text-bold" }, [
-            _vm._v("Monitor interval")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-grid-small uk-grid" }, [
-            _c("div", [
-              _c("label", [
-                _c("input", {
-                  staticClass: "uk-radio",
-                  attrs: { type: "radio", value: "" }
-                }),
-                _vm._v(" 5 min\n                        ")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("label", [
-                _c("input", {
-                  staticClass: "uk-radio",
-                  attrs: { type: "radio", value: "" }
-                }),
-                _vm._v(" 15 min\n                        ")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("label", [
-                _c("input", {
-                  staticClass: "uk-radio",
-                  attrs: { type: "radio", value: "" }
-                }),
-                _vm._v(" 30 min\n                        ")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("label", [
-                _c("input", {
-                  staticClass: "uk-radio",
-                  attrs: { type: "radio", value: "" }
-                }),
-                _vm._v(" 1 hour\n                        ")
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
         _c("div", { staticClass: "uk-width-1-2@s" }, [
           _c("div", { staticClass: "uk-form-label uk-text-bold" }, [
             _vm._v("Additional alert contact")
@@ -17584,6 +17616,9 @@ __webpack_require__.r(__webpack_exports__);
       },
       "scroll": {
         "title": "UP"
+      },
+      "timer": {
+        "title": "min"
       }
     },
     "validation": {
@@ -17726,6 +17761,9 @@ __webpack_require__.r(__webpack_exports__);
       },
       "scroll": {
         "title": "ВВЕРХ"
+      },
+      "timer": {
+        "title": "мин"
       }
     },
     "validation": {

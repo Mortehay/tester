@@ -175,11 +175,13 @@
                         hosting_link: '',
                         type: '',
                         display: '',
+                        timer: '',
                         login: '',
                         password: '',
                         description: '',
                         screen:'',
                         additionalDomains:[],
+                        additionalMails:[],
                         state: '',
                     }
                 );
@@ -195,10 +197,12 @@
                     login: domain.login,
                     password: domain.password,
                     description: domain.description,
-                    screen: (typeof domain.screen != undefined) && domain.screen.image_path != null ? domain.screen.image_path : 'storage/test.jpg',
+                    screen: (typeof domain.screen != undefined) && domain.screen != null && domain.screen.image_path != null ? domain.screen.image_path : 'storage/test.jpg',
                     additionalDomains: domain.additionalDomains,
+                    additionalMails: domain.additionalMails,
                     state: domain.state,
                     display: domain.display != '' && domain.display != null ? domain.display : 'hide',
+                    timer: domain.timer != '' && domain.timer != null ? domain.timer : 60,
                 });
             },
             forceRerender(key) {

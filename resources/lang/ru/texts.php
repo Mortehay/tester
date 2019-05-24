@@ -14,4 +14,7 @@ return [
     'scroll' => [
         'title' => 'ВВЕРХ'
     ],
+    'timer' => [
+        'title' => 'мин'
+    ],
 ];

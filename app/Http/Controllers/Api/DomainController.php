@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\AddDomain;
+use App\AddMail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Domain;
@@ -71,8 +72,10 @@ class DomainController extends Controller
         $domain->description = $request->input('description');
         $domain->state = $request->input('state');
         $domain->display = $request->input('display');
+        $domain->timer = $request->input('timer');
         $domain->save();
-
+        
+        /*additional domains*/
         $additionalDomains = $request->input('additionalDomains');
         //dd($additionalDomains);
         //delete additional domain
@@ -112,7 +115,44 @@ class DomainController extends Controller
                 }
             }
         }
-
+        /*additional domains*/
+        /*additional emails*/
+        $additionalMails = $request->input('additionalMails');
+        $existingAddMailIds = []; $postAddMailIds = [];
+        $additionalMailsExistingIds = AddMail::select('id')->where('domain_id', '=', $domain->id)->get()->toArray();
+        if(is_array($additionalMailsExistingIds) && !empty($additionalMailsExistingIds)){
+            foreach ($additionalMailsExistingIds as $additionalMailsExistingId){
+                array_push($existingAddMailIds, $additionalMailsExistingId['id']);
+            }
+        }
+        if(is_array($additionalMails) && !empty($additionalMails)){
+            foreach ($additionalMails as $additionalMail){
+                if(array_key_exists('id', $additionalMail)) array_push($postAddMailIds, $additionalMail['id']);
+            }
+        }
+        //dd(array_diff($existingAddMailIds, $postAddMailIds));
+        $additionalMailsToRemove = array_diff($existingAddMailIds, $postAddMailIds);
+        if(is_array($additionalMailsToRemove) && !empty($additionalMailsToRemove)) {
+            foreach ($additionalMailsToRemove as $additionalMailToRemove) {
+                $_additionalMailToRemove = AddMail::where('id', '=', $additionalMailToRemove)->delete();
+            }
+        }
+        //add new update existing additional domains
+        if($additionalMails && !empty($additionalMails)){
+            foreach ($additionalMails as $additionalMail){
+                if(!array_key_exists('id',$additionalMail)){
+                    $newAdditionalMail = new AddMail();
+                    $newAdditionalMail->domain_id = $domain->id;
+                    $newAdditionalMail->alert_mail = $additionalMail['alert_mail'];
+                    $newAdditionalMail->save();
+                } else {
+                    $existingAdditionalMail = AddMail::findOrFail($additionalMail['id']);
+                    $existingAdditionalMail->alert_mail = $additionalMail['alert_mail'];
+                    $existingAdditionalMail->save();
+                }
+            }
+        }
+        /*additional emails*/
         //dd($image);
         $image = $request->input('screen');
         if(substr_count($image, 'screen') == 0) {
