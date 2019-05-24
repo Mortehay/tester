@@ -256,6 +256,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domain",
   props: {},
@@ -310,24 +312,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.$root.$on('domainData', function (data) {
-      if (_typeof(_this.domainParams.id) != undefined) _this.domainWidgetIsVisible = true;
-      _this.edit = true;
-      _this.domainParams.id = data.id;
-      _this.domainParams.domain_id = data.id;
-      _this.domainParams.name = data.name;
-      _this.domainParams.link = data.link;
-      _this.domainParams.hosting_name = data.hosting_name;
-      _this.domainParams.hosting_link = data.hosting_link;
-      _this.domainParamsType = data.type;
-      _this.domainParamsDisplay = data.display;
-      _this.domainParams.type = data.type;
-      _this.domainParams.display = data.display; //console.log(domainParams.type);
+      if (_typeof(data.domainWidgetIsVisible) != undefined && data.domainWidgetIsVisible == false) {
+        _this.clearDomainForm();
+      }
 
-      _this.domainParams.screen = data.screen;
-      _this.domainParams.login = data.login;
-      _this.domainParams.password = data.password;
-      _this.domainParams.description = data.description;
-      _this.domainParams.additionalDomains = data.additionalDomains;
+      if (_typeof(data.id) != undefined) {
+        _this.domainWidgetIsVisible = true;
+        _this.edit = true;
+        _this.domainParams.id = data.id;
+        _this.domainParams.domain_id = data.id;
+        _this.domainParams.name = data.name;
+        _this.domainParams.link = data.link;
+        _this.domainParams.hosting_name = data.hosting_name;
+        _this.domainParams.hosting_link = data.hosting_link;
+        _this.domainParamsType = data.type;
+        _this.domainParamsDisplay = data.display;
+        _this.domainParams.type = data.type;
+        _this.domainParams.display = data.display; //console.log(domainParams.type);
+
+        _this.domainParams.screen = data.screen;
+        _this.domainParams.login = data.login;
+        _this.domainParams.password = data.password;
+        _this.domainParams.description = data.description;
+        _this.domainParams.additionalDomains = data.additionalDomains;
+      }
     });
   },
   methods: {
@@ -384,30 +392,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     displayChange: function displayChange() {
       var vm = this;
-      var type = event.target.value;
-      this.domainParams.type = event.target.value;
+      var display = event.target.value;
+      this.domainParams.display = event.target.value;
     },
     deleteDomainParams: function deleteDomainParams(id) {
-      var _this3 = this;
-
       if (confirm('are you sure?')) {
-        fetch("/api/domainParams/".concat(id), {
+        fetch("/api/domain/".concat(id), {
           method: 'delete'
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
           alert('domainParams removed');
-
-          _this3.fetchdomainParams();
         })["catch"](function (err) {
           return console.log(err);
         });
       }
 
-      this.forceRerender();
+      this.clearDomainForm();
     },
     addDomainParams: function addDomainParams() {
-      var _this4 = this;
+      var _this3 = this;
 
       //console.log(this.domainParams);
       if (this.edit === false) {
@@ -421,19 +425,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
-          _this4.domainParams.name = '';
-          _this4.domainParams.link = '';
-          _this4.domainParams.domainParamsing_name = '';
-          _this4.domainParams.domainParamsing_link = '';
-          _this4.domainParams.type = '';
-          _this4.domainParams.display = '';
-          _this4.domainParams.login = '';
-          _this4.domainParams.password = '';
-          _this4.domainParams.description = '';
-          _this4.domainParams.screen = '';
-          _this4.domainParams.additionaldomainParams = [];
-          _this4.newAdddomainParams = '';
-          _this4.newAdddomain = {
+          _this3.domainParams.name = '';
+          _this3.domainParams.link = '';
+          _this3.domainParams.domainParamsing_name = '';
+          _this3.domainParams.domainParamsing_link = '';
+          _this3.domainParams.type = '';
+          _this3.domainParams.display = '';
+          _this3.domainParams.login = '';
+          _this3.domainParams.password = '';
+          _this3.domainParams.description = '';
+          _this3.domainParams.screen = '';
+          _this3.domainParams.image = '';
+          _this3.domainParams.display = '';
+          _this3.domainParams.additionaldomainParams = [];
+          _this3.newAdddomainParams = '';
+          _this3.newAdddomain = {
             name: '',
             link: ''
           };
@@ -454,8 +460,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }).then(function (res) {
           return res.json();
         }).then(function (data) {
-          _this4.edit = false;
-          _this4.domainParams = {
+          _this3.edit = false;
+          _this3.domainParams = {
             id: '',
             name: '',
             link: '',
@@ -466,9 +472,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             password: '',
             description: '',
             screen: '',
+            image: '',
+            display: '',
             additionalDomains: []
           };
-          _this4.newAdddomain = {
+          _this3.newAdddomain = {
             name: '',
             link: ''
           };
@@ -482,25 +490,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         rerender: true
       }); //this.forceRerender();
     },
-    editdomainParams: function editdomainParams(domainParams) {
-      this.edit = true;
-      this.domainParams.id = domainParams.id;
-      this.domainParams.domain_id = domainParams.id;
-      this.domainParams.name = domainParams.name;
-      this.domainParams.link = domainParams.link;
-      this.domainParams.hosting_name = domainParams.hosting_name;
-      this.domainParams.hosting_link = domainParams.hosting_link;
-      this.domainParamsType = domainParams.type;
-      this.domainParams.type = domainParams.type;
-      this.domainParamsDisplay = domainParams.display;
-      this.domainParams.display = domainParams.display; //console.log(domainParams.type);
-
-      this.domainParams.screen = domainParams.screen;
-      this.domainParams.login = domainParams.login;
-      this.domainParams.password = domainParams.password;
-      this.domainParams.description = domainParams.description;
-      this.domainParams.additionaldomainParams = domainParams.additionalDomains;
+    clearDomainForm: function clearDomainForm() {
+      this.edit = false;
+      this.domainParams = {
+        id: '',
+        name: '',
+        link: '',
+        hosting_name: '',
+        hosting_link: '',
+        type: '',
+        login: '',
+        password: '',
+        description: '',
+        screen: '',
+        image: '',
+        display: '',
+        additionalDomains: []
+      };
+      this.newAdddomain = {
+        name: '',
+        link: ''
+      };
+      this.domainWidgetIsVisible = false;
     },
+
+    /*editdomainParams(domainParams){
+        this.edit = true;
+        this.domainParams.id = domainParams.id;
+        this.domainParams.domain_id = domainParams.id;
+        this.domainParams.name = domainParams.name;
+        this.domainParams.link = domainParams.link;
+        this.domainParams.hosting_name = domainParams.hosting_name;
+        this.domainParams.hosting_link = domainParams.hosting_link;
+        this.domainParamsType = domainParams.type;
+        this.domainParams.type = domainParams.type;
+        this.domainParamsDisplay = domainParams.display;
+        this.domainParams.display = domainParams.display;
+        //console.log(domainParams.type);
+        this.domainParams.screen = domainParams.screen;
+        this.domainParams.login = domainParams.login;
+        this.domainParams.password = domainParams.password;
+        this.domainParams.description = domainParams.description;
+        this.domainParams.additionaldomainParams = domainParams.additionalDomains;
+     },*/
     forceRerender: function forceRerender() {
       this.componentKey += 1;
     }
@@ -731,6 +763,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this.domainSearchName = '';
       this.fetchDomains();
       this.forceRerender('domainListKey');
+      this.$root.$emit("domainData", {
+        domainWidgetIsVisible: false
+      });
     },
     searchDomain: function searchDomain(searchName) {
       var _this3 = this;
@@ -3320,19 +3355,91 @@ var render = function() {
       attrs: { id: "domain-widget" }
     },
     [
-      _vm._m(0),
+      _c(
+        "div",
+        { staticClass: "uk-h3 uk-margin-bottom", attrs: { "uk-grid": "" } },
+        [
+          _c("div", { staticClass: "uk-width-1-2@s" }, [
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.domainParams.name) +
+                "\n            "
+            ),
+            _c("span", { staticClass: "uk-text-small" }, [
+              _vm._v("(edit mode)")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-margin uk-text-right uk-width-1-2@s" }, [
+            _c(
+              "button",
+              {
+                staticClass: "uk-button uk-button-small tm-button-save",
+                attrs: { "data-uk-tooltip": "Save" },
+                on: {
+                  click: function($event) {
+                    return _vm.addDomainParams(_vm.domainParams)
+                  }
+                }
+              },
+              [
+                _c("span", {
+                  staticClass: "tm-svg-top-fix",
+                  attrs: { "uk-icon": "icon: check" }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "uk-button uk-button-small uk-button-danger",
+                attrs: { "data-uk-tooltip": "Delete" },
+                on: {
+                  click: function($event) {
+                    return _vm.deleteDomainParams(_vm.domainParams.id)
+                  }
+                }
+              },
+              [
+                _c("span", {
+                  staticClass: "tm-svg-top-fix",
+                  attrs: { "uk-icon": "icon: trash" }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "uk-button uk-button-small uk-button-primary",
+                attrs: { "data-uk-tooltip": "Cancel" },
+                on: {
+                  click: function($event) {
+                    return _vm.clearDomainForm()
+                  }
+                }
+              },
+              [
+                _c("span", {
+                  staticClass: "tm-svg-top-fix",
+                  attrs: { "uk-icon": "icon: close" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "form",
         {
           staticClass: "uk-form uk-form-stacked",
-          attrs: { id: "domainParams-editor" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addDomainParams($event)
-            }
-          }
+          attrs: { id: "domainParams-editor" }
         },
         [
           _c(
@@ -3513,7 +3620,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-width-1-1@s" }, [
-                _vm._m(1),
+                _vm._m(2),
                 _vm._v(" "),
                 _c(
                   "ul",
@@ -3843,8 +3950,6 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "uk-hr" }),
           _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
           _vm._m(3)
         ]
       )
@@ -3856,10 +3961,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-h3 uk-margin-bottom" }, [
-      _vm._v("\n        domain.com\n        "),
-      _c("span", { staticClass: "uk-text-small" }, [_vm._v("(edit mode)")])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "uk-button uk-button-small uk-button-secondary",
+        attrs: { "data-uk-tooltip": "Stop" }
+      },
+      [
+        _c("span", {
+          staticClass: "tm-svg-top-fix",
+          attrs: { "uk-icon": "icon: arrow-down" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "uk-button uk-button-small uk-button-secondary",
+        attrs: { "data-uk-tooltip": "Start" }
+      },
+      [
+        _c("span", {
+          staticClass: "tm-svg-top-fix",
+          attrs: { "uk-icon": "icon: arrow-up" }
+        })
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -3978,82 +4110,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-margin uk-text-right" }, [
-      _c(
-        "button",
-        {
-          staticClass: "uk-button tm-button-save",
-          attrs: { type: "submit", "data-uk-tooltip": "Save" }
-        },
-        [
-          _c("span", {
-            staticClass: "tm-svg-top-fix",
-            attrs: { "uk-icon": "icon: check" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "uk-button uk-button-secondary",
-          attrs: { "data-uk-tooltip": "Stop" }
-        },
-        [
-          _c("span", {
-            staticClass: "tm-svg-top-fix",
-            attrs: { "uk-icon": "icon: arrow-down" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "uk-button uk-button-secondary",
-          attrs: { "data-uk-tooltip": "Start" }
-        },
-        [
-          _c("span", {
-            staticClass: "tm-svg-top-fix",
-            attrs: { "uk-icon": "icon: arrow-up" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "uk-button uk-button-primary",
-          attrs: { "data-uk-tooltip": "Cancel" }
-        },
-        [
-          _c("span", {
-            staticClass: "tm-svg-top-fix",
-            attrs: { "uk-icon": "icon: close" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "uk-button uk-button-danger",
-          attrs: { "data-uk-tooltip": "Delete" }
-        },
-        [
-          _c("span", {
-            staticClass: "tm-svg-top-fix",
-            attrs: { "uk-icon": "icon: trash" }
-          })
-        ]
-      )
-    ])
   }
 ]
 render._withStripped = true

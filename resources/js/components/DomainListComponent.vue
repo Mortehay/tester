@@ -208,6 +208,9 @@
                 this.domainSearchName = '';
                 this.fetchDomains();
                 this.forceRerender('domainListKey');
+                this.$root.$emit ("domainData", {
+                    domainWidgetIsVisible: false,
+                });
             },
             searchDomain(searchName){
                 let params = {

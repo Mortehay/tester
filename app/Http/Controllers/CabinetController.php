@@ -34,6 +34,6 @@ class CabinetController extends Controller
      */
     public function index()
     {
-        return view('cabinet', $this->data);
+        return view('cabinet.cabinet', $this->data);
     }
 }

@@ -28,41 +28,7 @@
                         </div>
 
                         <div class="uk-margin">
-                            <div data-uk-grid>
-                                <div class="uk-width-1-3@m">
-                                    <a class="uk-cover-container uk-transition-toggle uk-display-block uk-link-reset" href="#" target="_blank">
-                                        <img src="screen/1.jpg">
-                                        <div class="uk-overlay-primary uk-transition-fade uk-position-cover"></div>
-                                        <div class="uk-position-center">
-                                            <div class="uk-overlay uk-transition-fade uk-light">
-                                                Visit web-site
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="uk-width-2-3@m">
-                                    <div class="uk-flex-middle uk-grid-small" data-uk-grid>
-                                        <div class="uk-text-bold uk-h4"><a class="uk-link-reset" href="#" target="_blank">damaim.com</a></div>
-                                        <div><a class="uk-link-muted" href="#" target="_blank">(хостинг)</a></div>
-                                    </div>
-                                    <div class="uk-text-meta">
-                                        Additional domains: <a href="#" class="uk-link-muted" target="_blank">site.com</a>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <div class="uk-child-width-1-1 uk-grid-collapse" data-uk-grid>
-                                            <div>
-                                                Login: 111111
-                                            </div>
-                                            <div>
-                                                Password: 22222
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin">
-                                        Some comments
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="uk-card uk-card-primary uk-card-body uk-padding-small uk-margin uk-text-small">
                                 <h5 class="uk-card-title">
                                     Latest Events

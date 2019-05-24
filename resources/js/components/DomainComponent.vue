@@ -1,11 +1,30 @@
 <template>
     <div v-show="domainWidgetIsVisible" id="domain-widget" class="uk-card uk-card-default uk-card-body uk-margin-bottom">
-        <div class="uk-h3 uk-margin-bottom">
-            domain.com
-            <span class="uk-text-small">(edit mode)</span>
+        <div class="uk-h3 uk-margin-bottom" uk-grid>
+            <div class="uk-width-1-2@s">
+                {{domainParams.name}}
+                <span class="uk-text-small">(edit mode)</span>
+            </div>
+            <div class="uk-margin uk-text-right uk-width-1-2@s">
+                <button @click="addDomainParams(domainParams)" class="uk-button uk-button-small tm-button-save" data-uk-tooltip="Save">
+                    <span class="tm-svg-top-fix" uk-icon="icon: check"></span>
+                </button>
+                <button class="uk-button uk-button-small uk-button-secondary" data-uk-tooltip="Stop">
+                    <span class="tm-svg-top-fix" uk-icon="icon: arrow-down"></span>
+                </button>
+                <button class="uk-button uk-button-small uk-button-secondary" data-uk-tooltip="Start">
+                    <span class="tm-svg-top-fix" uk-icon="icon: arrow-up"></span>
+                </button>
+                <button @click="deleteDomainParams(domainParams.id)" class="uk-button uk-button-small uk-button-danger" data-uk-tooltip="Delete">
+                    <span class="tm-svg-top-fix" uk-icon="icon: trash"></span>
+                </button>
+                <button @click="clearDomainForm()" class="uk-button uk-button-small uk-button-primary" data-uk-tooltip="Cancel">
+                    <span class="tm-svg-top-fix" uk-icon="icon: close"></span>
+                </button>
+            </div>
         </div>
-        <form id="domainParams-editor" @submit.prevent="addDomainParams" class="uk-form uk-form-stacked">
-            <div class="uk-grid-small" data-uk-grid>
+        <form id="domainParams-editor" class="uk-form uk-form-stacked"><!--@submit.prevent="addDomainParams"-->
+        <div class="uk-grid-small" data-uk-grid>
                 <div class="uk-width-1-2@s">
                     <div class="uk-margin" v-if="domainParams.screen">
                         <img :src="(domainParams.screen).indexOf('data:image') > -1 ? domainParams.screen : location + '/' + domainParams.screen" class="img-responsive" height="70" width="90">
@@ -132,23 +151,6 @@
                 </div>
             </div>
 
-            <div class="uk-margin uk-text-right">
-                <button type="submit" class="uk-button tm-button-save" data-uk-tooltip="Save">
-                    <span class="tm-svg-top-fix" uk-icon="icon: check"></span>
-                </button>
-                <button class="uk-button uk-button-secondary" data-uk-tooltip="Stop">
-                    <span class="tm-svg-top-fix" uk-icon="icon: arrow-down"></span>
-                </button>
-                <button class="uk-button uk-button-secondary" data-uk-tooltip="Start">
-                    <span class="tm-svg-top-fix" uk-icon="icon: arrow-up"></span>
-                </button>
-                <button class="uk-button uk-button-primary" data-uk-tooltip="Cancel">
-                    <span class="tm-svg-top-fix" uk-icon="icon: close"></span>
-                </button>
-                <button class="uk-button uk-button-danger" data-uk-tooltip="Delete">
-                    <span class="tm-svg-top-fix" uk-icon="icon: trash"></span>
-                </button>
-            </div>
         </form>
 
     </div>
@@ -220,24 +222,29 @@
         },
         mounted() {
             this.$root.$on('domainData', (data) => {
-                if(typeof this.domainParams.id != undefined) this.domainWidgetIsVisible = true;
-                this.edit = true;
-                this.domainParams.id = data.id;
-                this.domainParams.domain_id = data.id;
-                this.domainParams.name = data.name;
-                this.domainParams.link = data.link;
-                this.domainParams.hosting_name = data.hosting_name;
-                this.domainParams.hosting_link = data.hosting_link;
-                this.domainParamsType = data.type;
-                this.domainParamsDisplay = data.display;
-                this.domainParams.type = data.type;
-                this.domainParams.display = data.display;
-                //console.log(domainParams.type);
-                this.domainParams.screen = data.screen;
-                this.domainParams.login = data.login;
-                this.domainParams.password = data.password;
-                this.domainParams.description = data.description;
-                this.domainParams.additionalDomains = data.additionalDomains;
+                if(typeof data.domainWidgetIsVisible != undefined && data.domainWidgetIsVisible == false){
+                    this.clearDomainForm();
+                }
+                if(typeof data.id != undefined) {
+                    this.domainWidgetIsVisible = true;
+                    this.edit = true;
+                    this.domainParams.id = data.id;
+                    this.domainParams.domain_id = data.id;
+                    this.domainParams.name = data.name;
+                    this.domainParams.link = data.link;
+                    this.domainParams.hosting_name = data.hosting_name;
+                    this.domainParams.hosting_link = data.hosting_link;
+                    this.domainParamsType = data.type;
+                    this.domainParamsDisplay = data.display;
+                    this.domainParams.type = data.type;
+                    this.domainParams.display = data.display;
+                    //console.log(domainParams.type);
+                    this.domainParams.screen = data.screen;
+                    this.domainParams.login = data.login;
+                    this.domainParams.password = data.password;
+                    this.domainParams.description = data.description;
+                    this.domainParams.additionalDomains = data.additionalDomains;
+                }
             })
         },
         methods:{
@@ -287,20 +294,19 @@
             },
             displayChange(){
                 let vm = this;
-                let type = event.target.value;
-                this.domainParams.type = event.target.value;
+                let display = event.target.value;
+                this.domainParams.display = event.target.value;
             },
             deleteDomainParams(id){
                 if(confirm('are you sure?')){
-                    fetch(`/api/domainParams/${id}`,{method:'delete'})
+                    fetch(`/api/domain/${id}`,{method:'delete'})
                         .then(res => res.json())
                         .then(data => {
                             alert('domainParams removed');
-                            this.fetchdomainParams();
                         })
                         .catch(err =>console.log(err));
                 }
-                this.forceRerender();
+                this.clearDomainForm()
             },
             addDomainParams(){
                 //console.log(this.domainParams);
@@ -325,6 +331,8 @@
                             this.domainParams.password = '';
                             this.domainParams.description = '';
                             this.domainParams.screen = '';
+                            this.domainParams.image = '';
+                            this.domainParams.display = '';
                             this.domainParams.additionaldomainParams = [];
                             this.newAdddomainParams = '';
                             this.newAdddomain =  {name: '', link : ''};
@@ -357,6 +365,8 @@
                                 password: '',
                                 description: '',
                                 screen:'',
+                                image: '',
+                                display:'',
                                 additionalDomains:[],
                             };
                             this.newAdddomain = {name: '', link : ''};
@@ -368,7 +378,27 @@
                 this.$root.$emit ("domainList", {rerender: true});
                 //this.forceRerender();
             },
-            editdomainParams(domainParams){
+            clearDomainForm(){
+                this.edit = false;
+                this.domainParams = {
+                    id: '',
+                    name: '',
+                    link:'',
+                    hosting_name: '',
+                    hosting_link: '',
+                    type: '',
+                    login: '',
+                    password: '',
+                    description: '',
+                    screen:'',
+                    image: '',
+                    display:'',
+                    additionalDomains:[],
+                };
+                this.newAdddomain = {name: '', link : ''};
+                this.domainWidgetIsVisible = false;
+            },
+            /*editdomainParams(domainParams){
                 this.edit = true;
                 this.domainParams.id = domainParams.id;
                 this.domainParams.domain_id = domainParams.id;
@@ -387,7 +417,7 @@
                 this.domainParams.description = domainParams.description;
                 this.domainParams.additionaldomainParams = domainParams.additionalDomains;
 
-            },
+            },*/
             forceRerender() {
                 this.componentKey += 1;
             }

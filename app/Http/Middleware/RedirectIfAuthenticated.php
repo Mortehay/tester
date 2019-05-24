@@ -17,9 +17,10 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
+        //we do not want constant redirect to cabinet
+        /*if (Auth::guard($guard)->check()) {
             return redirect('/cabinet');
-        }
+        }*/
 
         return $next($request);
     }
