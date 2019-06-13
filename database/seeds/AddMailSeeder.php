@@ -1,20 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Seeder;
 use App\Domain;
-use App\AddMail;
 use Faker\Factory as Faker;
+use App\AddMail;
 
-class AddDataToAddMailsTable extends Migration
+class AddMailSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      *
      * @return void
      */
-    public function up()
+    public function run()
     {
         $faker = Faker::create();
         $domains = Domain::all();
@@ -27,16 +25,5 @@ class AddDataToAddMailsTable extends Migration
                 $_addMail->save();
             }
         }
-
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        DB::table('add_mails')->truncate();
     }
 }
