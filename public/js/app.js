@@ -270,14 +270,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domain",
   props: {},
@@ -4206,9 +4198,7 @@ var render = function() {
               ],
               2
             )
-          ]),
-          _vm._v(" "),
-          _vm._m(4)
+          ])
         ]
       )
     ]
@@ -4296,49 +4286,6 @@ var staticRenderFns = [
         ),
         _vm._v(" "),
         _c("div")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "uk-grid-small", attrs: { "data-uk-grid": "" } },
-      [
-        _c("div", { staticClass: "uk-width-1-2@s" }, [
-          _c("div", { staticClass: "uk-form-label uk-text-bold" }, [
-            _vm._v("Additional alert contact")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "uk-input uk-margin-small",
-            attrs: { type: "text", placeholder: "email" }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "uk-input uk-margin-small",
-            attrs: {
-              type: "text",
-              placeholder: "email",
-              id: "my-id1",
-              hidden: ""
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "uk-button uk-button-default uk-width-1-1 uk-margin-small",
-              attrs: {
-                "uk-toggle": "target: #my-id1; animation: uk-animation-fade"
-              }
-            },
-            [_vm._v("Add more")]
-          )
-        ])
       ]
     )
   }

@@ -162,14 +162,6 @@
                     </li>
                 </ul>
             </div>
-            <div class="uk-grid-small" data-uk-grid>
-                <div class="uk-width-1-2@s">
-                    <div class="uk-form-label uk-text-bold">Additional alert contact</div>
-                    <input type="text" class="uk-input uk-margin-small" placeholder="email">
-                    <input type="text" class="uk-input uk-margin-small" placeholder="email" id="my-id1" hidden>
-                    <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small" uk-toggle="target: #my-id1; animation: uk-animation-fade">Add more</button>
-                </div>
-            </div>
 
         </form>
 
