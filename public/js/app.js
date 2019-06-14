@@ -247,6 +247,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "domain",
   props: {},
@@ -307,10 +338,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       timer: '',
       additionalDomains: [],
       additionalMails: []
-    }), _defineProperty(_ref, "newAdddomain", {
-      name: '',
-      link: ''
-    }), _defineProperty(_ref, "domain_id", ''), _defineProperty(_ref, "pagination", {}), _defineProperty(_ref, "edit", false), _defineProperty(_ref, "domainWidgetIsVisible", false), _defineProperty(_ref, "validationErrors", []), _ref;
+    }), _defineProperty(_ref, "additionalDomains", {}), _defineProperty(_ref, "additionalMails", {}), _defineProperty(_ref, "domain_id", ''), _defineProperty(_ref, "pagination", {}), _defineProperty(_ref, "edit", false), _defineProperty(_ref, "domainWidgetIsVisible", false), _defineProperty(_ref, "validationErrors", []), _ref;
   },
   created: function created() {},
   mounted: function mounted() {
@@ -342,6 +370,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.domainParams.password = data.password;
         _this.domainParams.description = data.description;
         _this.domainParams.additionalDomains = data.additionalDomains;
+        _this.domainParams.additionalMails = data.additionalMails;
       }
     });
   },
@@ -349,6 +378,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     editText: function editText(key, text, field) {
       //console.log(key, text);
       this.domainParams.additionalDomains[key].field = text;
+    },
+    newAdditioanalDomainParams: function newAdditioanalDomainParams(newdomainParams, paramName) {
+      console.log('click');
+      var state = true;
+      var paramObject = {};
+      Object.keys(newdomainParams).forEach(function (key) {
+        if (newdomainParams[key] == '') state = false;
+        paramObject[key] = newdomainParams[key];
+      });
+
+      if (state) {
+        this.domainParams[paramName].push(paramObject);
+        return this[paramName] = {};
+      } else {
+        alert('pleas enter add domain params');
+      }
     },
     newAdditioanalDomain: function newAdditioanalDomain(newdomainParams) {
       if (newdomainParams.name != '' && newdomainParams.link != '') {
@@ -364,10 +409,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         alert('pleas enter add domain params');
       }
     },
-    deleteAdditionalDomain: function deleteAdditionalDomain(index) {
-      this.domainParams.additionalDomains.splice(index, 1);
+    deleteAddDomainParams: function deleteAddDomainParams(index, paramName) {
+      this.domainParams[paramName].splice(index, 1);
       return false;
     },
+
+    /*deleteAdditionalDomain(index) {
+        this.domainParams.additionalDomains.splice(index, 1);
+        return false;
+    },*/
     screenChanged: function screenChanged(e) {
       var _this2 = this;
 
@@ -3708,7 +3758,10 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.deleteAdditionalDomain(key)
+                                        return _vm.deleteAddDomainParams(
+                                          key,
+                                          "additionalDomains"
+                                        )
                                       }
                                     }
                                   })
@@ -3733,8 +3786,8 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.newAdddomain.name,
-                                  expression: "newAdddomain.name"
+                                  value: _vm.additionalDomains.name,
+                                  expression: "additionalDomains.name"
                                 }
                               ],
                               staticClass: "uk-input uk-margin-small",
@@ -3742,14 +3795,14 @@ var render = function() {
                                 type: "text",
                                 placeholder: "Add domain name…"
                               },
-                              domProps: { value: _vm.newAdddomain.name },
+                              domProps: { value: _vm.additionalDomains.name },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
                                     return
                                   }
                                   _vm.$set(
-                                    _vm.newAdddomain,
+                                    _vm.additionalDomains,
                                     "name",
                                     $event.target.value
                                   )
@@ -3764,8 +3817,8 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.newAdddomain.link,
-                                  expression: "newAdddomain.link"
+                                  value: _vm.additionalDomains.link,
+                                  expression: "additionalDomains.link"
                                 }
                               ],
                               staticClass: "uk-input uk-margin-small",
@@ -3773,14 +3826,14 @@ var render = function() {
                                 type: "text",
                                 placeholder: "Add domain link…"
                               },
-                              domProps: { value: _vm.newAdddomain.link },
+                              domProps: { value: _vm.additionalDomains.link },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
                                     return
                                   }
                                   _vm.$set(
-                                    _vm.newAdddomain,
+                                    _vm.additionalDomains,
                                     "link",
                                     $event.target.value
                                   )
@@ -3798,8 +3851,9 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
-                                  return _vm.newAdditioanalDomain(
-                                    _vm.newAdddomain
+                                  return _vm.newAdditioanalDomainParams(
+                                    _vm.additionalDomains,
+                                    "additionalDomains"
                                   )
                                 }
                               }
@@ -4030,7 +4084,131 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "uk-hr" }),
           _vm._v(" "),
-          _vm._m(3)
+          _c("div", { staticClass: "uk-width-1-1@s" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "uk-list" },
+              [
+                _vm._l(_vm.domainParams.additionalMails, function(
+                  additionalmail,
+                  key
+                ) {
+                  return _vm.domainParams.additionalMails.length > 0
+                    ? _c("li", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "uk-grid-collapse uk-child-width-expand@s uk-text-center",
+                            attrs: { "uk-grid": "" }
+                          },
+                          [
+                            _c("div", [
+                              _c("input", {
+                                staticClass: "uk-input uk-margin-small",
+                                attrs: { type: "text" },
+                                domProps: { value: additionalmail.alert_mail },
+                                on: {
+                                  blur: function($event) {
+                                    _vm.textEditing = false
+                                    _vm.editText(
+                                      key,
+                                      $event.target.value,
+                                      "alert_mail"
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c("span", {
+                                staticStyle: { color: "red" },
+                                attrs: {
+                                  "uk-icon": "icon: minus-circle; ratio: 1"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.deleteAddDomainParams(
+                                      key,
+                                      "additionalMails"
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                }),
+                _c("li", { staticClass: "uk-margin-top" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "uk-grid-collapse uk-child-width-expand@s uk-text-center",
+                      attrs: { "uk-grid": "" }
+                    },
+                    [
+                      _c("div", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.additionalMails.alert_mail,
+                              expression: "additionalMails.alert_mail"
+                            }
+                          ],
+                          staticClass: "uk-input uk-margin-small",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Add alert mail"
+                          },
+                          domProps: { value: _vm.additionalMails.alert_mail },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.additionalMails,
+                                "alert_mail",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c("span", {
+                          staticStyle: { color: "blue" },
+                          attrs: { "uk-icon": "icon: plus-circle; ratio: 1" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.newAdditioanalDomainParams(
+                                _vm.additionalMails,
+                                "additionalMails"
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]
+                  )
+                ])
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(4)
         ]
       )
     ]
@@ -4094,6 +4272,27 @@ var staticRenderFns = [
           "div",
           { staticClass: "uk-form-label uk-text-bold uk-text-left@s" },
           [_vm._v("Additional domain link")]
+        ),
+        _vm._v(" "),
+        _c("div")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "uk-grid-collapse uk-child-width-expand@s uk-text-center",
+        attrs: { "uk-grid": "" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "uk-form-label uk-text-bold uk-text-left@s" },
+          [_vm._v("Additional alert mail")]
         ),
         _vm._v(" "),
         _c("div")

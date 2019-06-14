@@ -77,19 +77,19 @@
                                     <input type="text" class="uk-input uk-margin-small" :value="additionaldomain.link" v-on:blur= "textEditing=false; editText(key, $event.target.value, 'link')">
                                 </div>
                                 <div>
-                                    <span style="color:red;" uk-icon="icon: minus-circle; ratio: 1" @click.prevent="deleteAdditionalDomain(key)"></span>
+                                    <span style="color:red;" uk-icon="icon: minus-circle; ratio: 1" @click.prevent="deleteAddDomainParams(key, 'additionalDomains')"></span>
                                 </div>
                             </div>
                         <li class="uk-margin-top">
                             <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
                                 <div>
-                                    <input type="text" class="uk-input uk-margin-small" placeholder="Add domain name…"  v-model="newAdddomain.name">
+                                    <input type="text" class="uk-input uk-margin-small" placeholder="Add domain name…"  v-model="additionalDomains.name">
                                 </div>
                                 <div>
-                                    <input type="text" class="uk-input uk-margin-small" placeholder="Add domain link…"  v-model="newAdddomain.link">
+                                    <input type="text" class="uk-input uk-margin-small" placeholder="Add domain link…"  v-model="additionalDomains.link">
                                 </div>
                                 <div>
-                                    <span style="color:blue;" uk-icon="icon: plus-circle; ratio: 1" @click.prevent="newAdditioanalDomain(newAdddomain)"></span>
+                                    <span style="color:blue;" uk-icon="icon: plus-circle; ratio: 1" @click.prevent="newAdditioanalDomainParams(additionalDomains, 'additionalDomains')"></span>
                                 </div>
                             </div>
                         </li>
@@ -130,7 +130,38 @@
                     </div>
                 </div>
             </div>
+
             <div class="uk-hr"></div>
+
+            <div  class="uk-width-1-1@s">
+                <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+                    <div class="uk-form-label uk-text-bold uk-text-left@s">Additional alert mail</div>
+                    <!--<div class="uk-form-label uk-text-bold uk-text-left@s">Additional domain link</div>-->
+                    <div></div>
+                </div>
+                <ul class="uk-list">
+                    <li v-if="(domainParams.additionalMails).length > 0" v-for="(additionalmail, key) in domainParams.additionalMails">
+                        <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+                            <div>
+                                <input type="text" class="uk-input uk-margin-small" :value="additionalmail.alert_mail" v-on:blur= "textEditing=false; editText(key, $event.target.value, 'alert_mail')">
+                            </div>
+
+                            <div>
+                                <span style="color:red;" uk-icon="icon: minus-circle; ratio: 1" @click.prevent="deleteAddDomainParams(key, 'additionalMails')"></span>
+                            </div>
+                        </div>
+                    <li class="uk-margin-top">
+                        <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+                            <div>
+                                <input type="text" class="uk-input uk-margin-small" placeholder="Add alert mail"  v-model="additionalMails.alert_mail">
+                            </div>
+                            <div>
+                                <span style="color:blue;" uk-icon="icon: plus-circle; ratio: 1" @click.prevent="newAdditioanalDomainParams(additionalMails, 'additionalMails')"></span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <div class="uk-grid-small" data-uk-grid>
                 <div class="uk-width-1-2@s">
                     <div class="uk-form-label uk-text-bold">Additional alert contact</div>
@@ -218,7 +249,8 @@
                     additionalDomains: [],
                     additionalMails: [],
                 },
-                newAdddomain: {name: '', link : ''},
+                additionalDomains: {},
+                additionalMails: {},
                 domain_id: '',
                 pagination: {},
                 edit: false,
@@ -257,6 +289,7 @@
                     this.domainParams.password = data.password;
                     this.domainParams.description = data.description;
                     this.domainParams.additionalDomains = data.additionalDomains;
+                    this.domainParams.additionalMails = data.additionalMails;
                 }
             })
         },
@@ -265,6 +298,21 @@
                 //console.log(key, text);
                 this.domainParams.additionalDomains[key].field = text;
 
+            },
+            newAdditioanalDomainParams(newdomainParams, paramName) {
+                console.log('click');
+                let state = true;
+                let paramObject = {};
+                Object.keys(newdomainParams).forEach(function(key) {
+                    if(newdomainParams[key] == '') state = false;
+                    paramObject[key] = newdomainParams[key];
+                });
+                if(state) {
+                    this.domainParams[paramName].push(paramObject);
+                    return this[paramName] = {};
+                } else {
+                    alert('pleas enter add domain params');
+                }
             },
             newAdditioanalDomain(newdomainParams) {
                 if(newdomainParams.name != '' && newdomainParams.link != ''){
@@ -275,10 +323,15 @@
                 }
 
             },
-            deleteAdditionalDomain(index) {
-                this.domainParams.additionalDomains.splice(index, 1);
+            deleteAddDomainParams(index, paramName){
+
+                this.domainParams[paramName].splice(index,1);
                 return false;
             },
+            /*deleteAdditionalDomain(index) {
+                this.domainParams.additionalDomains.splice(index, 1);
+                return false;
+            },*/
             screenChanged(e){
                 if(e.target.files[0] !== undefined){
                     console.log(e.target.files[0]);
