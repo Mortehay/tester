@@ -306,24 +306,11 @@
                     alert('pleas enter add domain params');
                 }
             },
-            newAdditioanalDomain(newdomainParams) {
-                if(newdomainParams.name != '' && newdomainParams.link != ''){
-                    this.domainParams.additionalDomains.push({name: newdomainParams.name , link: newdomainParams.link});
-                    return this.newAdddomain = {name: '', link : ''};
-                } else {
-                    alert('pleas enter add domain params');
-                }
-
-            },
             deleteAddDomainParams(index, paramName){
 
                 this.domainParams[paramName].splice(index,1);
                 return false;
             },
-            /*deleteAdditionalDomain(index) {
-                this.domainParams.additionalDomains.splice(index, 1);
-                return false;
-            },*/
             screenChanged(e){
                 if(e.target.files[0] !== undefined){
                     console.log(e.target.files[0]);

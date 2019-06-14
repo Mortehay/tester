@@ -387,29 +387,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         alert('pleas enter add domain params');
       }
     },
-    newAdditioanalDomain: function newAdditioanalDomain(newdomainParams) {
-      if (newdomainParams.name != '' && newdomainParams.link != '') {
-        this.domainParams.additionalDomains.push({
-          name: newdomainParams.name,
-          link: newdomainParams.link
-        });
-        return this.newAdddomain = {
-          name: '',
-          link: ''
-        };
-      } else {
-        alert('pleas enter add domain params');
-      }
-    },
     deleteAddDomainParams: function deleteAddDomainParams(index, paramName) {
       this.domainParams[paramName].splice(index, 1);
       return false;
     },
-
-    /*deleteAdditionalDomain(index) {
-        this.domainParams.additionalDomains.splice(index, 1);
-        return false;
-    },*/
     screenChanged: function screenChanged(e) {
       var _this2 = this;
 
